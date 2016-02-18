@@ -1,0 +1,64 @@
+@import url(//fonts.googleapis.com/css?family=Playfair+Display:400,700italic);
+@import url(//fonts.googleapis.com/css?family=Lato:100,300);
+
+body {
+    padding-top: 50px;
+}
+
+.row {
+    margin-top: 2em;
+}
+
+/*body {*/
+    /*background-color: lightgrey;*/
+    /*font-family: "Helvetica";*/
+/*}*/
+
+/*h2,h4 {*/
+    /*color: black;*/
+    /*text-align: center;*/
+/*}*/
+
+
+div.definition p {
+    /*margin: 5px;*/
+    background: darkgrey;
+    font-size: 15px;
+    border: 10px solid darkgrey;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;"
+}
+
+b.falls {
+    background: #FDE607;
+}
+
+b.finds {
+    background: #E68A0A;
+}
+
+/*
+p {
+    font-size: 20px;
+    text-align: left;
+}
+*/
+
+/*a {
+    color: red;
+}*/
+
+video {
+    align-items: center;
+}
+
+table {
+    color: red;
+}
+
+.week {
+    padding-left: 5%;
+}
+.week > h4 {
+    font-size: 1rem;
+}

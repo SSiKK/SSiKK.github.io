@@ -1,0 +1,38 @@
+<section style="text-align: center;">
+    <h2 style="font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic; font-size: 10em">Knockin' on Heavin's Door</h2>
+    <h3 style="font-family: 'Lato', sans-serif; font-weight: 300;">Exploring UI design through a touch screen door</h3>
+</section>
+
+<section style="text-align: center;">
+    <h4 style="font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic; font-size: 3em"><a href="#app">Go To The Application</a></h4>
+
+</section>
+
+<!-- <section style="text-align: center;">
+    <video controls autoplay="true" loop="true">
+        <source src="./OverView.mp4" type='video/mp4'/>
+    </video>
+</section>
+ -->
+<section>
+    <p style="font-family: 'Lato', sans-serif; font-weight: 300;">Kyle Almryde</p>
+    <p style="font-family: 'Lato', sans-serif; font-weight: 300;">Krishna Bharadwaj</p>
+    <p style="font-family: 'Lato', sans-serif; font-weight: 300;">Shiwangi Singh</p>
+    <p style="font-family: 'Lato', sans-serif; font-weight: 300;">Saumya Solanki</p>
+</section>
+
+<script>
+    $("main").children().wrap('<div class="row" />');
+
+    $("section").each(function() {
+        var section = $(this);
+        section.wrapAll('<div class="col-xs-12" />');
+
+        var videoWrap = $('<div>')
+            .addClass('embed-responsive embed-responsive-16by9');
+
+        section.find("video").addClass("embed-responsive-item")
+            .wrap(videoWrap).css("height", "50%");
+    });
+    // $("video").each(function() { this.load(); });
+</script>
