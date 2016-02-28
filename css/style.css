@@ -62,3 +62,7 @@ table {
 .week > h4 {
     font-size: 1rem;
 }
+
+.smallImg {
+    width: 500;
+}
