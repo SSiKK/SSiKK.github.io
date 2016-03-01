@@ -21,20 +21,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="saumya.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="saumya.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/html/saumya.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.115385">
-              <caret line="32" column="69" selection-start-line="32" selection-start-column="58" selection-end-line="32" selection-end-column="69" />
+            <state vertical-scroll-proportion="0.6364734">
+              <caret line="31" column="67" selection-start-line="31" selection-start-column="67" selection-end-line="31" selection-end-column="67" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="group.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="group.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/html/group.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46618357">
+            <state vertical-scroll-proportion="-14.846154">
               <caret line="62" column="57" selection-start-line="62" selection-start-column="57" selection-end-line="62" selection-end-column="57" />
               <folding />
             </state>
@@ -59,8 +59,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/html/saumya.html" />
         <option value="$PROJECT_DIR$/html/group.html" />
+        <option value="$PROJECT_DIR$/html/saumya.html" />
       </list>
     </option>
   </component>
@@ -304,18 +304,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/html/saumya.html">
+    <entry file="file://$PROJECT_DIR$/html/group.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.115385">
-          <caret line="32" column="69" selection-start-line="32" selection-start-column="58" selection-end-line="32" selection-end-column="69" />
+        <state vertical-scroll-proportion="-14.846154">
+          <caret line="62" column="57" selection-start-line="62" selection-start-column="57" selection-end-line="62" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/html/group.html">
+    <entry file="file://$PROJECT_DIR$/html/saumya.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46618357">
-          <caret line="62" column="57" selection-start-line="62" selection-start-column="57" selection-end-line="62" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.6364734">
+          <caret line="31" column="67" selection-start-line="31" selection-start-column="67" selection-end-line="31" selection-end-column="67" />
           <folding />
         </state>
       </provider>
