@@ -21,11 +21,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="saumya.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="saumya.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/html/saumya.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.035024155">
+            <state vertical-scroll-proportion="-1.1153846">
               <caret line="64" column="17" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="progress.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/html/progress.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7330918">
+              <caret line="98" column="56" selection-start-line="98" selection-start-column="56" selection-end-line="98" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -63,6 +73,7 @@
       <list>
         <option value="$PROJECT_DIR$/html/group.html" />
         <option value="$PROJECT_DIR$/html/saumya.html" />
+        <option value="$PROJECT_DIR$/html/progress.html" />
       </list>
     </option>
   </component>
@@ -324,8 +335,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/html/saumya.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.035024155">
+        <state vertical-scroll-proportion="-1.1153846">
           <caret line="64" column="17" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html/progress.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7330918">
+          <caret line="98" column="56" selection-start-line="98" selection-start-column="56" selection-end-line="98" selection-end-column="56" />
           <folding />
         </state>
       </provider>
