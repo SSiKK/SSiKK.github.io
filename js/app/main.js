@@ -32,7 +32,15 @@
         radius: 20.0
     });
 
-
+    var cameraView = new YDYW_Camera();
+        cameraView.init(canvas);
+        cameraView.set({
+            width: 444,
+            height: localHeight * 0.25,
+            top: 20.0,
+            left: 300,
+            top: 250
+        })
     // draw everything at the appropriate scale for this canvas
     zoomAll(canvas.height / localHeight);
 
