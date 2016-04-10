@@ -9,6 +9,10 @@ body {
     margin-top: 2em;
 }
 
+
+div.canvas-container {
+    margin-top: 50px;
+}
 /*body {*/
     /*background-color: lightgrey;*/
     /*font-family: "Helvetica";*/
