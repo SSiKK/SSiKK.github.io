@@ -12,12 +12,22 @@ var YDYW_Camera = SVG_Imitator.extend({
 		this.viewport = null; // The viewing window, should be a rect
 		this.subview = null; // The picture in picture display of owner
 
+		// The different buttons
+		this.pipButton = null;  // The personal display view
+		this.incogButton = null; // The incognito button
+
+
+
+
 		//Feature specific status flags
 		this.on = false;
-		this.fullScreenMode = false;
 		this.showsub = false; // should we show subview?
+		this.fullScreenMode = false;
+		this.fullSubScreenMode = false; // Since the subview is decoupled
 
 
+
+		// Attach the canvas
 		if (canvas!==undefined && canvas!== null) {
 			this.attachToCanvas(canvas);
 		}
@@ -28,6 +38,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 
 	draw: function () {
 		// Draw
+		var that = this;
 		this.viewport = new fabric.Rect({
 			angle: 0,
             left: this.left,
@@ -41,16 +52,20 @@ var YDYW_Camera = SVG_Imitator.extend({
 			hasControls: false,
 			hasBorders: false,
 			lockMovementX: true,
-			lockMovementY: true,
-		});
+			lockMovementY: true
+		})
+		.on('selected', function(options) {
+			console.log("selected!", this);
+        	that.toggleFullScreenViewport();
+        });
 
 		// do NOT add to canvas on init, should be hidden for now
 		this.subview = new fabric.Rect({
 			angle: 0,
             left: this.viewport.left-160,
             top: this.viewport.top-60,
-			width: this.width * 0.2,
-			height: this.height * 0.35,
+			width: this.collapsedWidth * 0.2,
+			height: this.collapsedHeight * 0.35,
 			originX: 'center',
 			originY: 'center',
 			fill: 'white',
@@ -60,27 +75,32 @@ var YDYW_Camera = SVG_Imitator.extend({
 			hasBorders: false,
 			lockMovementX: true,
 			lockMovementY: true,
-		});
+			visible: this.showsub
+		}).on('selected', function(options) {
+        	that.toggleFullScreenSubview();
+        });
+
+
 
 		this.canvas.add(this.viewport);
-
-		if (this.showsub)
-			this.canvas.add(this.subview);
+		this.canvas.add(this.subview);
 
 		console.log ("being drawn!", this);
 	},
 
-	toggleFullScreenViewport: function() {
-		console.log("toggleFullScreenViewport", this.fullScreenMode, this);
+	toggleFullScreenSubview: function() {
+		console.log("toggleFullScreenSubview", this.toggleFullScreenSubview, this);
 		var refreshCallback = function() {
 			this.canvas.deactivateAll();
 			this.canvas.renderAll();
 		}
 
-		if (this.fullScreenMode) {
-			this.viewport.animate({
-				'top': this.top-50,
-				'height': this.collapsedHeight
+		// Make it SMALLER
+		if (this.fullSubScreenMode) {
+			// Adjust the SUBVIEW
+			this.subview.animate({
+				'top': this.top-100,
+				'height': this.collapsedHeight * 0.35
 			},
 			{
 				onChange: this.canvas.renderAll.bind(this.canvas),
@@ -88,16 +108,54 @@ var YDYW_Camera = SVG_Imitator.extend({
 				easing: fabric.util.ease.easeOutBounce,
 				onComplete: refreshCallback.bind(this)
 			});
+
+		// Make it LARGER
 		} else {
-			this.viewport.animate({
-				'top': this.top+150,
-				'height': this.collapsedHeight * 3
+
+			// Adjust the SUBVIEW
+			this.subview.animate({
+				'top': this.top-75,
+				'height': this.collapsedHeight * 0.45
 			},
 			{
 				onChange: this.canvas.renderAll.bind(this.canvas),
 				duration: 1000,
 				easing: fabric.util.ease.easeOutBounce,
 				onComplete: refreshCallback.bind(this)
+			});
+		}
+		this.fullSubScreenMode = !this.fullSubScreenMode;
+	},
+
+
+	toggleFullScreenViewport: function() {
+		console.log("toggleFullScreenViewport", this.fullScreenMode, this);
+
+		var refreshCallback = function() {
+			this.canvas.deactivateAll();
+			this.canvas.renderAll();
+		}
+
+		// Make it SMALLER
+		if (this.fullScreenMode) {
+			// Adjust the Viewport
+			this.viewport.animate({ 'top': this.top-50, 'height': this.collapsedHeight },
+			{
+				onChange: this.canvas.renderAll.bind(this.canvas),
+				duration: 1000,
+				easing: fabric.util.ease.easeOutBounce,
+				onComplete: refreshCallback.bind(this)
+			});
+
+		// Make it LARGER
+		} else {
+			// Adjust the Viewport
+			this.viewport.animate({ 'top': this.top+160, 'height': this.collapsedHeight * 3.5 },
+			{
+				onChange: this.canvas.renderAll.bind(this.canvas),
+			  	duration: 1000,
+			  	easing: fabric.util.ease.easeOutBounce,
+			  	onComplete: refreshCallback.bind(this)
 			});
 		}
 		this.fullScreenMode = !this.fullScreenMode;

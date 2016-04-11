@@ -24,6 +24,10 @@
     // Draw the Basic In/Outside doors,
     DrawDoors();
 
+    // Draw the Camera view and associated controls
+    DrawCameraView();
+
+    // Doorknob stuff
     var doorKnobIn = new YDYW_DoorKnob();
     doorKnobIn.init(canvas);
     doorKnobIn.set({
@@ -32,15 +36,7 @@
         radius: 20.0
     });
 
-    var cameraView = new YDYW_Camera();
-        cameraView.init(canvas)
-        cameraView.set({
-            width: 444,
-            height: localHeight * 0.25,
-            top: 20.0,
-            left: 300,
-            top: 250
-        });
+
     // draw everything at the appropriate scale for this canvas
     zoomAll(canvas.height / localHeight);
 
@@ -90,11 +86,8 @@
         });
 
         // the doors will not be selectable or movable
-        insideDoor.hasControls = insideDoor.hasBorders = false;
+        insideDoor.hasControls = insideDoor.hasBorders = insideDoor.selectable = false;
         insideDoor.lockMovementX = insideDoor.lockMovementY = true;
-        insideDoor.on('selected', function(options) {
-            cameraView.toggleFullScreenViewport();
-        });
 
 
         var outsideDoor = new fabric.Rect({
@@ -118,7 +111,21 @@
 
         canvas.add(insideDoor);
         canvas.add(outsideDoor);
+    }
 
+    function DrawCameraView() {
+        var cameraView = new YDYW_Camera();
+            cameraView.init(canvas)
+            cameraView.set({
+                width: 444,
+                height: localHeight * 0.25,
+                top: 20.0,
+                left: 300,
+                top: 250
+            });
+            // cameraView.viewport.on('selected', function(options) {
+            //     cameraView.toggleFullScreenViewport();
+            // });
     }
 
 })();
