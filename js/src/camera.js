@@ -16,8 +16,10 @@ var YDYW_Camera = SVG_Imitator.extend({
 		this.cameraButton = null;  // The personal display view
 		this.incogButton = null; // The incognito button
 
-
-
+		// Some temporary images of people...
+		this.viewportImage = null;
+		this.viewportImageHeight = null;
+		this.subviewOwner = null;
 
 		//Feature specific status flags
 		this.on = false;
@@ -56,10 +58,6 @@ var YDYW_Camera = SVG_Imitator.extend({
 			lockMovementX: true,
 			lockMovementY: true
 		})
-		.on('selected', function(options) {
-			console.log("selected!", this);
-        	that.toggleFullScreenViewport();
-        });
 
 		// draw the subview
 		this.subview = new fabric.Rect({
@@ -97,7 +95,6 @@ var YDYW_Camera = SVG_Imitator.extend({
                 scaleX: 0.1,
                 scaleY: 0.1,
                 fill: 'white',
-                selected: false,
 				hasControls: false,
 				hasBorders: false,
 				lockMovementX: true,
@@ -133,7 +130,6 @@ var YDYW_Camera = SVG_Imitator.extend({
                 scaleX: 0.25,
                 scaleY: 0.25,
                 fill: 'white',
-                selected: false,
 				hasControls: false,
 				hasBorders: false,
 				lockMovementX: true,
@@ -144,6 +140,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 					this.set('fill', 'white');
 				else
 					this.set('fill', 'green');
+				that.subview.bringToFront();
 				that.subview.visible = !that.showsub;
 				that.showsub = !that.showsub;
 				this.canvas.deactivateAll();
@@ -153,7 +150,33 @@ var YDYW_Camera = SVG_Imitator.extend({
 			this.canvas.add(this.incogButton);
 		})
 
+		this.viewportImageHeight = 360
+		fabric.Image.fromURL("js/assets/img/visitor.png", function(img){
+			console.log(img, this.viewportImageHeight);
 
+			this.viewportImage = img.set({
+	            left: that.viewport.left,
+	            top: that.top+135,
+                scaleX: 1.3,
+                scaleY: 1.3,
+				originX: 'center',
+				originY: 'center',
+				hasControls: false,
+				hasBorders: false,
+				lockMovementX: true,
+				lockMovementY: true,
+				clipTo:function(ctx){
+					console.log("who is", that.viewportImageHeight, ctx);
+					ctx.rect(-this.width, -this.height,
+							 this.width*2, that.viewportImageHeight);
+				}
+			}).on('selected', function(options) {
+				console.log("selected!", this);
+	        	that.toggleFullScreenViewport();
+	        });
+
+			this.canvas.add(this.viewportImage);
+		})
 
 		this.canvas.add(this.viewport);
 		this.canvas.add(this.subview);
@@ -204,21 +227,43 @@ var YDYW_Camera = SVG_Imitator.extend({
 			this.canvas.deactivateAll();
 			this.canvas.renderAll();
 		}
-
+		var that = this;
 		// Make it SMALLER
 		if (this.fullScreenMode) {
 			// Adjust the Viewport
-			this.viewport.animate({ 'top': this.top-50, 'height': this.collapsedHeight },
-			{
-				onChange: this.canvas.renderAll.bind(this.canvas),
-				duration: 1000,
-				easing: fabric.util.ease.easeOutBounce,
+			console.log(this.top-50);
+			fabric.util.animate({
+				startValue: (360 + 80)*2,
+				endValue: 360,
+				duration: 900,
+				onChange: function(value) {
+					that.viewportImageHeight = value;
+					that.canvas.renderAll();
+					that.viewport.animate({ 'top': that.top-50, 'height': that.collapsedHeight },
+					{
+						onChange: that.canvas.renderAll.bind(that.canvas),
+						duration: 1000,
+						easing: fabric.util.ease.easeOutBounce,
+						// onComplete: refreshCallback.bind(that)
+					});
+				},
 				onComplete: refreshCallback.bind(this)
-			});
+			})
+
 
 		// Make it LARGER
 		} else {
 			// Adjust the Viewport
+			fabric.util.animate({
+				startValue: this.viewportImageHeight === 360? 360: this.viewportImageHeight,
+				endValue: (360 + 80)*2,
+				duration: 900,
+				onChange: function(value) {
+					that.viewportImageHeight = value;
+					that.canvas.renderAll();
+				},
+				onComplete: refreshCallback.bind(this)
+			})
 			this.viewport.animate({ 'top': this.top+150, 'height': this.collapsedHeight * 3 },
 			{
 				onChange: this.canvas.renderAll.bind(this.canvas),
@@ -226,6 +271,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 			  	easing: fabric.util.ease.easeOutBounce,
 			  	onComplete: refreshCallback.bind(this)
 			});
+
 		}
 		this.fullScreenMode = !this.fullScreenMode;
 	}
