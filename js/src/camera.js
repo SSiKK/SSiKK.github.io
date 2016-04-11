@@ -1,10 +1,10 @@
 var YDYW_Camera = SVG_Imitator.extend({
-	init: function (canvas) { // Initialize
+	init: function (data) { // Initialize
 		//Attributes
 		this.left = null;
 		this.top = null;
-		this.width = null;
-		this.height = null;
+		this.collapsedWidth = this.width = null;
+		this.collapsedHeight = this.height = null;
 
 		// Canvas on which the object is created.
 		this.canvas = null;
@@ -15,7 +15,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 		//Feature specific status flags
 		this.on = false;
 		this.fullScreenMode = false;
-		this.showsub = true; // should we show subview?
+		this.showsub = false; // should we show subview?
 
 
 		if (canvas!==undefined && canvas!== null) {
@@ -32,8 +32,8 @@ var YDYW_Camera = SVG_Imitator.extend({
 			angle: 0,
             left: this.left,
             top: this.top,
-			width: this.width,
-			height: this.height,
+			width: this.collapsedWidth = this.width,
+			height: this.collapsedHeight = this.height,
 			originX: 'center',
 			originY: 'center',
 			fill: 'white',
@@ -68,6 +68,38 @@ var YDYW_Camera = SVG_Imitator.extend({
 			this.canvas.add(this.subview);
 
 		console.log ("being drawn!", this);
-	}
+	},
 
+	toggleFullScreenViewport: function() {
+		console.log("toggleFullScreenViewport", this.fullScreenMode, this);
+		var refreshCallback = function() {
+			this.canvas.deactivateAll();
+			this.canvas.renderAll();
+		}
+
+		if (this.fullScreenMode) {
+			this.viewport.animate({
+				'top': this.top-50,
+				'height': this.collapsedHeight
+			},
+			{
+				onChange: this.canvas.renderAll.bind(this.canvas),
+				duration: 1000,
+				easing: fabric.util.ease.easeOutBounce,
+				onComplete: refreshCallback.bind(this)
+			});
+		} else {
+			this.viewport.animate({
+				'top': this.top+150,
+				'height': this.collapsedHeight * 3
+			},
+			{
+				onChange: this.canvas.renderAll.bind(this.canvas),
+				duration: 1000,
+				easing: fabric.util.ease.easeOutBounce,
+				onComplete: refreshCallback.bind(this)
+			});
+		}
+		this.fullScreenMode = !this.fullScreenMode;
+	}
 });

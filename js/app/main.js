@@ -15,8 +15,8 @@
     var localHeight = 990;
     var localWidth = 1220;
 
-    var canvas = this.__canvas = new
-    fabric.Canvas('c');
+    window.canvas = this.__canvas = new fabric.Canvas('c');
+
 
     // set background to blue to make it easier to see it
     canvas.backgroundColor = "#DDDDDD"; // light grey
@@ -33,14 +33,14 @@
     });
 
     var cameraView = new YDYW_Camera();
-        cameraView.init(canvas);
+        cameraView.init(canvas)
         cameraView.set({
             width: 444,
             height: localHeight * 0.25,
             top: 20.0,
             left: 300,
             top: 250
-        })
+        });
     // draw everything at the appropriate scale for this canvas
     zoomAll(canvas.height / localHeight);
 
@@ -90,8 +90,11 @@
         });
 
         // the doors will not be selectable or movable
-        insideDoor.hasControls = insideDoor.hasBorders = insideDoor.selectable = false;
+        insideDoor.hasControls = insideDoor.hasBorders = false;
         insideDoor.lockMovementX = insideDoor.lockMovementY = true;
+        insideDoor.on('selected', function(options) {
+            cameraView.toggleFullScreenViewport();
+        });
 
 
         var outsideDoor = new fabric.Rect({
