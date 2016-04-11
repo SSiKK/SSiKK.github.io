@@ -13,7 +13,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 		this.subview = null; // The picture in picture display of owner
 
 		// The different buttons
-		this.pipButton = null;  // The personal display view
+		this.cameraButton = null;  // The personal display view
 		this.incogButton = null; // The incognito button
 
 
@@ -37,8 +37,10 @@ var YDYW_Camera = SVG_Imitator.extend({
 	},
 
 	draw: function () {
-		// Draw
+		// Need this in order to maintain scope for super nested functions
 		var that = this;
+
+		// Draw the viewportt
 		this.viewport = new fabric.Rect({
 			angle: 0,
             left: this.left,
@@ -59,7 +61,7 @@ var YDYW_Camera = SVG_Imitator.extend({
         	that.toggleFullScreenViewport();
         });
 
-		// do NOT add to canvas on init, should be hidden for now
+		// draw the subview
 		this.subview = new fabric.Rect({
 			angle: 0,
             left: this.viewport.left-160,
@@ -77,8 +79,79 @@ var YDYW_Camera = SVG_Imitator.extend({
 			lockMovementY: true,
 			visible: this.showsub
 		}).on('selected', function(options) {
-        	that.toggleFullScreenSubview();
+	    	that.toggleFullScreenSubview();
         });
+
+		// Draw Camera button
+		fabric.loadSVGFromURL('js/assets/svg/camera.svg', function(obj, opt){
+			console.log(obj, opt);
+			this.cameraButton = fabric.util.groupSVGElements(obj, {
+				width: opt.width,
+				height: opt.height,
+				svgUid: opt.svgUid,
+				toBeParsed: opt.toBeParsed,
+				left: that.viewport.left+200,
+				top: that.viewport.top-60,
+                originX: 'center',
+                originY:'center',
+                scaleX: 0.1,
+                scaleY: 0.1,
+                fill: 'white',
+                selected: false,
+				hasControls: false,
+				hasBorders: false,
+				lockMovementX: true,
+				lockMovementY: true,
+                visible: true
+			}).on('selected', function(options) {
+				if (that.showsub)
+					this.set('fill', 'white');
+				else
+					this.set('fill', 'green');
+				that.subview.visible = !that.showsub;
+				that.showsub = !that.showsub;
+				this.canvas.deactivateAll();
+                that.canvas.renderAll();
+	        });
+
+			this.canvas.add(this.cameraButton);
+		})
+
+
+		// Draw incognito button
+		fabric.loadSVGFromURL('js/assets/svg/incognito.svg', function(obj, opt){
+			console.log(obj, opt);
+			this.incogButton = fabric.util.groupSVGElements(obj, {
+				width: opt.width,
+				height: opt.height,
+				svgUid: opt.svgUid,
+				toBeParsed: opt.toBeParsed,
+				left: that.viewport.left+200,
+				top: that.viewport.top-20,
+                originX: 'center',
+                originY:'center',
+                scaleX: 0.25,
+                scaleY: 0.25,
+                fill: 'white',
+                selected: false,
+				hasControls: false,
+				hasBorders: false,
+				lockMovementX: true,
+				lockMovementY: true,
+                visible: true
+			}).on('selected', function(options) {
+				if (that.showsub)
+					this.set('fill', 'white');
+				else
+					this.set('fill', 'green');
+				that.subview.visible = !that.showsub;
+				that.showsub = !that.showsub;
+				this.canvas.deactivateAll();
+                that.canvas.renderAll();
+	        });
+
+			this.canvas.add(this.incogButton);
+		})
 
 
 
@@ -89,7 +162,6 @@ var YDYW_Camera = SVG_Imitator.extend({
 	},
 
 	toggleFullScreenSubview: function() {
-		console.log("toggleFullScreenSubview", this.toggleFullScreenSubview, this);
 		var refreshCallback = function() {
 			this.canvas.deactivateAll();
 			this.canvas.renderAll();
@@ -111,7 +183,6 @@ var YDYW_Camera = SVG_Imitator.extend({
 
 		// Make it LARGER
 		} else {
-
 			// Adjust the SUBVIEW
 			this.subview.animate({
 				'top': this.top-75,
@@ -129,8 +200,6 @@ var YDYW_Camera = SVG_Imitator.extend({
 
 
 	toggleFullScreenViewport: function() {
-		console.log("toggleFullScreenViewport", this.fullScreenMode, this);
-
 		var refreshCallback = function() {
 			this.canvas.deactivateAll();
 			this.canvas.renderAll();
@@ -150,7 +219,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 		// Make it LARGER
 		} else {
 			// Adjust the Viewport
-			this.viewport.animate({ 'top': this.top+160, 'height': this.collapsedHeight * 3.5 },
+			this.viewport.animate({ 'top': this.top+150, 'height': this.collapsedHeight * 3 },
 			{
 				onChange: this.canvas.renderAll.bind(this.canvas),
 			  	duration: 1000,
