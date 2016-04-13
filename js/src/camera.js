@@ -26,7 +26,8 @@ var YDYW_Camera = SVG_Imitator.extend({
 		this.showsub = false; // should we show subview?
 		this.fullScreenMode = false;
 		this.fullSubScreenMode = false; // Since the subview is decoupled
-
+		this.incogOn = false;
+		this.cameraOn = false;
 
 
 		// Attach the canvas
@@ -34,9 +35,13 @@ var YDYW_Camera = SVG_Imitator.extend({
 			this.attachToCanvas(canvas);
 		}
 	},
+
+
 	attachToCanvas: function(canvas) {
 		this.canvas = canvas;
 	},
+
+
 
 	draw: function () {
 		// Need this in order to maintain scope for super nested functions
@@ -105,9 +110,10 @@ var YDYW_Camera = SVG_Imitator.extend({
 					this.set('fill', 'white');
 				else
 					this.set('fill', 'green');
+				that.subview.bringToFront();
 				that.subview.visible = !that.showsub;
 				that.showsub = !that.showsub;
-				this.canvas.deactivateAll();
+				that.canvas.deactivateAll();
                 that.canvas.renderAll();
 	        });
 
@@ -136,6 +142,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 				lockMovementY: true,
                 visible: true
 			}).on('selected', function(options) {
+				// that.toggleCameraViewMode(this, that.cameraButton)
 				if (that.showsub)
 					this.set('fill', 'white');
 				else
@@ -171,7 +178,6 @@ var YDYW_Camera = SVG_Imitator.extend({
 							 this.width*2, that.viewportImageHeight);
 				}
 			}).on('selected', function(options) {
-				console.log("selected!", this);
 	        	that.toggleFullScreenViewport();
 	        });
 
@@ -274,5 +280,19 @@ var YDYW_Camera = SVG_Imitator.extend({
 
 		}
 		this.fullScreenMode = !this.fullScreenMode;
+	},
+
+	toggleCameraViewMode: function(context, other) {
+		console.log(context, other);
+
+		// if (that.showsub)
+		// 	context.set('fill', 'white');
+		// else
+		// 	context.set('fill', 'green');
+		// that.subview.visible = !that.showsub;
+		// that.showsub = !that.showsub;
+		// this.canvas.deactivateAll();
+  //       that.canvas.renderAll();
+
 	}
 });
