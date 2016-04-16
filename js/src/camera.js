@@ -266,14 +266,14 @@ var YDYW_Camera = SVG_Imitator.extend({
                     top: that.indoorView.top - 60,
                     originX: 'center',
                     originY: 'center',
-                    scaleX: 0.1,
-                    scaleY: 0.1,
+                    scaleX: 0.08,
+                    scaleY: 0.08,
                     fill: 'black',
                     hasControls: false,
                     hasBorders: false,
                     lockMovementX: true,
                     lockMovementY: true,
-                    visible: true
+                    visible: this.fullScreenMode
                 }))
             })
         })
@@ -286,8 +286,8 @@ var YDYW_Camera = SVG_Imitator.extend({
         //--------------------------------
 
         Promise.all([ownerPromise, visitorPromise, incognitoPromise, cameraPromise, expandPromise, collapsePromise])
-            .then(function([ownerImg, visitorImg, incognito, camera, ex, cl]) {
-                console.log("I got 99 promises and ", [ownerImg, visitorImg, incognito, camera, ex, cl]);
+            .then(function([ownerImg, visitorImg, incognito, camera, expander, collapse]) {
+                console.log("I got 99 promises and ", [ownerImg, visitorImg, incognito, camera, expander, collapse]);
 
                 var selfViewCB = function(options) {
                     if (that.showsub)
@@ -310,6 +310,16 @@ var YDYW_Camera = SVG_Imitator.extend({
                     .on('selected', selfViewCB);
 
 
+                that.expandButton = expander
+                    .on('selected', function(){
+                        that.toggleFullScreenindoorView();
+                    })
+
+                that.collapseButton = collapse
+                    .on('selected', function(){
+                        that.toggleFullScreenindoorView();
+                    })
+
                 that.indoorViewImage = visitorImg
                     .on('selected', function(options) {
                         console.log("selected!", this);
@@ -317,15 +327,14 @@ var YDYW_Camera = SVG_Imitator.extend({
                     });
 
                 that.outdoorViewImage = ownerImg
-                    // .on('selected', function(options) {
-                    //     console.log("selected!", this);
-                    //     that.toggleFullScreenindoorView();
-                    // });
+
 
                 that.canvas.add(that.outdoorViewImage);
                 that.canvas.add(that.indoorViewImage);
                 that.canvas.add(that.incogButton);
                 that.canvas.add(that.cameraButton);
+                that.canvas.add(that.expandButton);
+                that.canvas.add(that.collapseButton);
 
             })
             .catch(function(error) {
@@ -425,7 +434,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 
 
     /**
-     *
+     *  Makes indoor Image and Container Larger or smaller
      *
      */
     toggleFullScreenindoorView: function() {
@@ -481,70 +490,11 @@ var YDYW_Camera = SVG_Imitator.extend({
 
         }
         this.fullScreenMode = !this.fullScreenMode;
+        this.expandButton.visible = !this.fullScreenMode;
+        this.collapseButton.visible = this.fullScreenMode;
     }
 });
 
-
-//       fabric.Image.fromURL("js/assets/img/owner.png", function(img) {
-//           console.log("Image is!", img, that.outsideViewImageHeight);
-
-//           this.indoorViewImage = img.set({
-//                   left: that.indoorView.left + 500,
-//                   top: that.top + 135,
-//                   scaleX: 1.3,
-//                   scaleY: 1.3,
-//                   originX: 'center',
-//                   originY: 'center',
-//                   selectable: false,
-//                   hasControls: false,
-//                   hasBorders: false,
-//                   lockMovementX: true,
-//                   lockMovementY: true,
-//                   visible: this.showsub,
-//                   clipTo: function(ctx) {
-//                       // console.log("who is", that.indoorViewImageHeight, ctx);
-//                       ctx.rect(-this.width, -this.height,
-//                           this.width * 2, that.indoorViewImageHeight);
-//                   }
-//               })
-//               .on('selected', function(options) {
-//                   console.log("selected!", this);
-//                   that.toggleFullScreenindoorView();
-//               });
-
-//           this.canvas.add(this.indoorViewImage);
-//       })
-
-// this.subViewImageHeight = 600;
-//       fabric.Image.fromURL("js/assets/img/visitorM.png", function(img) {
-//           console.log("Image is!", img, that.subViewImageHeight);
-
-//           this.subViewImage = img.set({
-//                   left: that.indoorView.left,
-//                   top: that.top + 170,
-//                   scaleX: 0.3,
-//                   scaleY: 0.3,
-//                   originX: 'center',
-//                   originY: 'center',
-//                   // selectable: false,
-//                   hasControls: false,
-//                   hasBorders: false,
-//                   lockMovementX: true,
-//                   lockMovementY: true,
-//                   clipTo: function(ctx) {
-// 		        this.subViewImageHeight = 600;
-//                       // console.log("who is", that.indoorViewImageHeight, ctx);
-//                       ctx.rect(-400, -1000, 800, that.subViewImageHeight);
-//                           // this.width * 2, that.indoorViewImageHeight);
-//                   }
-//               })
-//               .on('selected', function(options) {
-//                   console.log("selected!", this);
-//                   that.toggleFullScreenindoorView();
-//               });
-
-//           this.canvas.add(this.subViewImage);
-//       })
 
 // Draw the Expand AND Collapse buttons...
 // This one is tricky
