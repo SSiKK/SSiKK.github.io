@@ -20,7 +20,9 @@
     var doorTop = 0;
     var doorWidth = 555;
     var doorHeight = localHeight;
-
+    
+    var messageIn;
+ 
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
     var zoomFactor = canvas.height / localHeight;
@@ -30,8 +32,14 @@
     // Draw the Basic In/Outside doors,
     DrawDoors();
 
+    // Draw the Message Box
+    DrawMessageBox();
+
     // Draw the Camera view and associated controls
     DrawCameraView();
+
+    //Weather layout
+    DrawWeatherLayout();
 
     // Doorknob stuff
     var lock = new YDYW_LockManager();
@@ -61,7 +69,6 @@
     soundMgr.addSound();
     soundMgr.setCurrent("doorBell");
 
-
     // draw everything at the appropriate scale for this canvas
     zoomAll(zoomFactor);
 
@@ -69,34 +76,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// Function Definitions /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
-    // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
-    // this code deals with scaling all the elements on the canvas
-    function zoomAll(SCALE_FACTOR) {
-
-        var objects = canvas.getObjects();
-        for (var i in objects) {
-            var scaleX = objects[i].scaleX;
-            var scaleY = objects[i].scaleY;
-            var left = objects[i].left;
-            var top = objects[i].top;
-
-            var tempScaleX = scaleX * SCALE_FACTOR;
-            var tempScaleY = scaleY * SCALE_FACTOR;
-            var tempLeft = left * SCALE_FACTOR;
-            var tempTop = top * SCALE_FACTOR;
-
-            objects[i].scaleX = tempScaleX;
-            objects[i].scaleY = tempScaleY;
-            objects[i].left = tempLeft;
-            objects[i].top = tempTop;
-
-            objects[i].setCoords();
-        }
-
-        canvas.renderAll();
-    }
-
 
     function DrawDoors() {
         // need 36 wide instead of 40 as now
@@ -139,19 +118,82 @@
         canvas.add(outsideDoor);
     }
 
+
+    function DrawDoorKnob() {
+
+    }
+
     function DrawCameraView() {
         var cameraView = new YDYW_Camera();
             cameraView.init(canvas)
             cameraView.set({
                 width: 444,
                 height: localHeight * 0.25,
-                top: 20.0,
                 left: 300,
-                top: 250
+                top: 300 // 250
             });
             // cameraView.viewport.on('selected', function(options) {
             //     cameraView.toggleFullScreenViewport();
             // });
     }
+
+    // Instantiate the message class to set the 4 parameters from SVG_Imitator
+    function DrawMessageBox(){
+        subC = document.createElement('canvas')
+        subC.id = 'subC';
+        subC.width = "300";
+        subC.height = "200";
+        subC.style.border = "2px solid black"
+        document.body.appendChild(subC);
+
+        messageIn = new YDYW_Message();
+        messageIn.init(canvas);
+        messageIn.set({
+            top:250,
+            left:300,
+            width: 300.0,
+            height: 200.0
+        });
+    }
+
+    function DrawWeatherLayout(){
+        var weatherView = new YDYW_Weather();
+        weatherView.init(canvas);
+        weatherView.set({
+            top: 500,
+            left: 300,
+            height: 300.0,
+            width: 500.0
+        });
+    }
+
+    // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
+    // this code deals with scaling all the elements on the canvas
+    function zoomAll(SCALE_FACTOR) {
+
+        var objects = canvas.getObjects();
+        for (var i in objects) {
+            var scaleX = objects[i].scaleX;
+            var scaleY = objects[i].scaleY;
+            var left = objects[i].left;
+            var top = objects[i].top;
+
+            var tempScaleX = scaleX * SCALE_FACTOR;
+            var tempScaleY = scaleY * SCALE_FACTOR;
+            var tempLeft = left * SCALE_FACTOR;
+            var tempTop = top * SCALE_FACTOR;
+
+            objects[i].scaleX = tempScaleX;
+            objects[i].scaleY = tempScaleY;
+            objects[i].left = tempLeft;
+            objects[i].top = tempTop;
+
+            objects[i].setCoords();
+        }
+
+        canvas.renderAll();
+    }
+
+
 
 })();
