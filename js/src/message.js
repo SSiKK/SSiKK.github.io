@@ -67,7 +67,7 @@ var YDYW_Message = SVG_Imitator.extend({
 		})
 		.on('selected', function() {
 			console.log('red cube');
-			JSON.stringify(that.subCanvas)
+			localStorage['krba'] = JSON.stringify(that.subCanvas)
             that.canvas.deactivateAll();
             that.canvas.renderAll();
 		});
