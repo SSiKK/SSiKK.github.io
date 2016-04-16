@@ -53,6 +53,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 			originY: 'center',
 			fill: 'white',
 			stroke: 'black',
+			selectable: false,
 			hasControls: false,
 			hasBorders: false,
 			lockMovementX: true,
@@ -161,12 +162,13 @@ var YDYW_Camera = SVG_Imitator.extend({
                 scaleY: 1.3,
 				originX: 'center',
 				originY: 'center',
+				selectable: false,
 				hasControls: false,
 				hasBorders: false,
 				lockMovementX: true,
 				lockMovementY: true,
 				clipTo:function(ctx){
-					console.log("who is", that.viewportImageHeight, ctx);
+					// console.log("who is", that.viewportImageHeight, ctx);
 					ctx.rect(-this.width, -this.height,
 							 this.width*2, that.viewportImageHeight);
 				}
@@ -231,7 +233,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 		// Make it SMALLER
 		if (this.fullScreenMode) {
 			// Adjust the Viewport
-			console.log(this.top-50);
+			// console.log(this.top-50);
 			fabric.util.animate({
 				startValue: (360 + 80)*2,
 				endValue: 360,

@@ -14,7 +14,7 @@
     // then I can scale the group to whatever size the final canvas is
     var localHeight = 990;
     var localWidth = 1220;
-
+    var messageIn;
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
 
@@ -25,7 +25,10 @@
     DrawDoors();
 
     // Draw the Camera view and associated controls
-    DrawCameraView();
+    // DrawCameraView();
+
+    // Draw the Message Box 
+    DrawMessageBox();
 
     // Doorknob stuff
     var doorKnobIn = new YDYW_DoorKnob();
@@ -35,8 +38,7 @@
         cx: localWidth * 0.75,
         radius: 20.0
     });
-
-
+   
     // draw everything at the appropriate scale for this canvas
     zoomAll(canvas.height / localHeight);
 
@@ -126,6 +128,29 @@
             // cameraView.viewport.on('selected', function(options) {
             //     cameraView.toggleFullScreenViewport();
             // });
+    }
+
+    // Instantiate the message class to set the 4 parameters from SVG_Imitator 
+    function DrawMessageBox(){
+        messageIn = new YDYW_Message();
+        messageIn.init(canvas);
+        messageIn.set({
+            cy:localHeight/2.0, 
+            cx:localWidth*0.25, 
+            height: 200.0,
+            width: 300.0
+        }); 
+    }
+
+    function DrawWeatherLayout(){
+        var weatherView = new YDYW_Weather();
+        weatherView.init(canvas);
+        messageIn.set({
+            left: localHeight/5.0, 
+            top: localWidth*0.1, 
+            height: 300.0,
+            width: 500.0
+        }); 
     }
 
 })();
