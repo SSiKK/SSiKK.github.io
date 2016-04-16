@@ -29,6 +29,8 @@
 
     // Draw the Message Box 
     DrawMessageBox();
+    //Weather layout
+    DrawWeatherLayout();
 
     // Doorknob stuff
     var doorKnobIn = new YDYW_DoorKnob();
@@ -146,8 +148,8 @@
         var weatherView = new YDYW_Weather();
         weatherView.init(canvas);
         messageIn.set({
-            left: localHeight/5.0, 
-            top: localWidth*0.1, 
+            left: 300, 
+            top: 500, 
             height: 300.0,
             width: 500.0
         }); 

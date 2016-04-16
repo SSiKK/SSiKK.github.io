@@ -21,7 +21,7 @@ var YDYW_Weather = SVG_Imitator.extend({
 	
 	draw: function () {
 		// Draw
-		console.log ("being drawn!", this);
+		console.log ("Weather Display Box!", this);
 		var innerRef = this;
 
 		this.weatherBox = new fabric.Rect({
@@ -39,7 +39,7 @@ var YDYW_Weather = SVG_Imitator.extend({
 			lockMovementY: true
 		}).on('selected', function(options) {
 			console.log("Weather Display Box!", this);
-        	innerRef.displayWeather();
+        	// innerRef.displayWeather();
         });
 
 	},
