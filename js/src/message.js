@@ -8,7 +8,7 @@ var YDYW_Message = SVG_Imitator.extend({
 
         this.subCanvasOn = true;
         this.subCanvasHTML = null;
-        window.subCanvas = this.subCanvas = new fabric.Canvas('subC', { backgroundColor: "#DDDDDD", isDrawingMode: true });
+        this.subCanvas = null;
 
         // Canvas on which the object is created.
         this.canvas = null;
@@ -31,26 +31,50 @@ var YDYW_Message = SVG_Imitator.extend({
     },
 
     configureSubCanvas: function() {
+        window.subCanvas = this.subCanvas = new fabric.Canvas('subC', { backgroundColor: "#DDDDDD", isDrawingMode: true });
         this.subCanvasHTML = document.getElementsByClassName('canvas-container')[1];
+        // this.subCanvasHTML.style.display = "none"
         this.subCanvasHTML.style.position = "absolute"
         this.subCanvasHTML.style.top = "300px"
         this.subCanvasHTML.style.left = "100px"
     },
 
     display: function() {
+    	that = this;
         console.log(this.cancelButton, this.sendButton);
 
+        for (var i = 0; i < 2; i++) {
+            this.cancelButton.item(i).visible = !this.subCanvasOn;
+            this.sendButton.item(i).visible = !this.subCanvasOn;
+        }
+
         if (this.subCanvasOn) {
-            this.subCanvasHTML.style.display = "none";
-        } else
-            this.subCanvasHTML.style.display = 'block';
+			fabric.util.animate({
+	            startValue: 200,
+	            endValue: 0,
+	            duration: 1000,
+	            onChange: function(value) {
+	                that.subCanvas.setHeight(value)
+	            },
+	            onComplete: function() {
+	            	that.subCanvasHTML.style.display = "none"
+	            }
+	        })
+        } else {
+            fabric.util.animate({
+                startValue: 0,
+                endValue: 200,
+                duration: 1000,
+                onChange: function(value) {
+                    that.subCanvas.setHeight(value)
+                },
+                onComplete: function() {
+                	that.subCanvasHTML.style.display = "block"
+                }
+            })
+        }
 
         this.subCanvasOn = !this.subCanvasOn;
-
-        for (var i = 0; i < 2; i++) {
-            that.cancelButton.item(i).visible = !that.subCanvasOn;
-            that.sendButton.item(i).visible = !that.subCanvasOn;
-        }
         this.canvas.deactivateAll();
         this.canvas.renderAll();
     },
@@ -61,7 +85,7 @@ var YDYW_Message = SVG_Imitator.extend({
         // The trick behind subclass reference!
         var that = this;
 
-        button = this.sendButton = new fabric.Group([
+        this.sendButton = new fabric.Group([
                 new fabric.Rect({
                     originX: 'center',
                     originY: 'center',
@@ -134,17 +158,7 @@ var YDYW_Message = SVG_Imitator.extend({
                 this.clicked++
                     console.log(this.clicked);
                 if (this.clicked > 1) {
-                    fabric.util.animate({
-                        startValue: 200,
-                        endValue: 0,
-                        duration: 1000,
-                        onChange: function(value) {
-                            subCanvas.setHeight(value)
-                        },
-                        onComplete: function() {
-                            that.display();
-                        }
-                    })
+					that.display();
                 }
                 that.subCanvas.clear();
                 that.canvas.deactivateAll();

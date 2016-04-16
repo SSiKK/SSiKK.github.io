@@ -153,8 +153,7 @@ var YDYW_Camera = SVG_Imitator.extend({
                         }
                     }))
                 })
-            })
-        ,
+            }),
             new Promise(function(resolve, reject) {
 
                 fabric.Image.fromURL("js/assets/img/visitorM.png", function(img) {
@@ -176,12 +175,10 @@ var YDYW_Camera = SVG_Imitator.extend({
                         }
                     }))
                 })
-            })
-        ,
+            }),
             //---------------------------
             //   HERE BE (svg) Buttons!
             //---------------------------
-
             // Camera button Promis
             new Promise(function(resolve, reject) {
                 fabric.loadSVGFromURL('js/assets/svg/camera.svg', function(obj, opt) {
@@ -204,8 +201,7 @@ var YDYW_Camera = SVG_Imitator.extend({
                         visible: true
                     }))
                 })
-            })
-        ,
+            }),
 
             // Incognito button Promis
             new Promise(function(resolve, reject) {
@@ -229,8 +225,7 @@ var YDYW_Camera = SVG_Imitator.extend({
                         visible: true
                     }))
                 })
-            })
-        ,
+            }),
             new Promise(function(resolve, reject) {
                 fabric.loadSVGFromURL('js/assets/svg/expand.svg', function(obj, opt) {
                     resolve(fabric.util.groupSVGElements(obj, {
@@ -252,8 +247,7 @@ var YDYW_Camera = SVG_Imitator.extend({
                         visible: true
                     }))
                 })
-            })
-        ,
+            }),
             new Promise(function(resolve, reject) {
                 fabric.loadSVGFromURL('js/assets/svg/collapse.svg', function(obj, opt) {
                     resolve(fabric.util.groupSVGElements(obj, {
@@ -282,54 +276,54 @@ var YDYW_Camera = SVG_Imitator.extend({
         //     Resolve All the Promises!
         //--------------------------------
 
-        Promise.all(PromisesPromises)  // [ownerPromise, visitorPromise, incognitoPromise, cameraPromise, expandPromise, collapsePromise]
-            .then(function(results) {  // [ownerImg, visitorImg, incognito, camera, expander, collapse]
+        Promise.all(PromisesPromises) // [ownerPromise, visitorPromise, incognitoPromise, cameraPromise, expandPromise, collapsePromise]
+        .then(function(results) { // [ownerImg, visitorImg, incognito, camera, expander, collapse]
 
-                // simple helper function
-                var selfViewCB = function(options) {
-                    if (that.showsub)
-                        this.set('fill', 'white');
-                    else
-                        this.set('fill', 'green');
-                    that.subView.bringToFront();
-                    that.subView.visible = !that.showsub;
-                    that.outsideView.visible = !that.showsub;
-                    that.outdoorViewImage.visible = !that.showsub;
-                    that.showsub = !that.showsub;
-                    that.canvas.deactivateAll();
-                    that.canvas.renderAll();
-                }
-
-
-                that.outdoorViewImage = results[0] // ownerImg
-
-                that.indoorViewImage = results[1] // visitorImg
-
-                that.incogButton = results[2] // incognito
-                    .on('selected', selfViewCB);
-
-                that.cameraButton = results[3] // camera
-                    .on('selected', selfViewCB);
-
-                that.expandButton = results[4] // expander
-                    .on('selected', function() {
-                        that.toggleFullScreenindoorView();
-                    })
-
-                that.collapseButton = results[5] // collapse
-                    .on('selected', function(){
-                        that.toggleFullScreenindoorView();
-                    })
+            // simple helper function
+            var selfViewCB = function(options) {
+                if (that.showsub)
+                    this.set('fill', 'white');
+                else
+                    this.set('fill', 'green');
+                that.subView.bringToFront();
+                that.subView.visible = !that.showsub;
+                that.outsideView.visible = !that.showsub;
+                that.outdoorViewImage.visible = !that.showsub;
+                that.showsub = !that.showsub;
+                that.canvas.deactivateAll();
+                that.canvas.renderAll();
+            }
 
 
-                that.canvas.add(that.outdoorViewImage);
-                that.canvas.add(that.indoorViewImage);
-                that.canvas.add(that.incogButton);
-                that.canvas.add(that.cameraButton);
-                that.canvas.add(that.expandButton);
-                that.canvas.add(that.collapseButton);
+            that.outdoorViewImage = results[0] // ownerImg
 
+            that.indoorViewImage = results[1] // visitorImg
+
+            that.incogButton = results[2] // incognito
+            .on('selected', selfViewCB);
+
+            that.cameraButton = results[3] // camera
+            .on('selected', selfViewCB);
+
+            that.expandButton = results[4] // expander
+            .on('selected', function() {
+                that.toggleFullScreenindoorView();
             })
+
+            that.collapseButton = results[5] // collapse
+            .on('selected', function() {
+                that.toggleFullScreenindoorView();
+            })
+
+
+            that.canvas.add(that.outdoorViewImage);
+            that.canvas.add(that.indoorViewImage);
+            that.canvas.add(that.incogButton);
+            that.canvas.add(that.cameraButton);
+            that.canvas.add(that.expandButton);
+            that.canvas.add(that.collapseButton);
+
+        })
             .catch(function(error) {
                 console.log("seems to be and error", error);
             })
@@ -372,14 +366,20 @@ var YDYW_Camera = SVG_Imitator.extend({
             })
 
             // Adjust the OUTSIDE VIEW
-            this.outsideView.animate({ 'top': this.top + 150, 'height': this.collapsedHeight * 3 }, {
+            this.outsideView.animate({
+                'top': this.top + 150,
+                'height': this.collapsedHeight * 3
+            }, {
                 onChange: this.canvas.renderAll.bind(this.canvas),
                 duration: 2000,
                 easing: fabric.util.ease.easeOutBack,
                 onComplete: refreshCallback.bind(this)
             });
             // Adjust the SUBVIEW
-            this.subView.animate({ 'top': this.top - 80, 'height': this.collapsedHeight * 0.45 }, {
+            this.subView.animate({
+                'top': this.top - 80,
+                'height': this.collapsedHeight * 0.45
+            }, {
                 onChange: this.canvas.renderAll.bind(this.canvas),
                 duration: 2000,
                 easing: fabric.util.ease.easeOutBack,
@@ -405,7 +405,10 @@ var YDYW_Camera = SVG_Imitator.extend({
 
 
             // Adjust the OUTSIDE VIEW
-            this.outsideView.animate({ 'top': this.top - 50, 'height': this.collapsedHeight }, {
+            this.outsideView.animate({
+                'top': this.top - 50,
+                'height': this.collapsedHeight
+            }, {
                 onChange: this.canvas.renderAll.bind(this.canvas),
                 duration: 1000,
                 easing: fabric.util.ease.easeInBack,
@@ -413,7 +416,10 @@ var YDYW_Camera = SVG_Imitator.extend({
             });
 
             // Adjust the SUBVIEW
-            this.subView.animate({ 'top': this.top - 100, 'height': this.collapsedHeight * 0.35}, {
+            this.subView.animate({
+                'top': this.top - 100,
+                'height': this.collapsedHeight * 0.35
+            }, {
                 onChange: this.canvas.renderAll.bind(this.canvas),
                 duration: 1000,
                 easing: fabric.util.ease.easeInBack,
@@ -452,7 +458,10 @@ var YDYW_Camera = SVG_Imitator.extend({
             })
 
 
-            this.indoorView.animate({ 'top': this.top + 150, 'height': this.collapsedHeight * 3 }, {
+            this.indoorView.animate({
+                'top': this.top + 150,
+                'height': this.collapsedHeight * 3
+            }, {
                 onChange: this.canvas.renderAll.bind(this.canvas),
                 duration: 2000,
                 easing: fabric.util.ease.easeOutBack,
@@ -474,7 +483,10 @@ var YDYW_Camera = SVG_Imitator.extend({
                 onComplete: refreshCallback.bind(this)
             })
 
-            that.indoorView.animate({ 'top': that.top - 50, 'height': that.collapsedHeight }, {
+            that.indoorView.animate({
+                'top': that.top - 50,
+                'height': that.collapsedHeight
+            }, {
                 onChange: that.canvas.renderAll.bind(that.canvas),
                 duration: 1000,
                 easing: fabric.util.ease.easeInBack,
