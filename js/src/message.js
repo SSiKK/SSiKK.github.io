@@ -67,28 +67,59 @@ var YDYW_Message = SVG_Imitator.extend({
 		})
 		.on('selected', function() {
 			console.log('red cube');
+			JSON.stringify(that.subCanvas)
             that.canvas.deactivateAll();
             that.canvas.renderAll();
 		});
 
-		this.cancelButton = new fabric.Rect({
-	  		originX: 'center',
-			originY: 'center',
-	  		left: this.left+100,
-	  		top: this.top+335,
-	  		width: this.width * 0.5,
-	  		height: this.height * .25,
-	  		fill: 'green',
-			hasControls: false,
-			hasBorders: false,
-			lockMovementX: true,
-			lockMovementY: true
+
+		this.subCanvas
+			.on("mouse:down", function() {
+				that.cancelButton.clicked = 0;
+			})
+
+		this.cancelButton = new fabric.Group([
+			new fabric.Rect({
+		  		originX: 'center',
+				originY: 'center',
+		  		left: this.left+100,
+		  		top: this.top+335,
+		  		width: this.width * 0.5,
+		  		height: this.height * .25,
+		  		fill: 'green',
+				hasControls: false,
+				hasBorders: false,
+				lockMovementX: true,
+				lockMovementY: true
+			}),
+			new fabric.Text('default', {
+				text: 'Cancel',
+                originY: 'center',
+                originX: 'center',
+		  		left: this.left+100,
+		  		top: this.top+340,
+                fontFamily: 'Helvetica',
+                fontSize: 40
+            })
+            ],{
+			visible: true,
+	  		left: this.left,
+	  		top: this.top+310,
+	  		clicked: 0
 		})
 		.on('selected', function() {
-			console.log('green cube');
+			this.clicked++
+			console.log(this.clicked);
+			if (this.clicked > 1) {
+				console.log("KILL IT WITH FIRE!!!");
+			}
+			that.subCanvas.clear();
             that.canvas.deactivateAll();
             that.canvas.renderAll();
 		});
+
+
+
 
 
 		//TODO draw the list of strokes that are saved
@@ -109,4 +140,6 @@ var YDYW_Message = SVG_Imitator.extend({
 	cancelMessage: function(){
 		//
 	}
+
+
 });
