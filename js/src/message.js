@@ -1,182 +1,178 @@
 var YDYW_Message = SVG_Imitator.extend({
-	init: function (canvas) { // Initialize
-		//Attributes
-		//this.left = null;
-		//this.top = null;
-		this.cx = null;
-		this.cy = null;
-		this.height = null;
-		this.width = null;
+    init: function(canvas) { // Initialize
+        //Attributes
+        this.left = null;
+        this.top = null;
+        this.height = null;
+        this.width = null;
 
-		this.subCanvasOn = false;
-		this.subCanvasHTML = null;
-		this.subCanvas = null;
-		// Canvas on which the object is created.
-		this.canvas = null;
+        this.subCanvasOn = true;
+        this.subCanvasHTML = null;
+        window.subCanvas = this.subCanvas = new fabric.Canvas('subC', { backgroundColor: "#DDDDDD", isDrawingMode: true });
 
-		//Feature specific status flags
-		this.inStroke = false;
+        // Canvas on which the object is created.
+        this.canvas = null;
 
-		//Initially drawing mode is off
-		this.isMessageBoxSelected = false;
+        //Feature specific status flags
+        this.inStroke = false;
 
-		if (canvas!==undefined && canvas!== null) {
-			this.attachToCanvas(canvas);
-		}
-	},
-	
-	attachToCanvas: function(canvas) {
-		this.canvas = canvas;
-	},
-
-	display: function() {
-		if (this.subCanvasOn)
-			this.subCanvasHTML.style = "none";
-		else
-			this.subCanvasHTML.style = 'block';
-		this.subCanvasOn = !this.subCanvasOn;
-	},
-
-	draw: function () {
-
-		this.subCanvasHTML = document.getElementById('subC');
-		this.subCanvas = new fabric.Canvas('subC');
-		// This function should draw the box and any message that has been written inside
-		//TODO draw rect
-
-		// The trick behind subclass reference!
-		var innerRef = this;
-
-		this.messageBox = new fabric.Rect({
-	  		originX: 'center',
-			originY: 'center',
-	  		left: this.cx,
-	  		top: this.cy,
-	  		width: this.width,
-	  		height: this.height,
-	  		fill: 'green',
-	  		opacity: 1.0,
-			hasControls: false,
-			hasBorders: false,
-			lockMovementX: true,
-			lockMovementY: true,
-			name: 'messageBitch'
-			//isDrawingMode : true
-		}).on('selected', function(options) {
-			console.log("selected!", this);
-        	innerRef.writeMessage();
-        });
-        window.message = this.messageBox; 
-        console.log(this.messageBox); 
-		// this.sendButton = new fabric.Rect({
-	 //  		originX: 'center',
-		// 	originY: 'center',
-	 //  		left: this.cx,
-	 //  		top: this.cy,
-	 //  		width: this.width,
-	 //  		height: this.height,
-	 //  		fill: 'red',
-	 //  		opacity: 0.0,
-		// 	hasControls: false,
-		// 	hasBorders: false,
-		// 	selectable: false,
-		// 	lockMovementX: true,
-		// 	lockMovementY: true
-		// });
-
-		// this.cancelButton = new fabric.Rect({
-	 //  		originX: 'center',
-		// 	originY: 'center',
-	 //  		left: this.cx,
-	 //  		top: this.cy,
-	 //  		width: this.width,
-	 //  		height: this.height,
-	 //  		fill: 'red', 
-	 //  		opacity: 0.0, 
-		// 	hasControls: false, 
-		// 	hasBorders: false, 
-		// 	selectable: false, 
-		// 	lockMovementX: true, 
-		// 	lockMovementY: true 
-		// }); 
+        //Initially drawing mode is off
+        this.isMessageBoxSelected = false;
 
 
-		//TODO draw the list of strokes that are saved 
+        if (canvas !== undefined && canvas !== null) {
+            this.attachToCanvas(canvas);
+            this.configureSubCanvas();
+        }
+    },
 
-		//add to canvas
-		this.canvas.add(this.messageBox);
-		// this.messageBox.bringToFront(); 
-		//this.canvas.add(this.sendButton); 
-		//this.canvas.add(this.cancelButton); 
+    attachToCanvas: function(canvas) {
+        this.canvas = canvas;
+    },
 
-		console.log ("being drawn!", this); 
- 
-		//this.messageBox.on('selected' , function(options){ 
-    	//	this.writeMessage(); 
-		//}); 
-	}, 
+    configureSubCanvas: function() {
+        this.subCanvasHTML = document.getElementsByClassName('canvas-container')[1];
+        this.subCanvasHTML.style.position = "absolute"
+        this.subCanvasHTML.style.top = "300px"
+        this.subCanvasHTML.style.left = "100px"
+    },
 
-	bringToFrontNow:function(){
-		this.messageBox.bringToFront();
-	},
-	strokeBegin: function(position) { 
-		//position will have x and y values 
-		//This function will be called when left mouse button is pressed down 
-		this.inStroke = true; 
- 
-		//TODO start recording the stroke 
-	}, 
+    display: function() {
+        console.log(this.cancelButton, this.sendButton);
 
-// We are creating an onclick() function instead of strokeBegin and strokeEnd ! 
-	writeMessage: function(position){ 
-		// Write a message by left clicking on the mouse  button 
-		console.log("Ready to draw"); 
-		var canHeight = this.canvas.getHeight() 
-		var canWidth = this.canvas.getWidth() 
-			
-		this.canvas.on('mouse:down', function(e){ 
- 			getMouse(e); 
-		}); 
- 
-		function getMouse(e){ 
-  			console.log(e.e.clientX + " " + e.e.clientY); 
-			this.mouseX = e.e.clientX; 
-			this.mouseY = e.e.clientY; 
+        if (this.subCanvasOn) {
+            this.subCanvasHTML.style.display = "none";
+        } else
+            this.subCanvasHTML.style.display = 'block';
 
-			if(mouseX >= (canWidth/4 - 150) && mouseX <= (canWidth/4 + 150) && mouseY >= (canHeight/2 - 100) && mouseY <= (canHeight/2 + 100))
-			{ 
-				this.canvas.isDrawingMode = true; 
-			} 
-			else 
-			{ 
-				this.canvas.isDrawingMode = false; 
-		
-			} 
-		} 
-	}, 
+        this.subCanvasOn = !this.subCanvasOn;
 
-	sendMessage: function(position){
-		// Sends the message on the inside of the door
-
-	},
-
-	cancelMessage: function(position){
-		// 
-	},
-	
-	strokeEnd: function(position) {
-		//position will have x and y values
-		//This function will be called when left mouse button is released
-		this.inStroke = false;
-
-		//TODO stop recording the stroke and save it in the list of strokes
-	},
-
-	stroke: function(position) {
-		//position will have x and y values
-		//This function will be called when mouse is dragged with the left mouse button down
+        for (var i = 0; i < 2; i++) {
+            that.cancelButton.item(i).visible = !that.subCanvasOn;
+            that.sendButton.item(i).visible = !that.subCanvasOn;
+        }
+        this.canvas.deactivateAll();
+        this.canvas.renderAll();
+    },
 
 
-		//TODO add the next point to the stroke being recorded
-	}
+    // This function should draw the box and any message that has been written inside
+    draw: function() {
+        // The trick behind subclass reference!
+        var that = this;
+
+        button = this.sendButton = new fabric.Group([
+                new fabric.Rect({
+                    originX: 'center',
+                    originY: 'center',
+                    left: this.left - 90,
+                    top: this.top + 335,
+                    width: this.width * 0.5,
+                    height: this.height * .25,
+                    fill: 'red',
+                    hasControls: false,
+                    hasBorders: false,
+                    lockMovementX: true,
+                    lockMovementY: true
+                }),
+                new fabric.Text('Send to', {
+                    originY: 'center',
+                    originX: 'center',
+                    left: this.left - 90,
+                    top: this.top + 340,
+                    fontFamily: 'Helvetica',
+                    fontSize: 40
+                })
+            ], {
+                visible: true,
+                left: this.left - 150,
+                top: this.top + 310,
+                clicked: 0
+            })
+            .on('selected', function() {
+                console.log('USER IS KRBA!!! Change this!!');
+                localStorage['krba'] = JSON.stringify(that.subCanvas)
+                that.canvas.deactivateAll();
+                that.canvas.renderAll();
+            });
+
+
+        this.subCanvas
+            .on("mouse:down", function() {
+                that.cancelButton.clicked = 0;
+            })
+
+        this.cancelButton = new fabric.Group([
+                new fabric.Rect({
+                    originX: 'center',
+                    originY: 'center',
+                    left: this.left + 100,
+                    top: this.top + 335,
+                    width: this.width * 0.5,
+                    height: this.height * .25,
+                    fill: 'green',
+                    hasControls: false,
+                    hasBorders: false,
+                    lockMovementX: true,
+                    lockMovementY: true
+                }),
+                new fabric.Text('Cancel', {
+                    originY: 'center',
+                    originX: 'center',
+                    left: this.left + 100,
+                    top: this.top + 340,
+                    fontFamily: 'Helvetica',
+                    fontSize: 40
+                })
+            ], {
+                visible: true,
+                left: this.left,
+                top: this.top + 310,
+                clicked: 0
+            })
+            .on('selected', function() {
+                this.clicked++
+                    console.log(this.clicked);
+                if (this.clicked > 1) {
+                    fabric.util.animate({
+                        startValue: 200,
+                        endValue: 0,
+                        duration: 1000,
+                        onChange: function(value) {
+                            subCanvas.setHeight(value)
+                        },
+                        onComplete: function() {
+                            that.display();
+                        }
+                    })
+                }
+                that.subCanvas.clear();
+                that.canvas.deactivateAll();
+                that.canvas.renderAll();
+            });
+
+
+
+
+
+        //TODO draw the list of strokes that are saved
+
+        //add to canvas
+        this.canvas.add(this.sendButton);
+        this.canvas.add(this.cancelButton);
+
+        console.log("being drawn!", this.sendButton);
+
+    },
+
+    sendMessage: function() {
+        // Sends the message on the inside of the door
+
+    },
+
+    cancelMessage: function() {
+        //
+    }
+
+
 });

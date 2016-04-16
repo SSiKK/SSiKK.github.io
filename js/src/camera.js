@@ -129,7 +129,7 @@ var YDYW_Camera = SVG_Imitator.extend({
         // Store our Promises in an array to make calling a little cleaner?
         var PromisesPromises = [
             //------------------------
-            //	   HERE BE IMAGES
+            //     HERE BE IMAGES
             //------------------------
             new Promise(function(resolve, reject) {
 
@@ -172,7 +172,6 @@ var YDYW_Camera = SVG_Imitator.extend({
                         lockMovementY: true,
                         visible: !that.showsub,
                         clipTo: function(ctx) {
-                            console.log(that.showsub);
                             ctx.rect(-400, -1000, 800, that.indoorViewImageHeight);
                         }
                     }))
@@ -280,7 +279,7 @@ var YDYW_Camera = SVG_Imitator.extend({
         ]
 
         //--------------------------------
-        //	   Resolve All the Promises!
+        //     Resolve All the Promises!
         //--------------------------------
 
         Promise.all(PromisesPromises)  // [ownerPromise, visitorPromise, incognitoPromise, cameraPromise, expandPromise, collapsePromise]
