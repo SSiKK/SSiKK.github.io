@@ -1,16 +1,15 @@
 var YDYW_Message = SVG_Imitator.extend({
 	init: function (canvas) { // Initialize
 		//Attributes
-		//this.left = null;
-		//this.top = null;
-		this.cx = null;
-		this.cy = null;
+		this.left = null;
+		this.top = null;
 		this.height = null;
 		this.width = null;
 
-		this.subCanvasOn = false;
+		this.subCanvasOn = true;
 		this.subCanvasHTML = null;
-		this.subCanvas = null;
+		window.subCanvas = this.subCanvas = new fabric.Canvas('subC', { backgroundColor: "#DDDDDD", isDrawingMode: true});
+
 		// Canvas on which the object is created.
 		this.canvas = null;
 
@@ -20,163 +19,94 @@ var YDYW_Message = SVG_Imitator.extend({
 		//Initially drawing mode is off
 		this.isMessageBoxSelected = false;
 
+
 		if (canvas!==undefined && canvas!== null) {
 			this.attachToCanvas(canvas);
+			this.configureSubCanvas();
 		}
 	},
-	
+
 	attachToCanvas: function(canvas) {
 		this.canvas = canvas;
 	},
 
+	configureSubCanvas: function() {
+		this.subCanvasHTML = document.getElementsByClassName('canvas-container')[1];
+		this.subCanvasHTML.style.position = "absolute"
+		this.subCanvasHTML.style.top = "300px"
+		this.subCanvasHTML.style.left = "100px"
+	},
+
 	display: function() {
 		if (this.subCanvasOn)
-			this.subCanvasHTML.style = "none";
+			this.subCanvasHTML.style.display = "none";
 		else
-			this.subCanvasHTML.style = 'block';
+			this.subCanvasHTML.style.display = 'block';
+
 		this.subCanvasOn = !this.subCanvasOn;
 	},
 
+
+	// This function should draw the box and any message that has been written inside
 	draw: function () {
-
-		this.subCanvasHTML = document.getElementById('subC');
-		this.subCanvas = new fabric.Canvas('subC');
-		// This function should draw the box and any message that has been written inside
-		//TODO draw rect
-
 		// The trick behind subclass reference!
-		var innerRef = this;
+		var that = this;
 
-		this.messageBox = new fabric.Rect({
+		this.sendButton = new fabric.Rect({
 	  		originX: 'center',
 			originY: 'center',
-	  		left: this.cx,
-	  		top: this.cy,
-	  		width: this.width,
-	  		height: this.height,
-	  		fill: 'green',
-	  		opacity: 1.0,
+	  		left: this.left-90,
+	  		top: this.top+335,
+	  		width: this.width * 0.5,
+	  		height: this.height * .25,
+	  		fill: 'red',
 			hasControls: false,
 			hasBorders: false,
 			lockMovementX: true,
-			lockMovementY: true,
-			name: 'messageBitch'
-			//isDrawingMode : true
-		}).on('selected', function(options) {
-			console.log("selected!", this);
-        	innerRef.writeMessage();
-        });
-        window.message = this.messageBox; 
-        console.log(this.messageBox); 
-		// this.sendButton = new fabric.Rect({
-	 //  		originX: 'center',
-		// 	originY: 'center',
-	 //  		left: this.cx,
-	 //  		top: this.cy,
-	 //  		width: this.width,
-	 //  		height: this.height,
-	 //  		fill: 'red',
-	 //  		opacity: 0.0,
-		// 	hasControls: false,
-		// 	hasBorders: false,
-		// 	selectable: false,
-		// 	lockMovementX: true,
-		// 	lockMovementY: true
-		// });
+			lockMovementY: true
+		})
+		.on('selected', function() {
+			console.log('red cube');
+            that.canvas.deactivateAll();
+            that.canvas.renderAll();
+		});
 
-		// this.cancelButton = new fabric.Rect({
-	 //  		originX: 'center',
-		// 	originY: 'center',
-	 //  		left: this.cx,
-	 //  		top: this.cy,
-	 //  		width: this.width,
-	 //  		height: this.height,
-	 //  		fill: 'red', 
-	 //  		opacity: 0.0, 
-		// 	hasControls: false, 
-		// 	hasBorders: false, 
-		// 	selectable: false, 
-		// 	lockMovementX: true, 
-		// 	lockMovementY: true 
-		// }); 
+		this.cancelButton = new fabric.Rect({
+	  		originX: 'center',
+			originY: 'center',
+	  		left: this.left+100,
+	  		top: this.top+335,
+	  		width: this.width * 0.5,
+	  		height: this.height * .25,
+	  		fill: 'green',
+			hasControls: false,
+			hasBorders: false,
+			lockMovementX: true,
+			lockMovementY: true
+		})
+		.on('selected', function() {
+			console.log('green cube');
+            that.canvas.deactivateAll();
+            that.canvas.renderAll();
+		});
 
 
-		//TODO draw the list of strokes that are saved 
+		//TODO draw the list of strokes that are saved
 
 		//add to canvas
-		this.canvas.add(this.messageBox);
-		// this.messageBox.bringToFront(); 
-		//this.canvas.add(this.sendButton); 
-		//this.canvas.add(this.cancelButton); 
+		this.canvas.add(this.sendButton);
+		this.canvas.add(this.cancelButton);
 
-		console.log ("being drawn!", this); 
- 
-		//this.messageBox.on('selected' , function(options){ 
-    	//	this.writeMessage(); 
-		//}); 
-	}, 
+		console.log ("being drawn!", this.sendButton);
 
-	bringToFrontNow:function(){
-		this.messageBox.bringToFront();
 	},
-	strokeBegin: function(position) { 
-		//position will have x and y values 
-		//This function will be called when left mouse button is pressed down 
-		this.inStroke = true; 
- 
-		//TODO start recording the stroke 
-	}, 
 
-// We are creating an onclick() function instead of strokeBegin and strokeEnd ! 
-	writeMessage: function(position){ 
-		// Write a message by left clicking on the mouse  button 
-		console.log("Ready to draw"); 
-		var canHeight = this.canvas.getHeight() 
-		var canWidth = this.canvas.getWidth() 
-			
-		this.canvas.on('mouse:down', function(e){ 
- 			getMouse(e); 
-		}); 
- 
-		function getMouse(e){ 
-  			console.log(e.e.clientX + " " + e.e.clientY); 
-			this.mouseX = e.e.clientX; 
-			this.mouseY = e.e.clientY; 
-
-			if(mouseX >= (canWidth/4 - 150) && mouseX <= (canWidth/4 + 150) && mouseY >= (canHeight/2 - 100) && mouseY <= (canHeight/2 + 100))
-			{ 
-				this.canvas.isDrawingMode = true; 
-			} 
-			else 
-			{ 
-				this.canvas.isDrawingMode = false; 
-		
-			} 
-		} 
-	}, 
-
-	sendMessage: function(position){
+	sendMessage: function(){
 		// Sends the message on the inside of the door
 
 	},
 
-	cancelMessage: function(position){
-		// 
-	},
-	
-	strokeEnd: function(position) {
-		//position will have x and y values
-		//This function will be called when left mouse button is released
-		this.inStroke = false;
-
-		//TODO stop recording the stroke and save it in the list of strokes
-	},
-
-	stroke: function(position) {
-		//position will have x and y values
-		//This function will be called when mouse is dragged with the left mouse button down
-
-
-		//TODO add the next point to the stroke being recorded
+	cancelMessage: function(){
+		//
 	}
 });

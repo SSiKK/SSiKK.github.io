@@ -27,7 +27,7 @@
     // Draw the Camera view and associated controls
     // DrawCameraView();
 
-    // Draw the Message Box 
+    // Draw the Message Box
     DrawMessageBox();
 
     // Doorknob stuff
@@ -38,7 +38,7 @@
         cx: localWidth * 0.75,
         radius: 20.0
     });
-   
+
     // draw everything at the appropriate scale for this canvas
     zoomAll(canvas.height / localHeight);
 
@@ -115,13 +115,17 @@
         canvas.add(outsideDoor);
     }
 
+
+    function DrawDoorKnob() {
+
+    }
+
     function DrawCameraView() {
         var cameraView = new YDYW_Camera();
             cameraView.init(canvas)
             cameraView.set({
                 width: 444,
                 height: localHeight * 0.25,
-                top: 20.0,
                 left: 300,
                 top: 250
             });
@@ -130,27 +134,27 @@
             // });
     }
 
-    // Instantiate the message class to set the 4 parameters from SVG_Imitator 
+    // Instantiate the message class to set the 4 parameters from SVG_Imitator
     function DrawMessageBox(){
-        messageIn = new YDYW_Message();
+        window.messageIn = messageIn = new YDYW_Message();
         messageIn.init(canvas);
         messageIn.set({
-            cy:localHeight/2.0, 
-            cx:localWidth*0.25, 
-            height: 200.0,
-            width: 300.0
-        }); 
+            top:250,
+            left:300,
+            width: 300.0,
+            height: 200.0
+        });
     }
 
     function DrawWeatherLayout(){
         var weatherView = new YDYW_Weather();
         weatherView.init(canvas);
         messageIn.set({
-            left: localHeight/5.0, 
-            top: localWidth*0.1, 
+            left: localHeight/5.0,
+            top: localWidth*0.1,
             height: 300.0,
             width: 500.0
-        }); 
+        });
     }
 
 })();
