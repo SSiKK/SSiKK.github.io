@@ -15,9 +15,15 @@
     var localHeight = 990;
     var localWidth = 1220;
 
+    var insideDoorLeft = 22;
+    var outsideDoorLeft = 642;
+    var doorTop = 0;
+    var doorWidth = 555;
+    var doorHeight = localHeight;
+
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
-
+    var zoomFactor = canvas.height / localHeight;
     // set background to blue to make it easier to see it
     canvas.backgroundColor = "#DDDDDD"; // light grey
 
@@ -28,17 +34,36 @@
     DrawCameraView();
 
     // Doorknob stuff
-    var doorKnobIn = new YDYW_DoorKnob();
-    doorKnobIn.init(canvas);
-    doorKnobIn.set({
-        cy: localHeight / 2.0,
-        cx: localWidth * 0.75,
-        radius: 20.0
+    var lock = new YDYW_LockManager();
+    lock.init(canvas);
+    lock.set({
+        deadBoltPosition: {
+            left: insideDoorLeft + doorWidth - 80,
+            top: doorTop  + doorHeight/2.0 - 50,
+            width: doorWidth/8.0,
+            height: 30,
+            zoomFactor: zoomFactor
+        },
+        doorKnobInPosition: {
+            cy: doorTop + doorHeight/2.0,
+            cx: insideDoorLeft + doorWidth - 40,
+            radius: 20.0
+        },
+        doorKnobOutPosition: {
+            cy: doorTop + doorHeight/2.0,
+            cx: outsideDoorLeft + 40,
+            radius: 20.0
+        }
     });
+    
+    var soundMgr = new YDYW_soundManager();
+    soundMgr.init();
+    soundMgr.addSound();
+    soundMgr.setCurrent("doorBell");
 
 
     // draw everything at the appropriate scale for this canvas
-    zoomAll(canvas.height / localHeight);
+    zoomAll(zoomFactor);
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -76,12 +101,12 @@
     function DrawDoors() {
         // need 36 wide instead of 40 as now
         var insideDoor = new fabric.Rect({
-            left: 22,
-            top: 0,
+            left: insideDoorLeft,
+            top: doorTop,
             fill: 'grey',
             stroke: 'black',
-            width: 555,
-            height: localHeight,
+            width: doorWidth,
+            height: doorHeight,
             angle: 0
         });
 
@@ -91,12 +116,12 @@
 
 
         var outsideDoor = new fabric.Rect({
-            left: 642,
-            top: 0,
+            left: outsideDoorLeft,
+            top: doorTop,
             fill: 'grey',
             stroke: 'black',
-            width: 555,
-            height: localHeight,
+            width: doorWidth,
+            height: doorHeight,
             angle: 0
         });
 
@@ -104,7 +129,8 @@
         outsideDoor.lockMovementX = outsideDoor.lockMovementY = true;
 
         outsideDoor.on('selected', function(options) {
-            doorKnobIn.toggleLockedStatusAndShow();
+            lock.toggleLockedStatusAndShow();
+            soundMgr.play();
         });
 
         // add all of the elements to the canvas

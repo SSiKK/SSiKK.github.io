@@ -166,7 +166,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 				lockMovementX: true,
 				lockMovementY: true,
 				clipTo:function(ctx){
-					console.log("who is", that.viewportImageHeight, ctx);
+					//console.log("who is", that.viewportImageHeight, ctx);
 					ctx.rect(-this.width, -this.height,
 							 this.width*2, that.viewportImageHeight);
 				}
