@@ -1,5 +1,5 @@
 var YDYW_Weather = SVG_Imitator.extend({
-	init: function (canvas) { // Initialize 
+	init: function (canvas) { // Initialize
 		//Attributes
 		this.left = null;
 		this.top = null;
@@ -18,7 +18,7 @@ var YDYW_Weather = SVG_Imitator.extend({
 	attachToCanvas: function(canvas) {
 		this.canvas = canvas;
 	},
-	
+
 	draw: function () {
 		// Draw
 		console.log ("being drawn!", this);
@@ -52,8 +52,8 @@ var YDYW_Weather = SVG_Imitator.extend({
         	var myArr = JSON.parse(xmlhttp.responseText);
         	console.log(myArr.query.channel.item.forecast[0]);
 
-        } 
-       }; 
+        }
+       };
        	xmlhttp.open("GET", url, true);
 	    xmlhttp.send();
 	},
