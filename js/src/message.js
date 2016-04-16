@@ -1,5 +1,5 @@
 var YDYW_Message = SVG_Imitator.extend({
-	init: function (canvas) { // Initialize 
+	init: function (canvas) { // Initialize
 		//Attributes
 		this.left = null;
 		this.top = null;
@@ -12,6 +12,7 @@ var YDYW_Message = SVG_Imitator.extend({
 		//Feature specific status flags
 		this.inStroke = false;
 
+
 		if (canvas!==undefined && canvas!== null) {
 			this.attachToCanvas(canvas);
 		}
@@ -19,6 +20,7 @@ var YDYW_Message = SVG_Imitator.extend({
 	attachToCanvas: function(canvas) {
 		this.canvas = canvas;
 	},
+
 	draw: function () {
 		// This function should draw the box and any message that has been written inside
 		//TODO draw rect
@@ -44,9 +46,8 @@ var YDYW_Message = SVG_Imitator.extend({
 	stroke: function(position) {
 		//position will have x and y values
 		//This function will be called when mouse is dragged with the left mouse button down
-		
+
 
 		//TODO add the next point to the stroke being recorded
 	}
-
 });

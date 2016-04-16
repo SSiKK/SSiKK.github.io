@@ -16,11 +16,11 @@ var YDYW_Camera = SVG_Imitator.extend({
 
         this.indoorView = null; // The viewing window, should be a rect
         this.indoorViewImage = null;
-        this.indoorViewImageHeight = null;
+        this.indoorViewImageHeight = 600;
 
         this.outsideView = null; // The outdoor viewing window, should be a rect
         this.outsideViewImage = null; // The outdoor viewing window, should be a rect
-        this.outsideViewImageHeight = null; // The outdoor viewing window, should be a rect
+        this.outsideViewImageHeight = 360; // The outdoor viewing window, should be a rect
 
         this.subView = null; // The picture in picture display of owner
         this.subViewImage = null;
@@ -77,6 +77,7 @@ var YDYW_Camera = SVG_Imitator.extend({
             originY: 'center',
             fill: 'white',
             stroke: 'black',
+            selectable: false,
             hasControls: false,
             hasBorders: false,
             lockMovementX: true,
@@ -125,170 +126,167 @@ var YDYW_Camera = SVG_Imitator.extend({
         });
 
 
+        // Store our Promises in an array to make calling a little cleaner?
+        var PromisesPromises = [
+            //------------------------
+            //	   HERE BE IMAGES
+            //------------------------
+            new Promise(function(resolve, reject) {
 
-
-        //------------------------
-        //	   HERE BE IMAGES
-        //------------------------
-        this.outsideViewImageHeight = 360
-        var ownerPromise = new Promise(function(resolve, reject) {
-            fabric.Image.fromURL("js/assets/img/owner.png", function(img) {
-                resolve(img.set({
-                    left: that.indoorView.left + 500,
-                    top: that.top + 135,
-                    scaleX: 1.3,
-                    scaleY: 1.3,
-                    originX: 'center',
-                    originY: 'center',
-                    selectable: false,
-                    hasControls: false,
-                    hasBorders: false,
-                    lockMovementX: true,
-                    lockMovementY: true,
-                    visible: that.showsub,
-                    clipTo: function(ctx) {
-                        ctx.rect(-this.width, -this.height,
-                            this.width * 2, that.outsideViewImageHeight);
-                    }
-                }))
+                fabric.Image.fromURL("js/assets/img/owner.png", function(img) {
+                    resolve(img.set({
+                        left: that.indoorView.left + 500,
+                        top: that.top + 135,
+                        scaleX: 1.3,
+                        scaleY: 1.3,
+                        originX: 'center',
+                        originY: 'center',
+                        selectable: false,
+                        hasControls: false,
+                        hasBorders: false,
+                        lockMovementX: true,
+                        lockMovementY: true,
+                        visible: that.showsub,
+                        clipTo: function(ctx) {
+                            ctx.rect(-this.width, -this.height,
+                                this.width * 2, that.outsideViewImageHeight);
+                        }
+                    }))
+                })
             })
-        })
+        ,
+            new Promise(function(resolve, reject) {
 
-        this.indoorViewImageHeight = 600;
-        var visitorPromise = new Promise(function(resolve, reject) {
-            fabric.Image.fromURL("js/assets/img/visitorM.png", function(img) {
-                resolve(img.set({
-                    left: that.indoorView.left,
-                    top: that.top + 170,
-                    scaleX: 0.3,
-                    scaleY: 0.3,
-                    originX: 'center',
-                    originY: 'center',
-                    // selectable: false,
-                    hasControls: false,
-                    hasBorders: false,
-                    lockMovementX: true,
-                    lockMovementY: true,
-                    visible: !that.showsub,
-                    clipTo: function(ctx) {
-                        console.log(that.showsub);
-                        ctx.rect(-400, -1000, 800, that.indoorViewImageHeight);
-                    }
-                }))
+                fabric.Image.fromURL("js/assets/img/visitorM.png", function(img) {
+                    resolve(img.set({
+                        left: that.indoorView.left,
+                        top: that.top + 170,
+                        scaleX: 0.3,
+                        scaleY: 0.3,
+                        originX: 'center',
+                        originY: 'center',
+                        selectable: false,
+                        hasControls: false,
+                        hasBorders: false,
+                        lockMovementX: true,
+                        lockMovementY: true,
+                        visible: !that.showsub,
+                        clipTo: function(ctx) {
+                            console.log(that.showsub);
+                            ctx.rect(-400, -1000, 800, that.indoorViewImageHeight);
+                        }
+                    }))
+                })
             })
-        })
+        ,
+            //---------------------------
+            //   HERE BE (svg) Buttons!
+            //---------------------------
 
-
-        //---------------------------
-        //   HERE BE (svg) Buttons!
-        //---------------------------
-
-        // Camera button Promise
-        var cameraPromise = new Promise(function(resolve, reject) {
-            fabric.loadSVGFromURL('js/assets/svg/camera.svg', function(obj, opt) {
-                resolve(fabric.util.groupSVGElements(obj, {
-                    width: opt.width,
-                    height: opt.height,
-                    svgUid: opt.svgUid,
-                    toBeParsed: opt.toBeParsed,
-                    left: that.indoorView.left + 200,
-                    top: that.indoorView.top - 60,
-                    originX: 'center',
-                    originY: 'center',
-                    scaleX: 0.1,
-                    scaleY: 0.1,
-                    fill: 'white',
-                    hasControls: false,
-                    hasBorders: false,
-                    lockMovementX: true,
-                    lockMovementY: true,
-                    visible: true
-                }))
+            // Camera button Promis
+            new Promise(function(resolve, reject) {
+                fabric.loadSVGFromURL('js/assets/svg/camera.svg', function(obj, opt) {
+                    resolve(fabric.util.groupSVGElements(obj, {
+                        width: opt.width,
+                        height: opt.height,
+                        svgUid: opt.svgUid,
+                        toBeParsed: opt.toBeParsed,
+                        left: that.indoorView.left + 200,
+                        top: that.indoorView.top - 60,
+                        originX: 'center',
+                        originY: 'center',
+                        scaleX: 0.1,
+                        scaleY: 0.1,
+                        fill: 'white',
+                        hasControls: false,
+                        hasBorders: false,
+                        lockMovementX: true,
+                        lockMovementY: true,
+                        visible: true
+                    }))
+                })
             })
-        })
+        ,
 
-
-        // Incognito button Promise
-        var incognitoPromise = new Promise(function(resolve, reject) {
-            fabric.loadSVGFromURL('js/assets/svg/incognito.svg', function(obj, opt) {
-                resolve(fabric.util.groupSVGElements(obj, {
-                    width: opt.width,
-                    height: opt.height,
-                    svgUid: opt.svgUid,
-                    toBeParsed: opt.toBeParsed,
-                    left: that.indoorView.left + 200,
-                    top: that.indoorView.top - 20,
-                    originX: 'center',
-                    originY: 'center',
-                    scaleX: 0.25,
-                    scaleY: 0.25,
-                    fill: 'white',
-                    hasControls: false,
-                    hasBorders: false,
-                    lockMovementX: true,
-                    lockMovementY: true,
-                    visible: true
-                }))
+            // Incognito button Promis
+            new Promise(function(resolve, reject) {
+                fabric.loadSVGFromURL('js/assets/svg/incognito.svg', function(obj, opt) {
+                    resolve(fabric.util.groupSVGElements(obj, {
+                        width: opt.width,
+                        height: opt.height,
+                        svgUid: opt.svgUid,
+                        toBeParsed: opt.toBeParsed,
+                        left: that.indoorView.left + 200,
+                        top: that.indoorView.top - 20,
+                        originX: 'center',
+                        originY: 'center',
+                        scaleX: 0.25,
+                        scaleY: 0.25,
+                        fill: 'white',
+                        hasControls: false,
+                        hasBorders: false,
+                        lockMovementX: true,
+                        lockMovementY: true,
+                        visible: true
+                    }))
+                })
             })
-        })
-
-        var expandPromise = new Promise(function(resolve, reject) {
-            fabric.loadSVGFromURL('js/assets/svg/expand.svg', function(obj, opt) {
-                resolve(fabric.util.groupSVGElements(obj, {
-                    width: opt.width,
-                    height: opt.height,
-                    svgUid: opt.svgUid,
-                    toBeParsed: opt.toBeParsed,
-                    left: that.indoorView.left + 150,
-                    top: that.indoorView.top - 60,
-                    originX: 'center',
-                    originY: 'center',
-                    scaleX: 0.1,
-                    scaleY: 0.1,
-                    fill: 'black',
-                    hasControls: false,
-                    hasBorders: false,
-                    lockMovementX: true,
-                    lockMovementY: true,
-                    visible: true
-                }))
+        ,
+            new Promise(function(resolve, reject) {
+                fabric.loadSVGFromURL('js/assets/svg/expand.svg', function(obj, opt) {
+                    resolve(fabric.util.groupSVGElements(obj, {
+                        width: opt.width,
+                        height: opt.height,
+                        svgUid: opt.svgUid,
+                        toBeParsed: opt.toBeParsed,
+                        left: that.indoorView.left + 150,
+                        top: that.indoorView.top - 60,
+                        originX: 'center',
+                        originY: 'center',
+                        scaleX: 0.1,
+                        scaleY: 0.1,
+                        fill: 'black',
+                        hasControls: false,
+                        hasBorders: false,
+                        lockMovementX: true,
+                        lockMovementY: true,
+                        visible: true
+                    }))
+                })
             })
-        })
-
-        var collapsePromise = new Promise(function(resolve, reject) {
-            fabric.loadSVGFromURL('js/assets/svg/collapse.svg', function(obj, opt) {
-                resolve(fabric.util.groupSVGElements(obj, {
-                    width: opt.width,
-                    height: opt.height,
-                    svgUid: opt.svgUid,
-                    toBeParsed: opt.toBeParsed,
-                    left: that.indoorView.left + 150,
-                    top: that.indoorView.top - 60,
-                    originX: 'center',
-                    originY: 'center',
-                    scaleX: 0.08,
-                    scaleY: 0.08,
-                    fill: 'black',
-                    hasControls: false,
-                    hasBorders: false,
-                    lockMovementX: true,
-                    lockMovementY: true,
-                    visible: this.fullScreenMode
-                }))
+        ,
+            new Promise(function(resolve, reject) {
+                fabric.loadSVGFromURL('js/assets/svg/collapse.svg', function(obj, opt) {
+                    resolve(fabric.util.groupSVGElements(obj, {
+                        width: opt.width,
+                        height: opt.height,
+                        svgUid: opt.svgUid,
+                        toBeParsed: opt.toBeParsed,
+                        left: that.indoorView.left + 150,
+                        top: that.indoorView.top - 60,
+                        originX: 'center',
+                        originY: 'center',
+                        scaleX: 0.08,
+                        scaleY: 0.08,
+                        fill: 'black',
+                        hasControls: false,
+                        hasBorders: false,
+                        lockMovementX: true,
+                        lockMovementY: true,
+                        visible: this.fullScreenMode
+                    }))
+                })
             })
-        })
-
-        //     var sharedOptions = {
-
+        ]
 
         //--------------------------------
         //	   Resolve All the Promises!
         //--------------------------------
 
-        Promise.all([ownerPromise, visitorPromise, incognitoPromise, cameraPromise, expandPromise, collapsePromise])
-            .then(function([ownerImg, visitorImg, incognito, camera, expander, collapse]) {
-                console.log("I got 99 promises and ", [ownerImg, visitorImg, incognito, camera, expander, collapse]);
+        Promise.all(PromisesPromises)  // [ownerPromise, visitorPromise, incognitoPromise, cameraPromise, expandPromise, collapsePromise]
+            .then(function(results) {  // [ownerImg, visitorImg, incognito, camera, expander, collapse]
 
+                // simple helper function
                 var selfViewCB = function(options) {
                     if (that.showsub)
                         this.set('fill', 'white');
@@ -303,30 +301,26 @@ var YDYW_Camera = SVG_Imitator.extend({
                     that.canvas.renderAll();
                 }
 
-                that.cameraButton = camera
+
+                that.outdoorViewImage = results[0] // ownerImg
+
+                that.indoorViewImage = results[1] // visitorImg
+
+                that.incogButton = results[2] // incognito
                     .on('selected', selfViewCB);
 
-                that.incogButton = incognito
+                that.cameraButton = results[3] // camera
                     .on('selected', selfViewCB);
 
-
-                that.expandButton = expander
-                    .on('selected', function(){
+                that.expandButton = results[4] // expander
+                    .on('selected', function() {
                         that.toggleFullScreenindoorView();
                     })
 
-                that.collapseButton = collapse
+                that.collapseButton = results[5] // collapse
                     .on('selected', function(){
                         that.toggleFullScreenindoorView();
                     })
-
-                that.indoorViewImage = visitorImg
-                    .on('selected', function(options) {
-                        console.log("selected!", this);
-                        that.toggleFullScreenindoorView();
-                    });
-
-                that.outdoorViewImage = ownerImg
 
 
                 that.canvas.add(that.outdoorViewImage);
@@ -494,66 +488,3 @@ var YDYW_Camera = SVG_Imitator.extend({
         this.collapseButton.visible = this.fullScreenMode;
     }
 });
-
-
-// Draw the Expand AND Collapse buttons...
-// This one is tricky
-// fabric.loadSVGFromURL('js/assets/svg/expand.svg', function(obj, opt) {
-//     var refreshCallback = function() {
-//         that.canvas.deactivateAll();
-//         that.canvas.renderAll();
-//     }
-
-//     var sharedOptions = {
-//         width: opt.width,
-//         height: opt.height,
-//         svgUid: opt.svgUid,
-//         toBeParsed: opt.toBeParsed,
-//         left: that.indoorView.left + 150,
-//         top: that.indoorView.top - 60,
-//         originX: 'center',
-//         originY: 'center',
-//         scaleX: 0.1,
-//         scaleY: 0.1,
-//         fill: 'black',
-//         hasControls: false,
-//         hasBorders: false,
-//         lockMovementX: true,
-//         lockMovementY: true,
-//         visible: true
-//     }
-
-//     fabric.loadSVGFromURL('js/assets/svg/collapse.svg', function(obj1, opt) {
-
-//         this.expandButton = fabric.util.groupSVGElements(obj, sharedOptions)
-//         this.collapseButton = fabric.util.groupSVGElements(obj1, sharedOptions)
-
-//         this.collapseButton;
-//         this.expandButton.on('selected', function(options) {
-//             fabric.util.animate({
-//                 startValue: that.indoorViewImageHeight === 360 ? 360 : that.indoorViewImageHeight,
-//                 endValue: (360 + 80) * 2,
-//                 duration: 900,
-//                 onChange: function(value) {
-//                     that.indoorViewImageHeight = value;
-//                     that.canvas.renderAll();
-//                 },
-//                 onComplete: refreshCallback.bind(that)
-//             })
-//             that.indoorView.animate({ 'top': that.top + 150, 'height': that.collapsedHeight * 3 }, {
-//                 onChange: that.canvas.renderAll.bind(that.canvas),
-//                 duration: 1000,
-//                 easing: fabric.util.ease.easeOutBounce,
-//                 onComplete: refreshCallback.bind(that)
-//             });
-
-//             that.fullScreenMode = !that.fullScreenMode;
-//             this.set('visible', false)
-//         });
-
-
-//         this.canvas.add(this.collapseButton);
-//         this.canvas.add(this.expandButton);
-//     })
-
-// })
