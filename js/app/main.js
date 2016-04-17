@@ -41,6 +41,7 @@
     //Weather layout
     DrawWeatherLayout();
 
+
     // Doorknob stuff
     var lock = new YDYW_LockManager();
     lock.init(canvas);
@@ -66,9 +67,25 @@
     
     var soundMgr = new YDYW_soundManager();
     soundMgr.init();
-    soundMgr.addSound();
-    soundMgr.setCurrent("doorBell");
+    AddSounds();
 
+    var checkBox = new YDYW_CheckBox();
+    checkBox.init(canvas);
+
+    checkBox.addEntries(soundMgr.getIDs());
+    checkBox.onSelect(function(id) {
+        soundMgr.setCurrent(id);
+        soundMgr.play();
+    });
+    checkBox.set({
+        left: outsideDoorLeft + 30,
+        top: doorTop,
+        width: doorWidth/3.0,
+        height: doorHeight/3.0,
+        zoomFactor: zoomFactor
+    });
+    
+    
     // draw everything at the appropriate scale for this canvas
     zoomAll(zoomFactor);
 
@@ -110,6 +127,7 @@
         outsideDoor.on('selected', function(options) {
             lock.toggleLockedStatusAndShow();
             soundMgr.play();
+            checkBox.toggle();
         });
 
         // add all of the elements to the canvas
@@ -167,6 +185,12 @@
         });
     }
 
+    function AddSounds() {
+        soundMgr.addSound();
+        soundMgr.setCurrent("doorBell");
+
+        soundMgr.addSound({src:'js/assets/sound/crow.mp3', img:'js/assets/img/icons/crow.jpg', id: "crow"});
+    }
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
     function zoomAll(SCALE_FACTOR) {
