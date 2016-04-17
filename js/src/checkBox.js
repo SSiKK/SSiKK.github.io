@@ -140,12 +140,13 @@ var YDYW_CheckBox = SVG_Imitator.extend({
 		this.showing = !this.showing;
 	},
 
+	//dict contains all text that are being used in the entire app
 	setTextCallback: function(dict) {
-		console.log(dict, this.entries);
 		var t;
 		for (var e = 0; e<this.entries.length; e++) {
 			t = dict[this.entries[e]] || this.entries[e];
 			//console.log(t);
+			//Set the text attribute of text elements to dictionary lookup value
 			this.fabEntries[e].label.set({text: t});
 		}
 	}
