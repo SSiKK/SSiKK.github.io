@@ -108,7 +108,16 @@
     //Do this to whatever element needs to change its text when a new language is selected.
     languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
     languageMgr.setLanguage("english");
-    
+
+    var button = new YDYW_Button();
+    button.init(canvas);
+    button.set({
+        top: (doorTop + doorHeight/2.0),
+        //top: 100,
+        left: outsideDoorLeft + doorWidth/2.0,
+        type: "icon",
+        zoomFactor: zoomFactor
+    });
     // draw everything at the appropriate scale for this canvas
     zoomAll(zoomFactor);
 

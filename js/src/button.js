@@ -12,12 +12,14 @@ var YDYW_Button = SVG_Imitator.extend({
 		this.shape = "rect"; // button type can be circle or rect
 		this.type = "label"; // button type can be icon or label
 		this.text = "label";
-		//this.fill = 'none';
+		this.textColor = 'none';
 		this.icon = null;
 		this.imgSrc = null;
+		this.fill = 'white';
 		this.zoomFactor = null;
 		// Canvas on which the object is created.
 		this.canvas = null;
+		this.selected = null;
 
 		//Feature specific status flags
 		this.on = false;
@@ -41,7 +43,7 @@ var YDYW_Button = SVG_Imitator.extend({
 		});
 		label.setColor('black');
 
-		var fillColor = 'none';
+		var fillColor = this.fill;
 		var shapeObject = null;
 
 
@@ -49,14 +51,16 @@ var YDYW_Button = SVG_Imitator.extend({
 
 
 			var group;
-			this.icon = 'js/assets/svg/camera.svg';
+			this.icon = '../js/assets/svg/.svg';
 
 			if(this.icon != null){
 
-				fabric.loadSVGFromURL(this.icon,function(objects,options){
+				fabric.loadSVGFromURL('../js/assets/svg/collapse.svg',function(objects,options){
+
 
 					shapeObject = new fabric.Circle({
 						fill: 'transparent',
+						selectable: false,
 						stroke: 'white',
 						radius: that.radius,
 						originX: 'center',
@@ -64,25 +68,19 @@ var YDYW_Button = SVG_Imitator.extend({
 					});
 
 
-
 					var img = fabric.util.groupSVGElements(objects, options);
-					//var img = objects;
+					//	var img = objects;
 					img.set({
-						height: objects.height,
-						width: objects.width,
-						selectable: true,
-						hasBorders: true,
-						top: shapeObject.top,
-						left : shapeObject.left,
+						height: options.height,
+						width: options.width,
+						selectable: false,
+						hasBorders: false,
 						originX: 'center',
-						originY: 'top'
-						/*stroke : 'black',
-						strokeWidth : 10,
-						clipTo: function (ctx) {
-							ctx.arc(0, 0, that.radius, 0, Math.PI * 2, true);
-						}*/
+						originY: 'center'
 					}).scale(that.radius/options.height);
 
+
+					//var radius = Math.sqrt(img.height * img.height + img.width * img.width) / 2;
 
 					label.set({
 						top: shapeObject.top + that.radius * 2 ,
@@ -91,10 +89,18 @@ var YDYW_Button = SVG_Imitator.extend({
 						originY: 'center'
 					});
 
+					//canvas.add(img);
+
+					//img.clipTo = function(context){
+					//	shapeObject.render(context);
+					//};
+					//canvas.renderAll();
 
 					that.button = new fabric.Group([img,shapeObject,label], {
-						left: that.cx * that.zoomFactor,
-						top: that.cy * that.zoomFactor,
+						left: that.left * that.zoomFactor,
+						top: that.top * that.zoomFactor,
+						originX: 'center',
+						originY: 'center',
 						hasControls: false,
 						selectable: true,
 						hasBorders: true,
@@ -102,16 +108,19 @@ var YDYW_Button = SVG_Imitator.extend({
 						lockMovementY: true
 					});
 
+					//console.log("This is the icon button",img);
 
 					that.canvas.add(that.button);
 					//that.canvas.add(img);
 
 
-			});
+				});
 
 			}
 
-		} else if (this.type === "label") {
+		}
+		else if (this.type === "label") {
+
 
 			var rectWidth = label.width + 10;
 			var rectHeight = 30 + 5;
@@ -127,15 +136,11 @@ var YDYW_Button = SVG_Imitator.extend({
 				ry: 10
 			});
 
-			label.originX = 'center';
-			label.originY = 'center';
-
-
 			//this.addToCanvas();
 
 			this.button = new fabric.Group([shapeObject,label], {
-				left: this.cx,
-				top: this.cy,
+				left: this.left,
+				top: this.top,
 				hasControls: false,
 				hasBorders: true,
 				lockMovementX: true,
@@ -143,11 +148,78 @@ var YDYW_Button = SVG_Imitator.extend({
 
 
 			this.canvas.add(this.button);
-
+			console.log(this.button);
 
 			this.button.on('mouseover', function(e) {
 				shapeObject.setFill('grey');
+				shapeObject.setStroke('white');
+				label.setColor('white');
 				canvas.renderAll();
+				//console.log ("hover event!", this);
+
+			});
+
+			this.button.on('mouseout', function(e) {
+				shapeObject.setFill(fillColor);
+				shapeObject.setStroke('black');
+				label.setColor('black');
+				canvas.renderAll();
+
+				//console.log ("hover event!", this);
+
+			});
+
+		}
+
+		else if(this.type = "tab"){
+
+			var rectWidth = label.width + 10;
+			var rectHeight = 30 + 5;
+
+			shapeObject = new fabric.Rect({
+				originX: 'center',
+				originY: 'center',
+				stroke: 'black',
+				fill: 'none',
+				width: rectWidth,
+				height: rectHeight
+			});
+
+			label.originX = 'center';
+			label.originY = 'center';
+
+
+			//this.addToCanvas();
+
+			this.button = new fabric.Group([shapeObject,label], {
+				left: this.left,
+				top: this.top,
+				hasControls: false,
+				hasBorders: true,
+				selectable: true,
+				lockMovementX: true,
+				lockMovementY: true });
+
+
+			this.canvas.add(this.button);
+
+
+			this.button.on('mousedown', function(e) {
+				console.log("the object is selected");
+				if(this.selected != true){
+
+					this.selected = true;
+					shapeObject.setFill('grey');
+					shapeObject.setStroke('white');
+
+					canvas.renderAll();
+				}
+				else if(this.selected === true){
+					this.selected = false;
+					shapeObject.setFill(fillColor);
+					shapeObject.setStroke('black');
+				}
+
 				//console.log ("hover event!", this);
 
 			});
@@ -156,14 +228,12 @@ var YDYW_Button = SVG_Imitator.extend({
 				shapeObject.setFill('none');
 
 
-				canvas.renderAll();
+
 				//console.log ("hover event!", this);
 
 			});
-
-
-
 		}
+
 		canvas.renderAll();
 	},
 
@@ -181,8 +251,8 @@ var YDYW_Button = SVG_Imitator.extend({
 
 		console.log("This is reaching");
 		this.button = new fabric.Group([this.shapeObject,this.label], {
-			left: this.cx,
-			top: this.cy,
+			left: this.left,
+			top: this.top,
 			hasControls: false,
 			hasBorders: true,
 			lockMovementX: true,
@@ -201,8 +271,6 @@ var YDYW_Button = SVG_Imitator.extend({
 
 		this.button.on('mouseout', function(e) {
 			shapeObject.setFill('none');
-
-
 			canvas.renderAll();
 			//console.log ("hover event!", this);
 
