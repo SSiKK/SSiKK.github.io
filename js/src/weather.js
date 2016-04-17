@@ -10,10 +10,18 @@ var YDYW_Weather = SVG_Imitator.extend({
         this.timeOfDay = null;
         this.dayOfWeek = null;
         this.killInterval = null;
+        this.weatherImg = null;
+        this.imgUrl = "js/assets/weather-icons/byCode/"; 
+        this.ext = '.svg';
 
         this.monthAbbr = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
         this.daysAbbr = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
         this.url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22Chicago%2C%20il%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
+        this.weatherIcons = [ "0.svg","1.svg","2.svg","3.svg","4.svg","5.svg","6.svg","7.svg","8.svg","9.svg","10.svg","11.svg",
+        					  "12.svg","13.svg","14.svg","15.svg","16.svg","17.svg","18.svg","19.svg","20.svg","21.svg","22.svg","23.svg",
+        					  "24.svg","25.svg","26.svg","27.svg","28.svg","29.svg","30.svg","31.svg","32.svg","33.svg","34.svg","35.svg",
+        					  "36.svg","37.svg","38.svg","39.svg","40.svg","41.svg","42.svg","43.svg","44.svg","45.svg","46.svg","47.svg" ];
+
         // Canvas on which the object is created.
         this.canvas = null;
 
@@ -52,7 +60,7 @@ var YDYW_Weather = SVG_Imitator.extend({
             originY: 'center',
             originX: 'center',
             left: this.left + 200,
-            top: this.top - 395,
+            top: this.top - 400,
             fontFamily: 'Helvetica',
             fontSize: 30
         })
@@ -66,12 +74,47 @@ var YDYW_Weather = SVG_Imitator.extend({
 		        that.temperature = new fabric.Text(temp, {
 		            originY: 'center',
 		            originX: 'center',
-		            left: that.left - 200,
+		            left: that.left - 220,
 		            top: that.top - 400,
 		            fontFamily: 'Helvetica',
-		            fontSize: 30
+		            fontSize: 22
 		        })
 				that.canvas.add(that.temperature)
+				var code = resJSON.query.results.channel.item.condition.code + " ";
+				var text = resJSON.query.results.channel.item.condition.text + " ";
+        		console.log("Code is", code);
+		      	console.log("Current weather is", text);
+
+		      	var imagePath = that.imgUrl + code.trim() + that.ext; 
+		      	console.log("imageUrl : " + imagePath); 
+		      	//
+
+	            new Promise(function(resolve, reject) {
+	                fabric.loadSVGFromURL(imagePath, function(obj, opt) {
+	                    resolve(fabric.util.groupSVGElements(obj, {
+	                        width: opt.width,
+	                        height: opt.height,
+	                        svgUid: opt.svgUid,
+	                        toBeParsed: opt.toBeParsed,
+				            left: that.left - 225,
+				            top: that.top - 440,
+	                        originX: 'center',
+	                        originY: 'center',
+	                        scaleX: 0.20,
+	                        scaleY: 0.20,
+	                        // fill: 'white',
+	                        hasControls: false,
+	                        hasBorders: false,
+	                        lockMovementX: true,
+	                        lockMovementY: true,
+	                        visible: true
+	                    }))
+	                })
+	            })
+	            .then(function(result) {
+	            	that.weatherImg = result;
+	            	that.canvas.add(that.weatherImg);
+	            })
         	})
 
 		this.canvas.add(this.timeOfDay)
