@@ -69,22 +69,43 @@
     soundMgr.init();
     AddSounds();
 
-    var checkBox = new YDYW_CheckBox();
-    checkBox.init(canvas);
+    var languageMgr = new YDYW_languageManager();
+    languageMgr.init();
 
-    checkBox.addEntries(soundMgr.getIDs());
-    checkBox.onSelect(function(id) {
+    var soundCheckBox = new YDYW_CheckBox();
+    soundCheckBox.init(canvas);
+
+    soundCheckBox.addEntries(soundMgr.getIDs());
+    soundCheckBox.onSelect(function(id) {
         soundMgr.setCurrent(id);
         soundMgr.play();
     });
-    checkBox.set({
+    soundCheckBox.set({
         left: outsideDoorLeft + 30,
         top: doorTop,
         width: doorWidth/3.0,
         height: doorHeight/3.0,
         zoomFactor: zoomFactor
     });
-    
+
+    var languageCheckBox = new YDYW_CheckBox();
+    languageCheckBox.init(canvas);
+
+    languageCheckBox.addEntries(languageMgr.getLanguages());
+    languageCheckBox.onSelect(function(id) {
+        languageMgr.setLanguage(id);
+    });
+    languageCheckBox.set({
+        left: outsideDoorLeft + 30,
+        top: doorTop + doorHeight/2.0,
+        width: doorWidth/3.0,
+        height: doorHeight/3.0,
+        zoomFactor: zoomFactor
+    });
+
+    //Do this to whatever element needs to change its text when a new language is selected.
+    languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
+    languageMgr.setLanguage("english");
     
     // draw everything at the appropriate scale for this canvas
     zoomAll(zoomFactor);
@@ -127,7 +148,7 @@
         outsideDoor.on('selected', function(options) {
             lock.toggleLockedStatusAndShow();
             soundMgr.play();
-            checkBox.toggle();
+            soundCheckBox.toggle();
         });
 
         // add all of the elements to the canvas

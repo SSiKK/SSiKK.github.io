@@ -138,6 +138,16 @@ var YDYW_CheckBox = SVG_Imitator.extend({
 			this.show();
 		}
 		this.showing = !this.showing;
+	},
+
+	setTextCallback: function(dict) {
+		console.log(dict, this.entries);
+		var t;
+		for (var e = 0; e<this.entries.length; e++) {
+			t = dict[this.entries[e]] || this.entries[e];
+			//console.log(t);
+			this.fabEntries[e].label.set({text: t});
+		}
 	}
 	
 
