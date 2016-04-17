@@ -11,7 +11,7 @@ var YDYW_Weather = SVG_Imitator.extend({
         this.dayOfWeek = null;
         this.killInterval = null;
         this.weatherImg = null;
-        this.imgUrl = "js/assets/weather-icons/byCode/"; 
+        this.imgUrl = "js/assets/weather-icons/byCode/";
         this.ext = '.svg';
 
         this.monthAbbr = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -74,10 +74,10 @@ var YDYW_Weather = SVG_Imitator.extend({
 		        that.temperature = new fabric.Text(temp, {
 		            originY: 'center',
 		            originX: 'center',
-		            left: that.left - 220,
-		            top: that.top - 400,
+		            left: that.left - 120,
+		            top: that.top - 250,
 		            fontFamily: 'Helvetica',
-		            fontSize: 22
+		            fontSize: 70
 		        })
 				that.canvas.add(that.temperature)
 				var code = resJSON.query.results.channel.item.condition.code + " ";
@@ -85,8 +85,8 @@ var YDYW_Weather = SVG_Imitator.extend({
         		console.log("Code is", code);
 		      	console.log("Current weather is", text);
 
-		      	var imagePath = that.imgUrl + code.trim() + that.ext; 
-		      	console.log("imageUrl : " + imagePath); 
+		      	var imagePath = that.imgUrl + code.trim() + that.ext;
+		      	console.log("imageUrl : " + imagePath);
 		      	//
 
 	            new Promise(function(resolve, reject) {
@@ -96,12 +96,12 @@ var YDYW_Weather = SVG_Imitator.extend({
 	                        height: opt.height,
 	                        svgUid: opt.svgUid,
 	                        toBeParsed: opt.toBeParsed,
-				            left: that.left - 225,
-				            top: that.top - 440,
+				            left: that.left - 120,
+				            top: that.top - 400,
 	                        originX: 'center',
 	                        originY: 'center',
-	                        scaleX: 0.20,
-	                        scaleY: 0.20,
+	                        scaleX: 0.45,
+	                        scaleY: 0.45,
 	                        // fill: 'white',
 	                        hasControls: false,
 	                        hasBorders: false,

@@ -86,8 +86,8 @@
         height: doorHeight/3.0,
         zoomFactor: zoomFactor
     });
-    
-    
+
+
     // draw everything at the appropriate scale for this canvas
     zoomAll(zoomFactor);
 
