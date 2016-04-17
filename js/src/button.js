@@ -6,30 +6,33 @@ var YDYW_Button = SVG_Imitator.extend({
 		this.button = null;
 		this.left = null;
 		this.top = null;
+		this.img = null;
 		this.width = this.width || 30;
 		this.height = this.height || 20;
 		this.radius = this.radius || 40;
 		this.shape = "rect"; // button type can be circle or rect
 		this.type = "label"; // button type can be icon or label
-		this.text = "label";
+		this.text = this.text || "";
 		this.textColor = 'none';
 		this.textSize = this.textSize || 30;
 		this.icon = null;
 		this.imgSrc = null;
-		this.fill = 'white';
+		this.fill = this.fill || null;
 		this.zoomFactor = null;
-		// Canvas on which the object is created.
 		this.canvas = null;
-		this.selected = null;
+
 
 		//Feature specific status flags
 		this.on = false;
+		this.selected = false;
+
 		if (canvas!==undefined && canvas!== null) {
 			this.attachToCanvas(canvas);
 		}
 	},
 	attachToCanvas: function(canvas) {
 		this.canvas = canvas;
+		return this;
 	},
 
 	draw: function () {
@@ -45,6 +48,7 @@ var YDYW_Button = SVG_Imitator.extend({
 		label.setColor('black');
 
 		var fillColor = this.fill;
+		console.log("The fill color is "+ fillColor);
 		var shapeObject = null;
 
 
@@ -69,7 +73,8 @@ var YDYW_Button = SVG_Imitator.extend({
 					});
 
 
-					var img = fabric.util.groupSVGElements(objects, options);
+					img = fabric.util.groupSVGElements(objects, options);
+
 					//	var img = objects;
 					img.set({
 						height: options.height,
@@ -88,7 +93,7 @@ var YDYW_Button = SVG_Imitator.extend({
 						originY: 'center'
 					});
 
-
+					that.img = img;
 
 					that.button = new fabric.Group([img,shapeObject,label], {
 						left: that.left * that.zoomFactor,
@@ -103,24 +108,27 @@ var YDYW_Button = SVG_Imitator.extend({
 					});
 
 					//console.log("This is the icon button",img);
-					that.button.on('mouseover', function(e) {
+					that.button.on('mousedown', function(e) {
 
 						shapeObject.setStroke('white');
 						label.setColor('white');
+						that.img.setColor('white');
 						canvas.renderAll();
-						//console.log ("hover event!", this);
+
 
 					});
 
-					that.button.on('mouseout', function(e) {
+					that.button.on('mouseup', function(e) {
 
 						shapeObject.setStroke('black');
 						label.setColor('black');
+						that.img.setColor('black');
 						canvas.renderAll();
 
 						//console.log ("hover event!", this);
 
 					});
+
 					that.canvas.add(that.button);
 					//that.canvas.add(img);
 
@@ -158,24 +166,22 @@ var YDYW_Button = SVG_Imitator.extend({
 
 
 			this.canvas.add(this.button);
-			console.log(this.button);
 
 			this.button.on('mouseover', function(e) {
-				shapeObject.setFill('grey');
-				shapeObject.setStroke('white');
-				label.setColor('white');
+
+				//console.log(fillColor, colorLuminance(fillColor, 0.15));
+				shapeObject.setFill(colorLuminance(fillColor, 0.15));
 				canvas.renderAll();
-				//console.log ("hover event!", this);
+
 
 			});
 
 			this.button.on('mouseout', function(e) {
+
 				shapeObject.setFill(fillColor);
-				shapeObject.setStroke('black');
-				label.setColor('black');
 				canvas.renderAll();
 
-				//console.log ("hover event!", this);
+
 
 			});
 
@@ -183,23 +189,23 @@ var YDYW_Button = SVG_Imitator.extend({
 
 		else if(this.type = "tab"){
 
-			var rectWidth = label.width + 10;
-			var rectHeight = this.textSize + 5;
+			var rectWidth = this.width || label.width + 10;
+			var rectHeight = this.height || this.textSize + 5;
+
+			label.set({textAlign: 'center'});
+
 
 			shapeObject = new fabric.Rect({
 				originX: 'center',
 				originY: 'center',
 				stroke: 'black',
-				fill: 'none',
+				fill: fillColor,
 				width: rectWidth,
 				height: rectHeight
 			});
 
 			label.originX = 'center';
 			label.originY = 'center';
-
-
-			//this.addToCanvas();
 
 			this.button = new fabric.Group([shapeObject,label], {
 				left: this.left,
@@ -219,29 +225,23 @@ var YDYW_Button = SVG_Imitator.extend({
 				if(this.selected != true){
 
 					this.selected = true;
-					shapeObject.setFill('grey');
-					shapeObject.setStroke('white');
+					//console.log(fillColor, colorLuminance(fillColor, 0.15));
+					shapeObject.setFill(colorLuminance(fillColor, 0.15));
 
-					canvas.renderAll();
+
 				}
 				else if(this.selected === true){
+
 					this.selected = false;
 					shapeObject.setFill(fillColor);
-					shapeObject.setStroke('black');
+
 				}
 
+				canvas.renderAll();
 				//console.log ("hover event!", this);
 
 			});
 
-			this.button.on('mouseout', function(e) {
-				shapeObject.setFill('none');
-
-
-
-				//console.log ("hover event!", this);
-
-			});
 		}
 
 		canvas.renderAll();
@@ -255,8 +255,28 @@ var YDYW_Button = SVG_Imitator.extend({
 
 	textCallback: function(str){
 		this.set({text: str});
-	},
-
-
+	}
 
 });
+
+
+//Hex value is used to define the color, -.10 ( make it ten percent darker), 0.20 (make it twenty percent lighter)
+function colorLuminance(hex, lum) {
+
+	// validate hex string
+	hex = String(hex).replace(/[^0-9a-f]/gi, '');
+	if (hex.length < 6) {
+		hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+	}
+	lum = lum || 0;
+
+	// convert to decimal and change luminosity
+	var rgb = "#", c, i;
+	for (i = 0; i < 3; i++) {
+		c = parseInt(hex.substr(i*2,2), 16);
+		c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+		rgb += ("00"+c).substr(c.length);
+	}
+
+	return rgb;
+}

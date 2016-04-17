@@ -115,20 +115,30 @@
         top: (doorTop + doorHeight/2.0),
         //top: 100,
         left: outsideDoorLeft + doorWidth/2.0,
-        type: "label", // label/icon/tab
-        text: "cancel", // displays the text inside the button
-        fill: 'red',
+        type: "icon", // label/icon/tab
+        //text: "cancel", // displays the text inside the button
+        fill: '#c8878e',
         zoomFactor: zoomFactor,
-        textSize: 100, // textSize
+        textSize: 50, // textSize
         radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
         icon: "../js/assets/svg/incognito.svg" //icon asset path
     });
 
 
-
+    //var Menu = new YDYW_Container();
+    //Menu.init(canvas);
+    //Menu.set({
+    //    top: (doorTop + doorHeight/2.0),
+    //    left: outsideDoorLeft + doorWidth/2.0,
+    //    height : 200,
+    //    width : 300,
+    //    stroke : "white",
+    //    fill : "white",
+    //    buttonList: {},
+    //    zoomFactor: zoomFactor
+    //});
 
     // draw everything at the appropriate scale for this canvas
-
 
     zoomAll(zoomFactor);
 
