@@ -105,34 +105,36 @@
     //languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
     languageMgr.setLanguage("english");
 
-    var button = new YDYW_Button();
-    button.init(canvas);
-    button.set({
-        top: (doorTop + doorHeight/2.0),
-        //top: 100,
-        left: outsideDoorLeft + doorWidth/2.0,
-        type: "icon", // label/icon/tab
-        //text: "cancel", // displays the text inside the button
-        fill: '#c8878e',
-        zoomFactor: zoomFactor,
-        textSize: 50, // textSize
-        radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
-        icon: "../js/assets/svg/incognito.svg" //icon asset path
-    });
-
-
-    //var Menu = new YDYW_Container();
-    //Menu.init(canvas);
-    //Menu.set({
+    //var button = new YDYW_Button();
+    //button.init(canvas);
+    //button.set({
     //    top: (doorTop + doorHeight/2.0),
+    //    //top: 100,
     //    left: outsideDoorLeft + doorWidth/2.0,
-    //    height : 200,
-    //    width : 300,
-    //    stroke : "white",
-    //    fill : "white",
-    //    buttonList: {},
-    //    zoomFactor: zoomFactor
+    //    type: "icon", // label/icon/tab
+    //    //text: "cancel", // displays the text inside the button
+    //
+    //    zoomFactor: zoomFactor,
+    //    textSize: 50, // textSize
+    //    radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+    //    icon: "../js/assets/svg/incognito.svg" //icon asset path
     //});
+
+
+    var Menu = new YDYW_Container();
+    Menu.init(canvas);
+    Menu.set({
+        top: (doorTop + doorHeight/2.0)-100,
+        left: outsideDoorLeft + doorWidth/2.0-50,
+        height : 200,
+        width : 300,
+        stroke : "white",
+        fill : "white",
+        RowHeadings : ["testing"],
+        RowIconNumber : [1,2,1],
+        buttonDataList: [{icon: '../js/assets/svg/incognito.svg'},{icon: '../js/assets/svg/incognito.svg'},{icon: '../js/assets/svg/incognito.svg'},{icon: '../js/assets/svg/incognito.svg'}],
+        zoomFactor: zoomFactor
+    });
 
     // draw everything at the appropriate scale for this canvas
 

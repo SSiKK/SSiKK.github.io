@@ -2,18 +2,20 @@ var YDYW_Container = SVG_Imitator.extend({
 
     init: function (canvas) { // Initialize
         //Attributes
-        this.left = 0;
-        this.top = 0;
-        this.width = 0;
-        this.height = 0;
+        this.left = this.left || 0;
+        this.top = this.top || 0;
+        this.width = this.width || 0;
+        this.height = this.height || 0;
         this.fill = this.fill || "white";
         this.stroke = this.stroke || "white";
-        this.buttonList = this.buttonList || {};
-        this.numberOfRows = this.numberOfRows || {};
-        this.RowHeadings = this.RowHeadings || {};
+        this.buttonDataList = this.buttonDataList || [];
+        this.RowHeadings = this.RowHeadings || [];
+        this.RowIconNumber =  this.RowIconNumber || [];
         this.controlAndOffsetList = [];
         this.board = this.board || null;
+        this.zoomFactor = this.zoomFactor || null;
         this.canvas = null;
+        this.buttonList = new Array();
 
         if (canvas!==undefined && canvas!== null) {
             this.attachToCanvas(canvas);
@@ -29,8 +31,8 @@ var YDYW_Container = SVG_Imitator.extend({
             id: "controlBoard",
             left: this.left,
             top: this.top,
-            fill: this.fill,
-            stroke: this.stroke,
+            fill: "#dddddd",
+            stroke: "#dddddd",
             rx : 10,
             ry : 10,
             width: this.width,
@@ -39,6 +41,48 @@ var YDYW_Container = SVG_Imitator.extend({
         });
         this.board.hasControls = this.board.hasBorders = false;
         this.board.lockMovementX = this.board.lockMovementY = true;
+
+
+        var index = 0,indexh = 0,indexv = 0, len = this.buttonList.length;
+
+        var n = this.RowIconNumber.length;
+        console.log("The number of rows are " + n);
+        //Setting up individual button size.
+        var buttonHeight = this.height/(n + 1);
+        var buttonRadius = buttonHeight/2;
+
+        var rowTop = this.top, rowLeft = this.left;
+
+        //iterate through the rows
+        for (indexv = 0; indexv <n; ++indexv) {
+
+            console.log("Creating the row number " + indexv + " which has number of icons " + this.RowIconNumber[indexv]);
+
+            for(indexh = 0;indexh < this.RowIconNumber[indexv]; ++indexh) {
+
+                console.log("Creating button " + index);
+
+                var button = new YDYW_Button();
+                button.init(this.canvas);
+                button.set({
+                    top: rowTop + buttonHeight,
+                    left: rowLeft + (indexh + 1)*buttonHeight,
+                    type: this.buttonDataList[index].type || "icon", // label/icon/tab
+                    text: this.buttonDataList[index].text || "blah", // displays the text inside the button
+                    zoomFactor: this.zoomFactor,
+                    textSize: this.buttonDataList[index].textSize || 20, // textSize
+                    radius: buttonRadius, // define a radius if you are going to make an icon. you dont need to do this for the label
+                    icon: this.buttonDataList[index].icon || '../js/assets/svg/incognito.svg' //icon asset path
+                });
+                this.buttonList.push(button);
+                index++;
+            }
+
+            rowTop = rowTop + buttonHeight;
+            console.log("Completed creating button " + indexv);
+
+        }
+
         this.canvas.add(this.board);
 
     },
