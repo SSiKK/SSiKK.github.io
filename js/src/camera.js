@@ -146,7 +146,7 @@ var YDYW_Camera = SVG_Imitator.extend({
                         hasBorders: false,
                         lockMovementX: true,
                         lockMovementY: true,
-                        visible: !that.showsub,
+                        visible: that.showsub,
                         clipTo: function(ctx) {
                             ctx.rect(-400, -1000, 800, that.outsideViewImageHeight);
                         }

@@ -31,15 +31,28 @@ var YDYW_Message = SVG_Imitator.extend({
     },
 
     configureSubCanvas: function() {
+    // var subC = document.createElement('canvas')
+    //     subC.id = 'subC';
+    //     subC.width = canvas.height * 0.35 + "";
+    //     subC.height = canvas.height * 0.15 +"";
+    //     subC.style.border = "2px solid black"
+
+    	subC = document.getElementById('subC')
+    	subC.style.display = 'block';
+		subC.style.top = "700px"
+        subC.style.left = "600px"
+        console.log(subC);
+
         window.subCanvas = this.subCanvas = new fabric.Canvas('subC', { backgroundColor: "#DDDDDD", isDrawingMode: true });
         this.subCanvasHTML = document.getElementsByClassName('canvas-container')[1];
-        // this.subCanvasHTML.style.display = "none"
         this.subCanvasHTML.style.position = "absolute"
-        this.subCanvasHTML.style.top = "300px"
-        this.subCanvasHTML.style.left = "100px"
+        // this.subCanvasHTML.style.display = "none"
+        this.subCanvasHTML.style.top = "700px"
+        this.subCanvasHTML.style.left = "300px"
     },
 
     display: function() {
+
     	that = this;
         console.log(this.cancelButton, this.sendButton);
 

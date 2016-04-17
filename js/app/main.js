@@ -35,7 +35,7 @@
     DrawDoors();
 
     // Draw the Message Box
-    // DrawMessageBox();
+    DrawMessageBox();
 
     // Draw the Camera view and associated controls
     DrawCameraView();
@@ -138,20 +138,20 @@
 
     // Instantiate the message class to set the 4 parameters from SVG_Imitator
     function DrawMessageBox(){
-        subC = document.createElement('canvas')
-        subC.id = 'subC';
-        subC.width = canvas.height * 0.3036437247 + "";
-        subC.height = canvas.height * 0.25 +"";
-        subC.style.border = "2px solid black"
-        document.body.appendChild(subC);
+        // subC = document.createElement('canvas')
+        // subC.id = 'subC';
+        // subC.width = canvas.height * 0.3036437247 + "";
+        // subC.height = canvas.height * 0.25 +"";
+        // subC.style.border = "2px solid black"
+        // document.body.appendChild(subC);
 
         messageIn = new YDYW_Message();
         messageIn.init(canvas);
         messageIn.set({
-            top:localHeight * .3, // 250,
-            left: localWidth * 0.25, //300,
-            width: 350,
-            height: localHeight * 0.25
+            width: localWidth * .30,
+            height: localHeight * 0.25,
+            left: localWidth, // * 1.25, //300,
+            top:localHeight * .3 // 250,
         });
     }
 
