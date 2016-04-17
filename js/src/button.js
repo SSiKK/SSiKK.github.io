@@ -260,8 +260,24 @@ var YDYW_Button = SVG_Imitator.extend({
 
 	},
 
-	textCallback: function(str){
-		this.set({text: str});
+	textCallback: function(dict){
+		this.label.set({text: dict[this.text]});
+	},
+
+	hide: function(){
+		this.button.set({visible:false});
+		this.showing = false;
+	},
+	show: function(){
+		this.button.set({visible:true});
+		this.showing = true;
+	},
+	toggle: function() {
+		if (this.showing) {
+			this.hide();
+		} else {
+			this.show();
+		}
 	}
 
 });

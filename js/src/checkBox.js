@@ -86,7 +86,8 @@ var YDYW_CheckBox = SVG_Imitator.extend({
 			  	left: entryLeft + 1.5*entryWidth,
 				top: this.top + (2*e + 1.5) * entryHeight,
 				id: this.entries[e],
-				originY: "center"
+				originY: "center",
+				selectable:false
 			});
 			this.fabEntries[e].in.on('selected',this.checkEntry.bind(this));
 			console.log("added : " + this.entries[e].id);
@@ -117,18 +118,20 @@ var YDYW_CheckBox = SVG_Imitator.extend({
 	},
 	hide: function(){
 		for(var e in this.fabEntries) {
-			this.fabEntries[e].out.set({opacity: 0.0});
-			this.fabEntries[e].in.set({opacity: 0.0});
-			this.fabEntries[e].label.set({opacity: 0.0});
+			this.fabEntries[e].out.set({visible: false});
+			this.fabEntries[e].in.set({visible: false});
+			this.fabEntries[e].label.set({visible: false});
 		}
+		this.showing = false;
 	},
 	show: function(){
 		for(var e in this.fabEntries) {
-			this.fabEntries[e].out.set({opacity: 1.0});
-			this.fabEntries[e].in.set({opacity: 0.0});
-			this.fabEntries[e].label.set({opacity: 1.0});
+			this.fabEntries[e].out.set({visible: true});
+			this.fabEntries[e].in.set({visible: true, opacity: 0.0});
+			this.fabEntries[e].label.set({visible: true});
 		}
 		this.fabEntries[this.selectedEntry].in.set({opacity: 1.0});
+		this.showing = true;
 	},
 
 	toggle: function(){
@@ -137,7 +140,6 @@ var YDYW_CheckBox = SVG_Imitator.extend({
 		} else {
 			this.show();
 		}
-		this.showing = !this.showing;
 	},
 
 	//dict contains all text that are being used in the entire app

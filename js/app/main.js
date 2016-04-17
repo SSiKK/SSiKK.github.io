@@ -27,6 +27,8 @@
     var messageIn;
     var lock;
     var doorBell;
+    var languageButton;
+    var chimesButton;
 
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
@@ -61,11 +63,15 @@
 
     var soundCheckBox = new YDYW_CheckBox();
     soundCheckBox.init(canvas);
+    
+
 
     soundCheckBox.addEntries(soundMgr.getIDs());
     soundCheckBox.onSelect(function(id) {
         soundMgr.setCurrent(id);
         soundMgr.play();
+        soundCheckBox.hide();
+        chimesButton.show();
     });
     soundCheckBox.set({
         left: outsideDoorLeft + 30,
@@ -74,6 +80,8 @@
         height: doorHeight/3.0,
         zoomFactor: zoomFactor
     });
+    soundCheckBox.hide();
+
 
     var languageCheckBox = new YDYW_CheckBox();
     languageCheckBox.init(canvas);
@@ -81,6 +89,8 @@
     languageCheckBox.addEntries(languageMgr.getLanguages());
     languageCheckBox.onSelect(function(id) {
         languageMgr.setLanguage(id);
+        languageCheckBox.hide();
+        languageButton.show();
     });
     languageCheckBox.set({
         left: outsideDoorLeft + 30,
@@ -89,9 +99,10 @@
         height: doorHeight/3.0,
         zoomFactor: zoomFactor
     });
-
+    languageCheckBox.hide();
     //Do this to whatever element needs to change its text when a new language is selected.
     languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
+    //languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
     languageMgr.setLanguage("english");
 
     var button = new YDYW_Button();
@@ -164,7 +175,6 @@
 
         outsideDoor.on('selected', function(options) {
             lock.toggleLockedStatusAndShow();
-            soundCheckBox.toggle();
         });
 
         // add all of the elements to the canvas
@@ -268,6 +278,44 @@
             icon: "js/assets/img/icons/doorbell.svg", //icon asset path
             cb:function() {
                 soundMgr.play();
+            }
+        });
+
+        languageButton = new YDYW_Button();
+        languageButton.init(canvas);
+        languageButton.set({
+            top: doorTop  + doorHeight/2.0 - 50,
+            left: outsideDoorLeft + 100,
+            type: "icon", // label/icon/tab
+            text: "Language", // displays the text inside the button
+            fill: '#c8878e',
+            zoomFactor: zoomFactor,
+            strokeWidth: 3,
+            textSize: 30, // textSize
+            radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+            icon: "js/assets/img/icons/language.svg", //icon asset path
+            cb:function() {
+                languageCheckBox.show();
+                languageButton.hide();
+            }
+        });
+
+        chimesButton = new YDYW_Button();
+        chimesButton.init(canvas);
+        chimesButton.set({
+            top: doorTop  + doorHeight/2.0 - 50,
+            left: outsideDoorLeft + 150,
+            type: "icon", // label/icon/tab
+            text: "Chimes", // displays the text inside the button
+            fill: '#c8878e',
+            zoomFactor: zoomFactor,
+            strokeWidth: 3,
+            textSize: 30, // textSize
+            radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+            icon: "js/assets/img/icons/music.svg", //icon asset path
+            cb:function() {
+                soundCheckBox.show();
+                chimesButton.hide();
             }
         });
 
