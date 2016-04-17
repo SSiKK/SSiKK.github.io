@@ -24,6 +24,6 @@ var YDYW_soundManager = Class.extend({
 		this.current = id;
 	},
 	getIDs: function() {
-		this.sounds.keys();
+		return Object.keys(this.sounds);
 	}
 });

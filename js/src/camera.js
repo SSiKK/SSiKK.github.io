@@ -20,7 +20,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 
         this.outsideView = null; // The outdoor viewing window, should be a rect
         this.outsideViewImage = null; // The outdoor viewing window, should be a rect
-        this.outsideViewImageHeight = 360; // The outdoor viewing window, should be a rect
+        this.outsideViewImageHeight = 600; // The outdoor viewing window, should be a rect
 
         this.subView = null; // The picture in picture display of owner
         this.subViewImage = null;
@@ -86,7 +86,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 
         this.outsideView = new fabric.Rect({
             angle: 0,
-            left: this.left + 620,
+            left: this.left * 3,
             top: this.top,
             width: this.collapsedWidth = this.width,
             height: this.collapsedHeight = this.height,
@@ -107,8 +107,8 @@ var YDYW_Camera = SVG_Imitator.extend({
         // hidden by default.
         this.subView = new fabric.Rect({
             angle: 0,
-            left: this.indoorView.left - 160,
-            top: this.indoorView.top - 60,
+            left: this.indoorView.left *.6,
+            top: this.indoorView.top * .75,
             width: this.collapsedWidth * 0.2,
             height: this.collapsedHeight * 0.35,
             originX: 'center',
@@ -133,12 +133,12 @@ var YDYW_Camera = SVG_Imitator.extend({
             //------------------------
             new Promise(function(resolve, reject) {
 
-                fabric.Image.fromURL("js/assets/img/owner.png", function(img) {
+                fabric.Image.fromURL("js/assets/img/visitorF.png", function(img) {
                     resolve(img.set({
-                        left: that.indoorView.left + 500,
-                        top: that.top + 135,
-                        scaleX: 1.3,
-                        scaleY: 1.3,
+                        left: that.indoorView.left*3,
+                        top: that.top * 4.3,
+                        scaleX: .9,
+                        scaleY: .9,
                         originX: 'center',
                         originY: 'center',
                         selectable: false,
@@ -148,20 +148,19 @@ var YDYW_Camera = SVG_Imitator.extend({
                         lockMovementY: true,
                         visible: that.showsub,
                         clipTo: function(ctx) {
-                            ctx.rect(-this.width, -this.height,
-                                this.width * 2, that.outsideViewImageHeight);
+                            ctx.rect(-400, -1000, 800, that.outsideViewImageHeight);
                         }
                     }))
                 })
             }),
             new Promise(function(resolve, reject) {
 
-                fabric.Image.fromURL("js/assets/img/visitorM.png", function(img) {
+                fabric.Image.fromURL("js/assets/img/visitorM1.png", function(img) {
                     resolve(img.set({
                         left: that.indoorView.left,
-                        top: that.top + 170,
-                        scaleX: 0.3,
-                        scaleY: 0.3,
+                        top: that.top * 4.3,
+                        scaleX: .9,
+                        scaleY: .9,
                         originX: 'center',
                         originY: 'center',
                         selectable: false,
@@ -187,12 +186,12 @@ var YDYW_Camera = SVG_Imitator.extend({
                         height: opt.height,
                         svgUid: opt.svgUid,
                         toBeParsed: opt.toBeParsed,
-                        left: that.indoorView.left + 200,
-                        top: that.indoorView.top - 60,
+                        left: that.indoorView.left * 1.7,
+                        top: that.indoorView.top * .90,
                         originX: 'center',
                         originY: 'center',
-                        scaleX: 0.1,
-                        scaleY: 0.1,
+                        scaleX: 0.3,
+                        scaleY: 0.3,
                         fill: 'white',
                         hasControls: false,
                         hasBorders: false,
@@ -211,12 +210,12 @@ var YDYW_Camera = SVG_Imitator.extend({
                         height: opt.height,
                         svgUid: opt.svgUid,
                         toBeParsed: opt.toBeParsed,
-                        left: that.indoorView.left + 200,
-                        top: that.indoorView.top - 20,
+                        left: that.indoorView.left * 1.7,
+                        top: that.indoorView.top * 1.1,
                         originX: 'center',
                         originY: 'center',
-                        scaleX: 0.25,
-                        scaleY: 0.25,
+                        scaleX: 0.6,
+                        scaleY: 0.6,
                         fill: 'white',
                         hasControls: false,
                         hasBorders: false,
@@ -233,12 +232,12 @@ var YDYW_Camera = SVG_Imitator.extend({
                         height: opt.height,
                         svgUid: opt.svgUid,
                         toBeParsed: opt.toBeParsed,
-                        left: that.indoorView.left + 150,
-                        top: that.indoorView.top - 60,
+                        left: that.indoorView.left * 1.5,
+                        top: that.indoorView.top * 0.9,
                         originX: 'center',
                         originY: 'center',
-                        scaleX: 0.1,
-                        scaleY: 0.1,
+                        scaleX: 0.2,
+                        scaleY: 0.2,
                         fill: 'black',
                         hasControls: false,
                         hasBorders: false,
@@ -255,12 +254,12 @@ var YDYW_Camera = SVG_Imitator.extend({
                         height: opt.height,
                         svgUid: opt.svgUid,
                         toBeParsed: opt.toBeParsed,
-                        left: that.indoorView.left + 150,
-                        top: that.indoorView.top - 60,
+                        left: that.indoorView.left * 1.5,
+                        top: that.indoorView.top * 0.9,
                         originX: 'center',
                         originY: 'center',
-                        scaleX: 0.08,
-                        scaleY: 0.08,
+                        scaleX: 0.15,
+                        scaleY: 0.15,
                         fill: 'black',
                         hasControls: false,
                         hasBorders: false,
@@ -324,9 +323,9 @@ var YDYW_Camera = SVG_Imitator.extend({
             that.canvas.add(that.collapseButton);
 
         })
-            .catch(function(error) {
-                console.log("seems to be and error", error);
-            })
+        .catch(function(error) {
+            console.log("seems to be and error", error);
+        })
 
 
 
@@ -355,8 +354,8 @@ var YDYW_Camera = SVG_Imitator.extend({
 
             // Adjust the outdoorView
             fabric.util.animate({
-                startValue: this.outsideViewImageHeight === 360 ? 360 : this.outsideViewImageHeight,
-                endValue: (360 + 80) * 2,
+                startValue: this.outsideViewImageHeight === 600 ? 600 : this.outsideViewImageHeight,
+                endValue: (600 + 600) * 2,
                 duration: 900,
                 onChange: function(value) {
                     that.outsideViewImageHeight = value;
@@ -367,8 +366,8 @@ var YDYW_Camera = SVG_Imitator.extend({
 
             // Adjust the OUTSIDE VIEW
             this.outsideView.animate({
-                'top': this.top + 150,
-                'height': this.collapsedHeight * 3
+                'top': that.outsideView.top * 1.9, //  + 150
+                'height': this.collapsedHeight * 3.1
             }, {
                 onChange: this.canvas.renderAll.bind(this.canvas),
                 duration: 2000,
@@ -377,7 +376,7 @@ var YDYW_Camera = SVG_Imitator.extend({
             });
             // Adjust the SUBVIEW
             this.subView.animate({
-                'top': this.top - 80,
+                'top': this.subView.top * 1.1,
                 'height': this.collapsedHeight * 0.45
             }, {
                 onChange: this.canvas.renderAll.bind(this.canvas),
@@ -393,8 +392,8 @@ var YDYW_Camera = SVG_Imitator.extend({
 
             // Adjust Owner image
             fabric.util.animate({
-                startValue: (360 + 80) * 2,
-                endValue: 360,
+                startValue: 600 * 4,
+                endValue: 600,
                 duration: 900,
                 onChange: function(value) {
                     that.outsideViewImageHeight = value;
@@ -406,7 +405,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 
             // Adjust the OUTSIDE VIEW
             this.outsideView.animate({
-                'top': this.top - 50,
+                'top': that.outsideView.top * .52, // this.top - 50,
                 'height': this.collapsedHeight
             }, {
                 onChange: this.canvas.renderAll.bind(this.canvas),
@@ -417,7 +416,7 @@ var YDYW_Camera = SVG_Imitator.extend({
 
             // Adjust the SUBVIEW
             this.subView.animate({
-                'top': this.top - 100,
+                'top': this.subView.top *.92,
                 'height': this.collapsedHeight * 0.35
             }, {
                 onChange: this.canvas.renderAll.bind(this.canvas),
@@ -448,7 +447,7 @@ var YDYW_Camera = SVG_Imitator.extend({
             // Adujust STRANGERS Image
             fabric.util.animate({
                 startValue: this.indoorViewImageHeight === 600 ? 600 : this.indoorViewImageHeight,
-                endValue: (600 + 600) * 2,
+                endValue: 600 * 4,
                 duration: 900,
                 onChange: function(value) {
                     that.indoorViewImageHeight = value;
@@ -459,8 +458,8 @@ var YDYW_Camera = SVG_Imitator.extend({
 
 
             this.indoorView.animate({
-                'top': this.top + 150,
-                'height': this.collapsedHeight * 3
+                'top': this.indoorView.top * 1.9,
+                'height': this.collapsedHeight * 3.1
             }, {
                 onChange: this.canvas.renderAll.bind(this.canvas),
                 duration: 2000,
@@ -473,7 +472,7 @@ var YDYW_Camera = SVG_Imitator.extend({
             // Adjust the indoorView
             // Adujust STRANGERS Image
             fabric.util.animate({
-                startValue: (600 + 600) * 2,
+                startValue: 600 * 4,
                 endValue: 600,
                 duration: 1000,
                 onChange: function(value) {
@@ -484,7 +483,7 @@ var YDYW_Camera = SVG_Imitator.extend({
             })
 
             that.indoorView.animate({
-                'top': that.top - 50,
+                'top': that.indoorView.top * .52,
                 'height': that.collapsedHeight
             }, {
                 onChange: that.canvas.renderAll.bind(that.canvas),

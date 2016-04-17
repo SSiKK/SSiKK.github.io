@@ -20,12 +20,14 @@
     var doorTop = 0;
     var doorWidth = 555;
     var doorHeight = localHeight;
-    
+
     var messageIn;
- 
+
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
     var zoomFactor = canvas.height / localHeight;
+
+
     // set background to blue to make it easier to see it
     canvas.backgroundColor = "#DDDDDD"; // light grey
 
@@ -40,6 +42,7 @@
 
     //Weather layout
     DrawWeatherLayout();
+
 
     // Doorknob stuff
     var lock = new YDYW_LockManager();
@@ -63,11 +66,27 @@
             radius: 20.0
         }
     });
-    
+
     var soundMgr = new YDYW_soundManager();
     soundMgr.init();
-    soundMgr.addSound();
-    soundMgr.setCurrent("doorBell");
+    AddSounds();
+
+    var checkBox = new YDYW_CheckBox();
+    checkBox.init(canvas);
+
+    checkBox.addEntries(soundMgr.getIDs());
+    checkBox.onSelect(function(id) {
+        soundMgr.setCurrent(id);
+        soundMgr.play();
+    });
+    checkBox.set({
+        left: outsideDoorLeft + 30,
+        top: doorTop,
+        width: doorWidth/3.0,
+        height: doorHeight/3.0,
+        zoomFactor: zoomFactor
+    });
+
 
     // draw everything at the appropriate scale for this canvas
     zoomAll(zoomFactor);
@@ -110,6 +129,7 @@
         outsideDoor.on('selected', function(options) {
             lock.toggleLockedStatusAndShow();
             soundMgr.play();
+            checkBox.toggle();
         });
 
         // add all of the elements to the canvas
@@ -127,32 +147,29 @@
         var cameraView = new YDYW_Camera();
             cameraView.init(canvas)
             cameraView.set({
-                width: 444,
+                width: localWidth * .30,
                 height: localHeight * 0.25,
-                left: 300,
-                top: 300 // 250
+                left: localWidth * 0.25,
+                top: localHeight * .3 // 250
             });
-            // cameraView.viewport.on('selected', function(options) {
-            //     cameraView.toggleFullScreenViewport();
-            // });
     }
 
     // Instantiate the message class to set the 4 parameters from SVG_Imitator
     function DrawMessageBox(){
-        subC = document.createElement('canvas')
-        subC.id = 'subC';
-        subC.width = "300";
-        subC.height = "200";
-        subC.style.border = "2px solid black"
-        document.body.appendChild(subC);
+        // subC = document.createElement('canvas')
+        // subC.id = 'subC';
+        // subC.width = canvas.height * 0.3036437247 + "";
+        // subC.height = canvas.height * 0.25 +"";
+        // subC.style.border = "2px solid black"
+        // document.body.appendChild(subC);
 
         messageIn = new YDYW_Message();
         messageIn.init(canvas);
         messageIn.set({
-            top:250,
-            left:300,
-            width: 300.0,
-            height: 200.0
+            width: doorWidth,
+            height: doorHeight,
+            left: insideDoorLeft, // * 1.25, //300,
+            top: doorTop // 250,
         });
     }
 
@@ -163,10 +180,16 @@
             top: 500,
             left: 300,
             height: 300.0,
-            width: 500.0
+            width: 444.0
         });
     }
 
+    function AddSounds() {
+        soundMgr.addSound();
+        soundMgr.setCurrent("doorBell");
+
+        soundMgr.addSound({src:'js/assets/sound/crow.mp3', img:'js/assets/img/icons/crow.jpg', id: "crow"});
+    }
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
     function zoomAll(SCALE_FACTOR) {
