@@ -39,8 +39,6 @@ var YDYW_Message = SVG_Imitator.extend({
 
     	subC = document.getElementById('subC')
     	subC.style.display = 'block';
-		subC.style.top = "700px"
-        subC.style.left = "600px"
         console.log(subC);
 
         window.subCanvas = this.subCanvas = new fabric.Canvas('subC', { backgroundColor: "#DDDDDD", isDrawingMode: true });
@@ -48,7 +46,7 @@ var YDYW_Message = SVG_Imitator.extend({
         this.subCanvasHTML.style.position = "absolute"
         // this.subCanvasHTML.style.display = "none"
         this.subCanvasHTML.style.top = "700px"
-        this.subCanvasHTML.style.left = "300px"
+        this.subCanvasHTML.style.left = document.getElementsByClassName('container')[1]? "566px" : '300px'
     },
 
     display: function() {
