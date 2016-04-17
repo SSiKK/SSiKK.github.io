@@ -6,13 +6,14 @@ var YDYW_Button = SVG_Imitator.extend({
 		this.button = null;
 		this.left = null;
 		this.top = null;
-		this.width = 30;
-		this.height = 20;
-		this.radius = 30;
+		this.width = this.width || 30;
+		this.height = this.height || 20;
+		this.radius = this.radius || 40;
 		this.shape = "rect"; // button type can be circle or rect
 		this.type = "label"; // button type can be icon or label
 		this.text = "label";
 		this.textColor = 'none';
+		this.textSize = 30;
 		this.icon = null;
 		this.imgSrc = null;
 		this.fill = 'white';
@@ -37,7 +38,7 @@ var YDYW_Button = SVG_Imitator.extend({
 		console.log ("being drawn!", this);
 
 		var label = new fabric.Text(this.text,{
-			fontSize: 20,
+			fontSize: this.textSize,
 			originX: 'center',
 			originY: 'center'
 		});
@@ -50,18 +51,18 @@ var YDYW_Button = SVG_Imitator.extend({
 		if (this.type === "icon") {
 
 
-			var group;
-			this.icon = '../js/assets/svg/.svg';
+
+			if(this.icon === null) this.icon = '../js/assets/svg/camera.svg';
 
 			if(this.icon != null){
 
-				fabric.loadSVGFromURL('../js/assets/svg/collapse.svg',function(objects,options){
+				fabric.loadSVGFromURL(that.icon,function(objects,options){
 
 
 					shapeObject = new fabric.Circle({
 						fill: 'transparent',
 						selectable: false,
-						stroke: 'white',
+						stroke: 'black',
 						radius: that.radius,
 						originX: 'center',
 						originY: 'center'
@@ -109,7 +110,24 @@ var YDYW_Button = SVG_Imitator.extend({
 					});
 
 					//console.log("This is the icon button",img);
+					that.button.on('mouseover', function(e) {
 
+						shapeObject.setStroke('white');
+						label.setColor('white');
+						canvas.renderAll();
+						//console.log ("hover event!", this);
+
+					});
+
+					that.button.on('mouseout', function(e) {
+
+						shapeObject.setStroke('black');
+						label.setColor('black');
+						canvas.renderAll();
+
+						//console.log ("hover event!", this);
+
+					});
 					that.canvas.add(that.button);
 					//that.canvas.add(img);
 
@@ -247,35 +265,6 @@ var YDYW_Button = SVG_Imitator.extend({
 		this.set({text: str});
 	},
 
-	addToCanvas: function(){
-
-		console.log("This is reaching");
-		this.button = new fabric.Group([this.shapeObject,this.label], {
-			left: this.left,
-			top: this.top,
-			hasControls: false,
-			hasBorders: true,
-			lockMovementX: true,
-			lockMovementY: true });
-
-
-		this.canvas.add(this.button);
-
-
-		this.button.on('mouseover', function(e) {
-			shapeObject.setFill('grey');
-			canvas.renderAll();
-			//console.log ("hover event!", this);
-
-		});
-
-		this.button.on('mouseout', function(e) {
-			shapeObject.setFill('none');
-			canvas.renderAll();
-			//console.log ("hover event!", this);
-
-		});
-	}
 
 
 });

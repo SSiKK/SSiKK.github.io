@@ -115,8 +115,10 @@
         top: (doorTop + doorHeight/2.0),
         //top: 100,
         left: outsideDoorLeft + doorWidth/2.0,
-        type: "icon",
-        zoomFactor: zoomFactor
+        type: "icon", // put in label when you want to make normal buttons
+        zoomFactor: zoomFactor,
+        radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+        icon: "../js/assets/svg/incognito.svg"
     });
     // draw everything at the appropriate scale for this canvas
     zoomAll(zoomFactor);
@@ -199,7 +201,7 @@
             width: doorWidth,
             height: doorHeight,
             left: insideDoorLeft, // * 1.25, //300,
-            top: doorTop // 250,
+            top: doorTop // 25
         });
     }
 
