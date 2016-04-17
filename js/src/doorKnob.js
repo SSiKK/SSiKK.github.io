@@ -4,11 +4,20 @@ var YDYW_DoorKnob = SVG_Imitator.extend({
 		this.cx = null;
 		this.cy = null;
 		this.radius = null;
+		this.zoomFactor = null;
 		this.knobColor = "rgba(230,230,230,1.0)";
 		this.lockActivateColor = "rgba(200,135,142,1.0)";
 		this.lockDeactivateColor = "rgba(142,200,135,1.0)";
 		this.oulineColor = "black";
-
+		this.defaults = {
+			originX: 'center',
+			originY: 'center',
+			hasControls: false,
+			hasBorders: false,
+			selectable: false,
+			lockMovementX: true,
+			lockMovementY: true
+		};
 		// Canvas on which the object is created.
 		this.canvas = null;
 		this.knob = null;
@@ -18,63 +27,53 @@ var YDYW_DoorKnob = SVG_Imitator.extend({
 		if (canvas!==undefined && canvas!== null) {
 			this.attachToCanvas(canvas);
 		}
+		return this;
 	},
 	attachToCanvas: function(canvas) {
 		this.canvas = canvas;
+		return this;
 	},
 	
 	draw: function () {
 		// Draw
-		this.feedBackRing = new fabric.Circle({
-			originX: 'center',
-			originY: 'center',
+		if (!this.feedBackRing) {
+			this.feedBackRing = new fabric.Circle(this.defaults);
+			this.canvas.add(this.feedBackRing);
+		}
+		if (!this.knob) {
+			this.knob = new fabric.Circle(this.defaults);
+			this.canvas.add(this.knob);
+		}
+		if (!this.knobShine) {
+			this.knobShine = new fabric.Circle(this.defaults);
+			this.canvas.add(this.knobShine);
+		}
+		this.feedBackRing.set({
 			fill: this.knobColor,
 			radius: this.radius,
 			stroke: this.oulineColor,
 			left: this.cx,
 			top: this.cy,
-			opacity: 0.0,
-			hasControls: false,
-			hasBorders: false,
-			selectable: false,
-			lockMovementX: true,
-			lockMovementY: true
+			opacity:0.0
 		});
-		this.knob = new fabric.Circle({
-			originX: 'center',
-			originY: 'center',
+		this.knob.set({
 			fill: this.knobColor,
 			radius: this.radius*0.6,
 			stroke: this.oulineColor,
 			left: this.cx,
-			top: this.cy,
-			hasControls: false,
-			hasBorders: false,
-			selectable: false,
-			lockMovementX: true,
-			lockMovementY: true
+			top: this.cy
 		});
-		this.knobShine = new fabric.Circle({
-			originX: 'center',
-			originY: 'center',
+		this.knobShine.set({
 			fill: '',
 			radius: this.radius*0.45,
 			stroke: this.oulineColor,
 			startAngle: Math.PI,
 			endAngle: 1.5*Math.PI,
 			left: this.cx,
-			top: this.cy,
-			hasControls: false,
-			hasBorders: false,
-			selectable: false,
-			lockMovementX: true,
-			lockMovementY: true
-		});
-		
-		this.canvas.add(this.feedBackRing);
-		this.canvas.add(this.knob);
-		this.canvas.add(this.knobShine);
-		console.log ("being drawn!", this);
+			top: this.cy
+		});		
+		//console.log ("being drawn!", this);
+		return this;
 	},
 
 	toggleLockedStatusAndShow: function() {
@@ -101,6 +100,7 @@ var YDYW_DoorKnob = SVG_Imitator.extend({
 				});
 			}.bind(this)
 		});
+		return this;
 	}
 
 
