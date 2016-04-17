@@ -13,7 +13,7 @@ var YDYW_Button = SVG_Imitator.extend({
 		this.type = "label"; // button type can be icon or label
 		this.text = "label";
 		this.textColor = 'none';
-		this.textSize = 30;
+		this.textSize = this.textSize || 30;
 		this.icon = null;
 		this.imgSrc = null;
 		this.fill = 'white';
@@ -81,8 +81,6 @@ var YDYW_Button = SVG_Imitator.extend({
 					}).scale(that.radius/options.height);
 
 
-					//var radius = Math.sqrt(img.height * img.height + img.width * img.width) / 2;
-
 					label.set({
 						top: shapeObject.top + that.radius * 2 ,
 						left: shapeObject.left, //(label.width/2),
@@ -90,12 +88,7 @@ var YDYW_Button = SVG_Imitator.extend({
 						originY: 'center'
 					});
 
-					//canvas.add(img);
 
-					//img.clipTo = function(context){
-					//	shapeObject.render(context);
-					//};
-					//canvas.renderAll();
 
 					that.button = new fabric.Group([img,shapeObject,label], {
 						left: that.left * that.zoomFactor,
@@ -141,8 +134,7 @@ var YDYW_Button = SVG_Imitator.extend({
 
 
 			var rectWidth = label.width + 10;
-			var rectHeight = 30 + 5;
-
+			var rectHeight = this.textSize + 5;
 			shapeObject = new fabric.Rect({
 				originX: 'center',
 				originY: 'center',
@@ -192,7 +184,7 @@ var YDYW_Button = SVG_Imitator.extend({
 		else if(this.type = "tab"){
 
 			var rectWidth = label.width + 10;
-			var rectHeight = 30 + 5;
+			var rectHeight = this.textSize + 5;
 
 			shapeObject = new fabric.Rect({
 				originX: 'center',
