@@ -35,13 +35,13 @@
     DrawDoors();
 
     // Draw the Message Box
-    DrawMessageBox();
+    // DrawMessageBox();
 
     // Draw the Camera view and associated controls
-    DrawCameraView();
+    // DrawCameraView();
 
     //Weather layout
-    DrawWeatherLayout();
+    // DrawWeatherLayout();
 
 
     // Doorknob stuff
@@ -67,65 +67,65 @@
         }
     });
 
-    var soundMgr = new YDYW_soundManager();
-    soundMgr.init();
-    AddSounds();
+    // var soundMgr = new YDYW_soundManager();
+    // soundMgr.init();
+    // AddSounds();
 
-    var languageMgr = new YDYW_languageManager();
-    languageMgr.init();
+    // var languageMgr = new YDYW_languageManager();
+    // languageMgr.init();
 
-    var soundCheckBox = new YDYW_CheckBox();
-    soundCheckBox.init(canvas);
+    // var soundCheckBox = new YDYW_CheckBox();
+    // soundCheckBox.init(canvas);
 
-    soundCheckBox.addEntries(soundMgr.getIDs());
-    soundCheckBox.onSelect(function(id) {
-        soundMgr.setCurrent(id);
-        soundMgr.play();
-    });
-    soundCheckBox.set({
-        left: outsideDoorLeft + 30,
-        top: doorTop,
-        width: doorWidth/3.0,
-        height: doorHeight/3.0,
-        zoomFactor: zoomFactor
-    });
+    // soundCheckBox.addEntries(soundMgr.getIDs());
+    // soundCheckBox.onSelect(function(id) {
+    //     soundMgr.setCurrent(id);
+    //     soundMgr.play();
+    // });
+    // soundCheckBox.set({
+    //     left: outsideDoorLeft + 30,
+    //     top: doorTop,
+    //     width: doorWidth/3.0,
+    //     height: doorHeight/3.0,
+    //     zoomFactor: zoomFactor
+    // });
 
-    var languageCheckBox = new YDYW_CheckBox();
-    languageCheckBox.init(canvas);
+    // var languageCheckBox = new YDYW_CheckBox();
+    // languageCheckBox.init(canvas);
 
-    languageCheckBox.addEntries(languageMgr.getLanguages());
-    languageCheckBox.onSelect(function(id) {
-        languageMgr.setLanguage(id);
-    });
-    languageCheckBox.set({
-        left: outsideDoorLeft + 30,
-        top: doorTop + doorHeight/2.0,
-        width: doorWidth/3.0,
-        height: doorHeight/3.0,
-        zoomFactor: zoomFactor
-    });
+    // languageCheckBox.addEntries(languageMgr.getLanguages());
+    // languageCheckBox.onSelect(function(id) {
+    //     languageMgr.setLanguage(id);
+    // });
+    // languageCheckBox.set({
+    //     left: outsideDoorLeft + 30,
+    //     top: doorTop + doorHeight/2.0,
+    //     width: doorWidth/3.0,
+    //     height: doorHeight/3.0,
+    //     zoomFactor: zoomFactor
+    // });
 
-    //Do this to whatever element needs to change its text when a new language is selected.
-    languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
-    languageMgr.setLanguage("english");
+    // //Do this to whatever element needs to change its text when a new language is selected.
+    // languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
+    // languageMgr.setLanguage("english");
 
-    var button = new YDYW_Button();
-    button.init(canvas);
-    button.set({
-        top: (doorTop + doorHeight/2.0),
-        //top: 100,
-        left: outsideDoorLeft + doorWidth/2.0,
-        type: "label", // label/icon/tab
-        text: "cancel", // displays the text inside the button
-        fill: 'red',
-        zoomFactor: zoomFactor,
-        textSize: 100, // textSize
-        radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
-        icon: "../js/assets/svg/incognito.svg" //icon asset path
-    });
+    // var button = new YDYW_Button();
+    // button.init(canvas);
+    // button.set({
+    //     top: (doorTop + doorHeight/2.0),
+    //     //top: 100,
+    //     left: outsideDoorLeft + doorWidth/2.0,
+    //     type: "label", // label/icon/tab
+    //     text: "cancel", // displays the text inside the button
+    //     fill: 'red',
+    //     zoomFactor: zoomFactor,
+    //     textSize: 100, // textSize
+    //     radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+    //     icon: "../js/assets/svg/incognito.svg" //icon asset path
+    // });
 
 
-
+    DrawWelcome();
 
     // draw everything at the appropriate scale for this canvas
 
@@ -179,11 +179,6 @@
         canvas.add(outsideDoor);
     }
 
-
-    function DrawDoorKnob() {
-
-    }
-
     function DrawCameraView() {
         var cameraView = new YDYW_Camera();
             cameraView.init(canvas)
@@ -225,12 +220,27 @@
         });
     }
 
+
+    function DrawWelcome() {
+        var welcome = new YDYW_Welcome();
+        welcome.init(canvas);
+        welcome.set({
+            top: doorTop,
+            left: insideDoorLeft,
+            width: doorWidth,
+            height: doorHeight
+        })
+    }
+
+
     function AddSounds() {
         soundMgr.addSound();
         soundMgr.setCurrent("doorBell");
 
         soundMgr.addSound({src:'js/assets/sound/crow.mp3', img:'js/assets/img/icons/crow.jpg', id: "crow"});
     }
+
+
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
     function zoomAll(SCALE_FACTOR) {
