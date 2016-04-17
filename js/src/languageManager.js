@@ -35,7 +35,10 @@ var YDYW_languageManager = Class.extend({
 				kidModeOff: "Adults mode",
 				presets: "Presets",
 				doorBell: "Door Bell",
-				crow: "Crow"
+				crow: "Crow",
+				violin: "Violin",
+				harmonica: "Harmonica",
+				trumpet: "Trumpet"
 			},
 			kannada: {
 				language: "ಭಾಷೆ",
@@ -45,7 +48,10 @@ var YDYW_languageManager = Class.extend({
 				kidModeOff: "ವಯಸ್ಕರ ಮೋಡ್",
 				presets: "ಪೂರ್ವನಿಗದಿಗಳು",
 				doorBell: "ಬಾಗಿಲ ಗಂಟೆ",
-				crow: "ಕಾಗೆ"
+				crow: "ಕಾಗೆ",
+				violin: "ಪಿಟೀಲು",
+				harmonica:"ಹಾರ್ಮೋನಿಕಾ",
+				trumpet: "ಕಹಳೆ"
 			},
 			hindi: {
 				language: "भाषा",
@@ -55,7 +61,10 @@ var YDYW_languageManager = Class.extend({
 				kidModeOff: "बड़ोंका मोड़",
 				presets: "प्रीसेट",
 				doorBell: "दर्वाज़ी की घंटी",
-				crow: "कौआ"
+				crow: "कौआ",
+				violin: "वायोलिन",
+				harmonica: "अकार्डियन",
+				trumpet: "तुरही"
 			},
 			spanish: {
 				language: "Idioma",
@@ -65,12 +74,18 @@ var YDYW_languageManager = Class.extend({
 				kidModeOff: "बड़ोंका मोड़",
 				presets: "प्रीसेट",
 				doorBell: "timbre de la puerta",
-				crow: "cuervo"
+				crow: "cuervo",
+				violin: "violín",
+				harmonica: "harmónica",
+				trumpet: "trompeta"
 			},
 			italian: {
 				language: "Lingua",
 				doorBell: "campanello di casa",
-				crow: "corvo"
+				crow: "corvo",
+				violin: "violino",
+				harmonica: "armonica a bocca",
+				trumpet: "tromba"
 			}
 		};	
 	}
