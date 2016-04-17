@@ -1,9 +1,12 @@
 var container = Class.extend({
+
+
 	construct: function () {
 		this.left = 0;
 		this.top = 0;
 		this.width = 0;
 		this.height = 0;
+		this.button = {};
 		this.controlAndOffsetList = [];
 	},
 	init: function (data) {
