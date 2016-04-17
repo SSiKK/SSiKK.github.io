@@ -21,7 +21,12 @@
     var doorWidth = 555;
     var doorHeight = localHeight;
 
+
+
+    // Door elements
     var messageIn;
+    var lock;
+    var doorBell;
 
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
@@ -34,6 +39,7 @@
     // Draw the Basic In/Outside doors,
     DrawDoors();
 
+    placeElementsOnDoor();
     // Draw the Message Box
     DrawMessageBox();
 
@@ -44,28 +50,7 @@
     DrawWeatherLayout();
 
 
-    // Doorknob stuff
-    var lock = new YDYW_LockManager();
-    lock.init(canvas);
-    lock.set({
-        deadBoltPosition: {
-            left: insideDoorLeft + doorWidth - 80,
-            top: doorTop  + doorHeight/2.0 - 50,
-            width: doorWidth/8.0,
-            height: 30,
-            zoomFactor: zoomFactor
-        },
-        doorKnobInPosition: {
-            cy: doorTop + doorHeight/2.0,
-            cx: insideDoorLeft + doorWidth - 40,
-            radius: 20.0
-        },
-        doorKnobOutPosition: {
-            cy: doorTop + doorHeight/2.0,
-            cx: outsideDoorLeft + 40,
-            radius: 20.0
-        }
-    });
+    
 
     var soundMgr = new YDYW_soundManager();
     soundMgr.init();
@@ -179,7 +164,6 @@
 
         outsideDoor.on('selected', function(options) {
             lock.toggleLockedStatusAndShow();
-            soundMgr.play();
             soundCheckBox.toggle();
         });
 
@@ -243,6 +227,50 @@
         soundMgr.addSound({src:'js/assets/sound/violin.wav', img:'js/assets/img/icons/violin.png', id: "violin"});
         soundMgr.addSound({src:'js/assets/sound/harp.wav', img:'js/assets/img/icons/harp.png', id: "harmonica"});
         soundMgr.addSound({src:'js/assets/sound/trumpet.wav', img:'js/assets/img/icons/trumpet.ico', id: "trumpet"});
+    }
+
+    function placeElementsOnDoor() {
+        // Doorknob stuff
+        lock = new YDYW_LockManager();
+        lock.init(canvas);
+        lock.set({
+            deadBoltPosition: {
+                left: insideDoorLeft + doorWidth - 80,
+                top: doorTop  + doorHeight/2.0 - 50,
+                width: doorWidth/8.0,
+                height: 30,
+                zoomFactor: zoomFactor
+            },
+            doorKnobInPosition: {
+                cy: doorTop + doorHeight/2.0,
+                cx: insideDoorLeft + doorWidth - 40,
+                radius: 20.0
+            },
+            doorKnobOutPosition: {
+                cy: doorTop + doorHeight/2.0,
+                cx: outsideDoorLeft + 40,
+                radius: 20.0
+            }
+        });
+
+        doorBell = new YDYW_Button();
+        doorBell.init(canvas);
+        doorBell.set({
+            top: doorTop  + doorHeight/2.0 - 50,
+            left: outsideDoorLeft + 40,
+            type: "icon", // label/icon/tab
+            //text: "cancel", // displays the text inside the button
+            fill: '#c8878e',
+            zoomFactor: zoomFactor,
+            strokeWidth: 3,
+            textSize: 50, // textSize
+            radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+            icon: "js/assets/img/icons/doorbell.svg", //icon asset path
+            cb:function() {
+                soundMgr.play();
+            }
+        });
+
     }
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas

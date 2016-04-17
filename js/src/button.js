@@ -20,7 +20,8 @@ var YDYW_Button = SVG_Imitator.extend({
 		this.fill = this.fill || null;
 		this.zoomFactor = null;
 		this.canvas = null;
-
+		this.strokeWidth = 1;
+		this.cb = null;
 
 		//Feature specific status flags
 		this.on = false;
@@ -67,6 +68,7 @@ var YDYW_Button = SVG_Imitator.extend({
 						fill: 'transparent',
 						selectable: false,
 						stroke: 'black',
+						strokeWidth: that.strokeWidth,
 						radius: that.radius,
 						originX: 'center',
 						originY: 'center'
@@ -114,7 +116,7 @@ var YDYW_Button = SVG_Imitator.extend({
 						label.setColor('white');
 						that.img.setColor('white');
 						canvas.renderAll();
-
+						that.cb();
 
 					});
 
@@ -128,6 +130,9 @@ var YDYW_Button = SVG_Imitator.extend({
 						//console.log ("hover event!", this);
 
 					});
+
+					//that.button.on()
+
 
 					that.canvas.add(that.button);
 					//that.canvas.add(img);
@@ -147,6 +152,7 @@ var YDYW_Button = SVG_Imitator.extend({
 				originX: 'center',
 				originY: 'center',
 				stroke: 'black',
+				strokeWidth: this.strokeWidth,
 				fill: fillColor,
 				width: rectWidth,
 				height: rectHeight,
@@ -199,6 +205,7 @@ var YDYW_Button = SVG_Imitator.extend({
 				originX: 'center',
 				originY: 'center',
 				stroke: 'black',
+				strokeWidth: this.strokeWidth,
 				fill: fillColor,
 				width: rectWidth,
 				height: rectHeight
@@ -249,7 +256,7 @@ var YDYW_Button = SVG_Imitator.extend({
 
 	pressButton: function(cb) {
 
-		this.button.on('mouse:down', cb);
+		this.button.on('mousedown', cb);
 
 	},
 
