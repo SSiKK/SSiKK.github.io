@@ -71,12 +71,13 @@ var YDYW_Message = SVG_Imitator.extend({
 	            },
 	            onComplete: function() {
 	            	that.subCanvasHTML.style.display = "none"
+	            	that.cancelButton.item(1).setText('Cancel')
 	            }
 	        })
         } else {
             fabric.util.animate({
                 startValue: 0,
-                endValue: that.height,
+                endValue: that.height*.35,
                 duration: 1000,
                 onChange: function(value) {
                     that.subCanvas.setHeight(value)
@@ -102,11 +103,11 @@ var YDYW_Message = SVG_Imitator.extend({
                 new fabric.Rect({
                     originX: 'center',
                     originY: 'center',
-                    left: this.left - 90,
-                    top: this.top + 335,
-                    width: this.width * 0.5,
-                    height: this.height * .25,
-                    fill: 'red',
+                    left: this.left * 4,
+                    // top: this.top,
+                    width: this.width * 0.25,
+                    height: this.height * .08,
+                    fill: '#8ec887',
                     hasControls: false,
                     hasBorders: false,
                     lockMovementX: true,
@@ -115,20 +116,22 @@ var YDYW_Message = SVG_Imitator.extend({
                 new fabric.Text('Send to', {
                     originY: 'center',
                     originX: 'center',
-                    left: this.left - 90,
-                    top: this.top + 340,
+                    left: this.left * 4,
+                    // top: this.top,
                     fontFamily: 'Helvetica',
-                    fontSize: 40
+                    fontSize: 35
                 })
             ], {
                 visible: true,
-                left: this.left - 150,
-                top: this.top + 310,
+                left: this.left * 7.5,
+                top: this.top + 450,
                 clicked: 0
             })
             .on('selected', function() {
                 console.log('USER IS KRBA!!! Change this!!');
-                localStorage['krba'] = JSON.stringify(that.subCanvas)
+                localStorage['ssikk'] = JSON.stringify(that.subCanvas)
+                that.cancelButton.item(1).setText('Cancel')
+                that.cancelButton.clicked = 0;
                 that.canvas.deactivateAll();
                 that.canvas.renderAll();
             });
@@ -137,17 +140,18 @@ var YDYW_Message = SVG_Imitator.extend({
         this.subCanvas
             .on("mouse:down", function() {
                 that.cancelButton.clicked = 0;
+                that.cancelButton.item(1).setText('Cancel')
+
             })
 
         this.cancelButton = new fabric.Group([
                 new fabric.Rect({
                     originX: 'center',
                     originY: 'center',
-                    left: this.left + 100,
-                    top: this.top + 335,
-                    width: this.width * 0.5,
-                    height: this.height * .25,
-                    fill: 'green',
+                    left: this.left * 4,
+                    width: this.width * 0.25,
+                    height: this.height * .08,
+                    fill: '#c8878e',
                     hasControls: false,
                     hasBorders: false,
                     lockMovementX: true,
@@ -156,20 +160,21 @@ var YDYW_Message = SVG_Imitator.extend({
                 new fabric.Text('Cancel', {
                     originY: 'center',
                     originX: 'center',
-                    left: this.left + 100,
-                    top: this.top + 340,
+                    left: this.left * 4,
                     fontFamily: 'Helvetica',
-                    fontSize: 40
+                    fontSize: 35
                 })
             ], {
                 visible: true,
-                left: this.left,
-                top: this.top + 310,
+                left: this.left * 14.5,
+                top: this.top + 450,
                 clicked: 0
             })
             .on('selected', function() {
                 this.clicked++
                     console.log(this.clicked);
+                if (this.clicked === 1)
+                	this.item(1).setText('Close?')
                 if (this.clicked > 1) {
 					that.display();
                 }

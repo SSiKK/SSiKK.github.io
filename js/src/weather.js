@@ -45,6 +45,11 @@ var YDYW_Weather = SVG_Imitator.extend({
             originX: 'center',
             left: this.left,
             top: this.top - 450,
+            selectable: false,
+            hasControls: false,
+            hasBorders: false,
+            lockMovementX: true,
+            lockMovementY: true,
             fontFamily: 'Helvetica',
             fontSize: 40
         })
@@ -61,6 +66,11 @@ var YDYW_Weather = SVG_Imitator.extend({
             originX: 'center',
             left: this.left + 200,
             top: this.top - 400,
+            selectable: false,
+            hasControls: false,
+            hasBorders: false,
+            lockMovementX: true,
+            lockMovementY: true,
             fontFamily: 'Helvetica',
             fontSize: 30
         })
@@ -76,6 +86,11 @@ var YDYW_Weather = SVG_Imitator.extend({
 		            originX: 'center',
 		            left: that.left - 120,
 		            top: that.top - 250,
+                    selectable: false,
+                    hasControls: false,
+                    hasBorders: false,
+                    lockMovementX: true,
+                    lockMovementY: true,
 		            fontFamily: 'Helvetica',
 		            fontSize: 70
 		        })
@@ -103,10 +118,11 @@ var YDYW_Weather = SVG_Imitator.extend({
 	                        scaleX: 0.45,
 	                        scaleY: 0.45,
 	                        // fill: 'white',
-	                        hasControls: false,
-	                        hasBorders: false,
-	                        lockMovementX: true,
-	                        lockMovementY: true,
+                            selectable: false,
+                            hasControls: false,
+                            hasBorders: false,
+                            lockMovementX: true,
+                            lockMovementY: true,
 	                        visible: true
 	                    }))
 	                })

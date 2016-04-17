@@ -166,10 +166,10 @@
         messageIn = new YDYW_Message();
         messageIn.init(canvas);
         messageIn.set({
-            width: localWidth * .30,
-            height: localHeight * 0.25,
-            left: localWidth, // * 1.25, //300,
-            top:localHeight * .3 // 250,
+            width: doorWidth,
+            height: doorHeight,
+            left: insideDoorLeft, // * 1.25, //300,
+            top: doorTop // 250,
         });
     }
 
