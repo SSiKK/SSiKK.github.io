@@ -50,7 +50,7 @@ var YDYW_Message = SVG_Imitator.extend({
 
         if (this.subCanvasOn) {
 			fabric.util.animate({
-	            startValue: 200,
+	            startValue: that.subCanvas.height,
 	            endValue: 0,
 	            duration: 1000,
 	            onChange: function(value) {
@@ -63,7 +63,7 @@ var YDYW_Message = SVG_Imitator.extend({
         } else {
             fabric.util.animate({
                 startValue: 0,
-                endValue: 200,
+                endValue: that.height,
                 duration: 1000,
                 onChange: function(value) {
                     that.subCanvas.setHeight(value)

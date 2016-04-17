@@ -20,12 +20,14 @@
     var doorTop = 0;
     var doorWidth = 555;
     var doorHeight = localHeight;
-    
+
     var messageIn;
- 
+
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
     var zoomFactor = canvas.height / localHeight;
+
+
     // set background to blue to make it easier to see it
     canvas.backgroundColor = "#DDDDDD"; // light grey
 
@@ -33,7 +35,7 @@
     DrawDoors();
 
     // Draw the Message Box
-    DrawMessageBox();
+    // DrawMessageBox();
 
     // Draw the Camera view and associated controls
     DrawCameraView();
@@ -63,7 +65,7 @@
             radius: 20.0
         }
     });
-    
+
     var soundMgr = new YDYW_soundManager();
     soundMgr.init();
     soundMgr.addSound();
@@ -127,32 +129,29 @@
         var cameraView = new YDYW_Camera();
             cameraView.init(canvas)
             cameraView.set({
-                width: 444,
+                width: localWidth * .30,
                 height: localHeight * 0.25,
-                left: 300,
-                top: 300 // 250
+                left: localWidth * 0.25,
+                top: localHeight * .3 // 250
             });
-            // cameraView.viewport.on('selected', function(options) {
-            //     cameraView.toggleFullScreenViewport();
-            // });
     }
 
     // Instantiate the message class to set the 4 parameters from SVG_Imitator
     function DrawMessageBox(){
         subC = document.createElement('canvas')
         subC.id = 'subC';
-        subC.width = "300";
-        subC.height = "200";
+        subC.width = canvas.height * 0.3036437247 + "";
+        subC.height = canvas.height * 0.25 +"";
         subC.style.border = "2px solid black"
         document.body.appendChild(subC);
 
         messageIn = new YDYW_Message();
         messageIn.init(canvas);
         messageIn.set({
-            top:250,
-            left:300,
-            width: 300.0,
-            height: 200.0
+            top:localHeight * .3, // 250,
+            left: localWidth * 0.25, //300,
+            width: 350,
+            height: localHeight * 0.25
         });
     }
 
@@ -163,7 +162,7 @@
             top: 500,
             left: 300,
             height: 300.0,
-            width: 500.0
+            width: 444.0
         });
     }
 
