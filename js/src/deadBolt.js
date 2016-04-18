@@ -11,7 +11,7 @@ var YDYW_DeadBolt = SVG_Imitator.extend({
 		this.lockActivateColor = "rgba(200,135,142,1.0)";
 		this.lockDeactivateColor = "rgba(142,200,135,1.0)";
 		this.oulineColor = "black";
-
+		this.cb = null;
 		this.defaults = {
 			hasControls: false,
 			hasBorders: false,
@@ -40,6 +40,7 @@ var YDYW_DeadBolt = SVG_Imitator.extend({
 		// Draw
 		if (!this.holder) {
 			this.holder = new fabric.Rect(this.defaults);
+			this.holder.on('selected', this.cb);
 			this.canvas.add(this.holder);
 		}
 		if (!this.bolt) {
@@ -52,6 +53,7 @@ var YDYW_DeadBolt = SVG_Imitator.extend({
 		}
 		
 		this.holder.set({
+			selectable: true,
 			fill: this.locked ? this.lockActivateColor: this.lockDeactivateColor,
 			width: this.width,
 			height: this.height,

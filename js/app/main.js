@@ -206,6 +206,9 @@
                 cy: doorTop + doorHeight/2.0,
                 cx: outsideDoorLeft + 40,
                 radius: 20.0
+            },
+            cb: function() {
+                lock.toggleLockedStatusAndShow();
             }
         });
 
@@ -310,8 +313,9 @@
             fill : "white",
             visible: false,
             RowHeadings : ["testing"],
-            RowIconNumber : [1,2,1],
-            buttonDataList: [{
+            RowIconNumber : [5,4,5],
+            buttonDataList: [
+                    {
                         type: "icon", // label/icon/tab
                         text: "language", // displays the text inside the button
                         icon: "js/assets/img/icons/language.svg", //icon asset path
@@ -328,6 +332,36 @@
                             soundCheckBox.show();
                             Menu.hide();
                         }
+                    },
+                    {
+                        icon: '../js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: '../js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: '../js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: '../js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: '../js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: '../js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: '../js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: '../js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: '../js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: '../js/assets/svg/incognito.svg'
                     },
                     {
                         icon: '../js/assets/svg/incognito.svg'
