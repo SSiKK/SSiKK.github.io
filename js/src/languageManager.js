@@ -45,12 +45,12 @@ var YDYW_languageManager = Class.extend({
 	    		hiName: "Hello, Name!",
 	    		hasPhoneInstruct: "If you would like to\nchange your profile\npicture, touch the\ncamera or choose a\nphoto",
 	    		getKnowU: "Getting to know you...",
-	    		noPhoneInstruct: "Touch the camera icon to take your profile picture\nOR\nswipe through the array of available photos",
+	    		noPhoneInstruct: "Touch the camera icon to take your profile picture\n         OR\nswipe through the array of\navailable photos",
 	    		fTfKeys: "First things first. Keys...",
-	    		handInstruct: "Place your hand in the space provided",
-	    		greenHand: "Great! Now you can user your hand-print to unlock your door!",
+	    		handInstruct: "Place your hand in the\n     space provided",
+	    		greenHand: "Great! Now you can user your\nhand-print to unlock your door!",
 	    		sweet: "SWEET",
-	    		aFewMore: "A couple more things and you are all set"
+	    		aFewMore: "A couple more things\nand you are all set"
 			},
 
 			"ಕನ್ನಡ": {
@@ -71,12 +71,12 @@ var YDYW_languageManager = Class.extend({
 	    		hiName: "ಹಲೋ, ಹೆಸರು!",
 	    		hasPhoneInstruct: "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಚಿತ್ರ\nಬದಲಾಯಿಸಲು ಬಯಸುತ್ತೀರಿ,\nಕ್ಯಾಮರಾ ಸ್ಪರ್ಶಕ್ಕೆ\nಅಥವಾ ಫೋಟೋ ಆಯ್ಕೆ",
 	    		getKnowU: "ನೀವು ತಿಳಿಯಲು ಗೆಟ್ಟಿಂಗ್ ...",
-	    		noPhoneInstruct: "ಕ್ಯಾಮರಾ ಐಕಾನ್ ಲಭ್ಯವಿರುವ ಛಾಯಾಚಿತ್ರಗಳನ್ನು ರಚನೆಯ ಮೂಲಕ ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಚಿತ್ರ ಅಥವಾ ಸ್ವೈಪ್ ತೆಗೆದುಕೊಳ್ಳಲು ಟಚ್",
+	    		noPhoneInstruct: "ಕ್ಯಾಮರಾ ಐಕಾನ್ ಲಭ್ಯವಿರುವ\nಛಾಯಾಚಿತ್ರಗಳನ್ನು ರಚನೆಯ ಮೂಲಕ\nನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಚಿತ್ರ ಅಥವಾ\nಸ್ವೈಪ್ ತೆಗೆದುಕೊಳ್ಳಲು ಟಚ್",
 	    		fTfKeys: "ಮೊದಲ ವಿಷಯಗಳು ಮೊದಲು. ಕೀಸ್ ...",
 	    		handInstruct: "ಜಾಗದಲ್ಲಿ ನಿಮ್ಮ ಕೈ ಇರಿಸಿ",
-	    		greenHand: "ಗ್ರೇಟ್! ಈಗ ನೀವು ಬಳಕೆದಾರ ನಿಮ್ಮ ಬಾಗಿಲು ಅನ್ಲಾಕ್ ನಿಮ್ಮ ಕೈ ಮುದ್ರಿಸಬಹುದು!",
+	    		greenHand: "ಗ್ರೇಟ್! ಈಗ ನೀವು ಬಳಕೆದಾರ\nನಿಮ್ಮ ಬಾಗಿಲು ಅನ್ಲಾಕ್\nನಿಮ್ಮ ಕೈ ಮುದ್ರಿಸಬಹುದು!",
 	    		sweet: "ಸಿಹಿ",
-	    		aFewMore: "ಒಂದೆರಡು ಹೆಚ್ಚು ವಿಷಯಗಳನ್ನು ಮತ್ತು ನೀವು ಎಲ್ಲಾ ಸೆಟ್ ಇವೆ"
+	    		aFewMore: "ಒಂದೆರಡು ಹೆಚ್ಚು\nವಿಷಯಗಳನ್ನು ಮತ್ತು\nನೀವು ಎಲ್ಲಾ ಸೆಟ್ ಇವೆ"
 
 			},
 			"हिंदी": {

@@ -33,6 +33,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
         this.languageMgr.addSetTextCallback(this.setTextCallback.bind(this));
         // this.floatingWelcome();
         this.chooseLangauge();
+        // this.newUserImageCapture()
 
     },
 
@@ -121,10 +122,10 @@ var YDYW_Welcome = SVG_Imitator.extend({
         var languagePromises = [];
 
         for (var i = 0; i < 24; i++) {
-			console.log(i, getLangCode(i));
+            console.log(i, that.getLangCode(i));
             languagePromises.push(
                 new Promise(function(resolve, reject) {
-            		var url = 'js/assets/flags/byIndex/' + i + '.png'
+                    var url = 'js/assets/flags/byIndex/' + i + '.png'
                     fabric.Image.fromURL(url, function(img) {
                         resolve(img.set({
                             scaleX: .5,
@@ -148,15 +149,15 @@ var YDYW_Welcome = SVG_Imitator.extend({
                 results.forEach(function(flag, i) {
                     var x = i % 4;
                     var y = Math.floor(i / 4);
-                    console.log(i, x, y, flag );
+                    console.log(i, x, y, flag);
                     flag.set({
                         top: that.top + 500 + (y * 250),
                         left: that.left + 200 + (x * 250)
                     })
-                    // console.log(i, flag.positionID, getLangCode(flag.positionID), flag.code);
+                    // console.log(i, flag.positionID, that.getLangCode(flag.positionID), flag.code);
                     flag.on('selected', function() {
-                    	console.log('flag selected!', getLangCode(i));
-                        that.languageMgr.setLanguage(getLangCode(i));
+                        console.log('flag selected!', that.getLangCode(i));
+                        that.languageMgr.setLanguage(that.getLangCode(i));
 
                         results.forEach(function(lang) {
                             that.canvas.remove(lang);
@@ -180,10 +181,8 @@ var YDYW_Welcome = SVG_Imitator.extend({
         var that = this;
         // New user provided with camera and an array of hip images to set his profile picture.
 
-        var hipPromises = [];
-
         this.canvas.add(
-        	this.languageEntries['hiName'].set({
+            this.languageEntries['hiName'].set({
                 'fontSize': 80,
                 'top': that.top + 500,
                 'left': that.left + 700
@@ -195,63 +194,140 @@ var YDYW_Welcome = SVG_Imitator.extend({
             })
         );
 
-        for (var i = 0; i < 5; i++) {
-            url = 'js/assets/img/profiles/p' + i + '.jpg'
-            hipPromises.push(
-                new Promise(function(resolve, reject) {
-                    fabric.Image.fromURL(url,
-                        function(img) {
-                            resolve(img.set({
-                                scaleX: .1,
-                                scaleY: .1,
-                                originX: 'center',
-                                originY: 'center',
-                                stroke: 'black',
-                                strokeWidth: 25,
-                                opacity: 0.3,
-                                selectable: true,
-                                hasControls: false,
-                                hasBorders: false,
-                                lockMovementX: true,
-                                lockMovementY: true
-                            }))
-                        })
+        var images = [0, 1].map(function(i) {
+                return new Promise(function(resolve, reject) {
+                    fabric.loadSVGFromURL('js/assets/svg/stack.svg', function(obj, opt) {
+                        resolve(fabric.util.groupSVGElements(obj, {
+                            width: opt.width,
+                            height: opt.height,
+                            svgUid: opt.svgUid,
+                            toBeParsed: opt.toBeParsed,
+                            originX: 'center',
+                            originY: 'center',
+                            top: that.top + 600,
+                            scaleX: 0.2,
+                            scaleY: 0.2,
+                            fill: 'black',
+                            flipX: (i > 0) ? true : false,
+                            hasControls: false,
+                            hasBorders: false,
+                            lockMovementX: true,
+                            lockMovementY: true,
+                        }))
+                    })
+                })
+            })
+            .concat(
+                // Generate our Image array and concat them to our panels
+                [0, 1, 2, 3, 4].map(function(i) {
+                    url = 'js/assets/img/profiles/p' + i + '.jpg'
+                    return new Promise(function(resolve, reject) {
+                        fabric.Image.fromURL(url,
+                            function(img) {
+                                resolve(img.set({
+                                    scaleX: .1,
+                                    scaleY: .12,
+                                    originX: 'center',
+                                    originY: 'center',
+                                    top: that.top-50,
+                                    stroke: 'black',
+                                    strokeWidth: 25,
+                                    selectable: false,
+                                    hasControls: false,
+                                    hasBorders: false,
+                                    lockMovementX: true,
+                                    lockMovementY: true,
+                                    visible: false
+                                }))
+                            })
+                    })
                 })
             )
-        }
-
-
-        // Resolve all of the Promises
-        Promise.all(hipPromises)
+        console.log("newUserImageCapture", images);
+        // resolve all of our images now
+        Promise.all(images)
             .then(function(results) {
-                that.hipImagesArr = results.map(function(img, i) {
-                    img.set({
-                        left: that.left + 800 + (i * 75),
-                        top: that.top + 600
-                    })
-                    .on('mousemove', function() {
-                        console.log("mouseOver");
-                        var there = this;
-                        results.forEach(function(t) {
-                            if (t !== this) {
-                                t.sendBackwards()
-                                t.opacity = 0.3;
-                            }
-                            there.opacity = 1.0;
-                            there.bringToFront();
-                        })
-                    })
-                    .on('selected', function() {
-                        results.map(function(t) {
-                            that.canvas.remove(t);
-                            that.canvas.remove(that.languageEntries['hiName']);
-                            that.canvas.remove(that.languageEntries['hasPhoneInstruct']);
-                        })
-                        that.handprintScanner();
+                var panels = results.slice(0, 2);
+                var imagesArray = results.slice(2);
+                var index = imagesArray.length - 1;
 
-                    })
-                    that.canvas.add(img)
+
+                window.hip = that.hipImagesArr = new fabric.Group(imagesArray, {
+                    visible: true,
+                    left: that.left + 815,
+                    top: that.top + 550,
+                    hasControls: false,
+                    hasBorders: false,
+                    lockMovementX: true,
+                    lockMovementY: true,
+                    clicked: 0
                 })
+
+                that.canvas.add(that.hipImagesArr);
+                that.hipImagesArr.item(index).setVisible(true).bringToFront();
+                that.hipImagesArr.bringToFront();
+
+                panels.forEach(function(panel, i) {
+                    console.log(panel, i);
+                    panel.set({
+                        left: that.left + 800 + (i * 125),
+                    })
+                    panel.on('selected', function() {
+                        index += (i < 1) ? -1 : 1
+                        var pre = index - 1,
+                            post = index + 1;
+
+                        console.log(index, pre, post, imagesArray.length - 1);
+                        if (index >= imagesArray.length - 1) {
+                            console.log('too large!');
+                            post = index = imagesArray.length - 1;
+
+                        } else if (index <= 0) {
+                            pre = index = 0;
+                        }
+
+                        that.hipImagesArr.item(pre).setVisible(false);
+                        that.hipImagesArr.item(post).setVisible(false);
+                        that.hipImagesArr.item(index).setVisible(true);
+                        that.hipImagesArr.bringToFront();
+                        that.canvas.deactivateAll();
+                        that.canvas.renderAll();
+                    })
+
+                    that.canvas.add(panel)
+                })
+
+                // that.hipImagesArr.item(index);
+
+
+                // imagesArray.map(function(img, i) {
+                //     img.set({
+                //         left: that.left + 800 + (i * 75),
+                //         top: that.top + 600
+                //     })
+                //         .on('mousemove', function() {
+                //             console.log("mouseOver");
+                //             var there = this;
+                //             results.forEach(function(t) {
+                //                 if (t !== this) {
+                //                     t.sendBackwards()
+                //                     t.opacity = 0.3;
+                //                 }
+                //                 there.opacity = 1.0;
+                //                 there.bringToFront();
+                //             })
+                //         })
+                //         .on('selected', function() {
+                //             results.map(function(t) {
+                //                 that.canvas.remove(t);
+                //                 that.canvas.remove(that.languageEntries['hiName']);
+                //                 that.canvas.remove(that.languageEntries['hasPhoneInstruct']);
+                //             })
+                //             that.handprintScanner();
+
+                //         })
+                //     that.canvas.add(img)
+                // })
             })
     },
 
@@ -259,7 +335,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
     existingUserProfile: function() {
         var that = this;
         /** Existing Users. A text for name, Image display and give users an option to change the profile picture
-		 or choosing from the array of hip images. **/
+         or choosing from the array of hip images. **/
         // Set time interval of 2s and next screen appears
 
     },
@@ -306,31 +382,33 @@ var YDYW_Welcome = SVG_Imitator.extend({
     setTextCallback: function(dict) {
         for (var key in this.languageEntries) {
             console.log(key, dict[key]);
-            this.languageEntries[key].set({text: dict[key]})
+            this.languageEntries[key].set({
+                text: dict[key]
+            })
 
+        }
+    },
+
+    getLangCode: function(id) {
+        switch (id) {
+            case 11:
+                return "Italiano";
+                break;
+            case 9:
+                return "हिंदी";
+                break;
+            case 8:
+                return "ಕನ್ನಡ";
+                break;
+            case 7:
+            case 19:
+            case 20:
+            case 23:
+                return "Español";
+                break;
+            default:
+                return 'English';
+                break;
         }
     }
 });
-
-function getLangCode(id) {
-    switch (id) {
-        case 11:
-            return "Italiano";
-            break;
-        case 9:
-            return "हिंदी";
-            break;
-        case 8:
-            return "ಕನ್ನಡ";
-            break;
-        case 7:
-        case 19:
-        case 20:
-        case 23:
-            return "Español";
-            break;
-        default:
-            return 'English';
-            break;
-    }
-}

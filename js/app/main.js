@@ -50,8 +50,17 @@
     // Draw the Camera view and associated controls
     var mirrorView = initMirror(canvas);
 
+    // Draw emergencyView
+    // var emergencyView = initEmergency(canvas);
+
     //Maps Layout
     var mapView = initMap(canvas);
+
+
+    //Weather layout
+    var weatherView, WeatherContainer;
+    DrawWeatherLayout();
+
 
 
 
@@ -67,10 +76,10 @@
     soundMgr.init();
     AddSounds();
 
-    var userManager = new YDYW_userManager();
-    userManager.init();
+    //var userManager = new YDYW_userManager();
+    //userManager.init();
     //Adding a few users to show
-    AddUsers();
+    //AddUsers();
 
     // Initialize the ImageManager
     var imageManager = initImageLoader();
@@ -94,18 +103,7 @@
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
-    // var welcome = new YDYW_Welcome();
-    // welcome.init(canvas);
-    // welcome.set({
-    //     top: doorTop,
-    //     left: insideDoorLeft,
-    //     width: doorWidth,
-    //     height: doorHeight,
-    //     languageMgr: languageMgr
-    // })
-
-
-
+    var welcomeView = initWelcome(canvas);
 
 
     SetupMenu();
@@ -190,13 +188,27 @@
     }
 
     function DrawWeatherLayout(){
-        var weatherView = new YDYW_Weather();
+        weatherView = new YDYW_Weather();
         weatherView.init(canvas);
         weatherView.set({
-            top: 500,
-            left: 300,
+            top: 520,
+            left: 320,
             height: 300.0,
-            width: 444.0
+            width: doorWidth,
+            visible: false
+        });
+        WeatherContainer = new YDYW_Container();
+        WeatherContainer.init(canvas);
+        WeatherContainer.set({
+            top: doorTop + 10 ,
+            left: insideDoorLeft + 10,
+            height: 150.0,
+            width: doorWidth - 20,
+            fill: "transparent",
+            stroke: "black",
+            visible: false,
+            zoomFactor: zoomFactor
+
         });
     }
 
@@ -209,32 +221,6 @@
         soundMgr.addSound({src:'js/assets/sound/violin.wav', img:'js/assets/img/icons/violin.png', id: "violin"});
         soundMgr.addSound({src:'js/assets/sound/harp.wav', img:'js/assets/img/icons/harp.png', id: "harmonica"});
         soundMgr.addSound({src:'js/assets/sound/trumpet.wav', img:'js/assets/img/icons/trumpet.ico', id: "trumpet"});
-    }
-
-
-    function DrawMaps(){
-        console.log("draw bitch!");
-        var mapView = new YDYW_Maps();
-        mapView.init(canvas);
-        mapView.set({
-            left: localWidth*0.25,
-            top: localHeight*0.5, // 250
-            width: localWidth*0.30,
-            height: localHeight*0.25
-        });
-    }
-
-    function DrawEmergency (){
-        var emergencyView = new YDYW_Emergency();
-        emergencyView.init(canvas);
-        emergencyView.set({
-            //left: doorWidth - doorWidth/2 + 22,
-            //top: localHeight - localHeight/2 , // 250
-            left: doorWidth + 110,
-            top: localHeight + 110, // 250
-            width: doorWidth*2 + 130,
-            height: localHeight*2 + 220
-        });
     }
 
 
@@ -297,11 +283,18 @@
             icon: "js/assets/svg/circle.svg", //icon asset path
             cb: function(){
                 if(menuButton.selected === true){
+
+                    //welcome.hide();
+                    WeatherContainer.hide();
+                    weatherView.hide();
                     Menu.hide();
                     soundCheckBox.hide();
                     languageCheckBox.hide();
                     menuButton.selected = false;
                 }else{
+                   // welcome.show();
+                    WeatherContainer.show();
+                    weatherView.show();
                     Menu.show();
                     menuButton.selected = true;
                 }
@@ -317,8 +310,8 @@
             top: (doorTop + doorHeight/2.0) - 100,
             left: insideDoorLeft + doorWidth/2.0 - 150,
             height : 200,
-            width : 300,
-        }
+            width : 300
+        };
         soundCheckBox.addEntries(soundMgr.getIDs());
         soundCheckBox.onSelect(function(id) {
             soundMgr.setCurrent(id);
@@ -524,7 +517,7 @@
                 width: localWidth * .30,
                 height: localHeight * 0.25,
                 left: localWidth * 0.25,
-                top: localHeight * .3 // 250
+                top: localHeight * .3  // 250
             })
         return camera
     }
@@ -547,6 +540,34 @@
         imgLoader.addImage({url:"js/assets/img/profiles/KB.jpg", id:"krishna"});
         imgLoader.addPattern({url:"js/assets/img/profiles/people1.jpg", id:"kid"});
         return imgLoader;
+    }
+
+    function initEmergency (canvas){
+        var emergency = new YDYW_Emergency();
+        emergency.init(canvas);
+        emergency.set({
+            //left: doorWidth - doorWidth/2 + 22,
+            //top: localHeight - localHeight/2 , // 250
+            left: doorWidth + 110,
+            top: localHeight + 110, // 250
+            width: doorWidth*2 + 130,
+            height: localHeight*2 + 220
+        });
+        return emergency;
+    }
+
+    function initWelcome(canvas) {
+        var welcome = new YDYW_Welcome();
+        welcome.init(canvas);
+        welcome.set({
+            top: doorTop,
+            left: insideDoorLeft,
+            width: doorWidth,
+            height: doorHeight,
+            languageMgr: languageMgr,
+            mirror: mirrorView
+        })
+        return welcome
     }
 
 

@@ -195,6 +195,14 @@ var YDYW_Message = SVG_Imitator.extend({
 
     },
 
+    show: function() {
+
+    },
+
+    hide: function() {
+
+    },
+
     sendMessage: function() {
         // Sends the message on the inside of the door
 
