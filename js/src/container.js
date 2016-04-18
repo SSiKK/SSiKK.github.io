@@ -2,12 +2,7 @@ var container = Class.extend({
 
 
 	construct: function () {
-		this.left = 0;
-		this.top = 0;
-		this.width = 0;
-		this.height = 0;
-		this.button = {};
-		this.controlAndOffsetList = [];
+
 	},
 	init: function (data) {
 		this.left = data.left;
@@ -19,8 +14,10 @@ var container = Class.extend({
 			id: "controlBoard",
 			left: this.left,
 			top: this.top,
-			fill: 'rgb(60,60,60)',
-			stroke: 'black',
+			fill: this.fill,
+			stroke: this.stroke,
+			rx : 10,
+			ry : 10,
 			width: this.width,
 			height: this.height,
 			angle: 0
