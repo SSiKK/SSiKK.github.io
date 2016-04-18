@@ -44,7 +44,7 @@
 
     // Draw the Basic In/Outside doors,
     DrawDoors();
-
+    //
     placeElementsOnDoor();
     // Draw the Message Box
     //DrawMessageBox();
@@ -53,7 +53,7 @@
     //DrawCameraView();
 
     //Weather layout
-    DrawWeatherLayout();
+    //DrawWeatherLayout();
 
     //Maps Layout
     //DrawMaps();
@@ -79,15 +79,27 @@
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
-    var welcome = new YDYW_Welcome();
-    welcome.init(canvas);
-    welcome.set({
-        top: doorTop,
-        left: insideDoorLeft,
-        width: doorWidth,
-        height: doorHeight,
-        languageMgr: languageMgr
-    })
+    //var welcome = new YDYW_Welcome();
+    //welcome.init(canvas);
+    //welcome.set({
+    //    top: doorTop,
+    //    left: insideDoorLeft,
+    //    width: doorWidth,
+    //    height: doorHeight,
+    //    languageMgr: languageMgr
+    //});
+
+    //var welcome = new YDYW_Button();
+    //welcome.init(canvas);
+    //welcome.set({
+    //    top: doorTop  + doorHeight/2.0 - 50,
+    //    left: outsideDoorLeft + 40,
+    //    type: "tab",
+    //    text : "outside door",
+    //    visible: false,
+    //    fill: '#c8878e',
+    //    zoomFactor: zoomFactor
+    //});
 
     SetupMenu();
     languageMgr.setLanguage("English");
@@ -295,11 +307,13 @@
             icon: "js/assets/svg/circle.svg", //icon asset path
             cb: function(){
                 if(menuButton.selected === true){
+                   // welcome.hide();
                     Menu.hide();
                     soundCheckBox.hide();
                     languageCheckBox.hide();
                     menuButton.selected = false;
                 }else{
+                   // welcome.show();
                     Menu.show();
                     menuButton.selected = true;
                 }
@@ -386,14 +400,26 @@
                         }
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/childsafe.svg',
+                        icon2: 'js/assets/svg/childunsafe.svg',
+                        text: "Child Safety"
+                    },
+                    {
+                        icon: 'js/assets/svg/housesecure.svg',
+                        icon2: 'js/assets/svg/houseunsecure.svg',
+                        text: "  Home Alarm"
                     },
                     {
                         icon: 'js/assets/svg/incognito.svg'
                     },
-                    {
-                        icon: 'js/assets/svg/incognito.svg'
-                    },
+                    //[
+                    //    {
+                    //        text: 'inside door'
+                    //    },
+                    //    {
+                    //        text: 'outside door'
+                    //    }
+                    //],
                     {
                         icon: 'js/assets/svg/incognito.svg'
                     },

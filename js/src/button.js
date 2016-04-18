@@ -7,8 +7,8 @@ var YDYW_Button = SVG_Imitator.extend({
 		this.left = null;
 		this.top = null;
 		this.img = null;
-		this.width = 30;
-		this.height = 20;
+		this.width = null;
+		this.height = null;
 		this.radius = 40;
 		this.shape = "rect"; // button type can be circle or rect
 		this.type = "label"; // button type can be icon or label
@@ -44,6 +44,7 @@ var YDYW_Button = SVG_Imitator.extend({
 		var label = new fabric.Text(this.text,{
 			fontFamily: "helvetica",
 			fontSize: this.textSize,
+			textAlign: "center",
 			originX: 'center',
 			originY: 'center'
 		});
@@ -172,6 +173,8 @@ var YDYW_Button = SVG_Imitator.extend({
 								if(that.icon2 === null)
 									that.img.setColor('white');
 								else{
+									img2.setColor('white');
+									that.img.setColor('white');
 									if(that.selected === true) {
 										that.img.set({visible: false});
 										img2.set({visible: true});
@@ -193,6 +196,10 @@ var YDYW_Button = SVG_Imitator.extend({
 								label.setColor('black');
 								if(that.icon2 === null)
 									that.img.setColor('black');
+								else{
+									img2.setColor('black');
+									that.img.setColor('black');
+								}
 								canvas.renderAll();
 
 								//console.log ("hover event!", this);
@@ -319,6 +326,7 @@ var YDYW_Button = SVG_Imitator.extend({
 
 			var rectWidth = label.width + 10;
 			var rectHeight = this.textSize + 5;
+
 			shapeObject = new fabric.Rect({
 				originX: 'center',
 				originY: 'center',
@@ -339,7 +347,8 @@ var YDYW_Button = SVG_Imitator.extend({
 				hasControls: false,
 				hasBorders: true,
 				lockMovementX: true,
-				lockMovementY: true });
+				lockMovementY: true,
+				visible: this.visible});
 
 
 			this.canvas.add(this.button);
@@ -363,13 +372,12 @@ var YDYW_Button = SVG_Imitator.extend({
 			});
 
 		}
-
 		else if(this.type = "tab"){
 
 			var rectWidth = this.width || label.width + 10;
 			var rectHeight = this.height || this.textSize + 5;
 
-			label.set({textAlign: 'center'});
+			//label.set({textAlign: 'center'});
 
 
 			shapeObject = new fabric.Rect({
@@ -380,6 +388,7 @@ var YDYW_Button = SVG_Imitator.extend({
 				fill: fillColor,
 				width: rectWidth,
 				height: rectHeight
+				//visible: this.visible
 			});
 
 			label.originX = 'center';
@@ -392,7 +401,9 @@ var YDYW_Button = SVG_Imitator.extend({
 				hasBorders: true,
 				selectable: true,
 				lockMovementX: true,
-				lockMovementY: true });
+				lockMovementY: true,
+				visible: this.visible
+			});
 
 
 			this.canvas.add(this.button);
