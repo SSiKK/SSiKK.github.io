@@ -7,22 +7,22 @@ var YDYW_Button = SVG_Imitator.extend({
 		this.left = null;
 		this.top = null;
 		this.img = null;
-		this.width = this.width || 30;
-		this.height = this.height || 20;
-		this.radius = this.radius || 40;
+		this.width = 30;
+		this.height = 20;
+		this.radius = 40;
 		this.shape = "rect"; // button type can be circle or rect
 		this.type = "label"; // button type can be icon or label
-		this.text = this.text || "";
+		this.text = "";
 		this.textColor = 'none';
-		this.textSize = this.textSize || 30;
+		this.textSize = 30;
 		this.icon = null;
 		this.imgSrc = null;
-		this.fill = this.fill || null;
+		this.fill = null;
 		this.zoomFactor = null;
 		this.canvas = null;
 		this.strokeWidth = 1;
 		this.cb = function(){};
-        this.visible = true;
+		this.visible = true;
 		//Feature specific status flags
 		this.on = false;
 		this.selected = false;
@@ -40,8 +40,9 @@ var YDYW_Button = SVG_Imitator.extend({
 		var that = this;
 		// Draw
 		console.log ("being drawn!", this);
-		
+
 		var label = new fabric.Text(this.text,{
+			fontFamily: "helvetica",
 			fontSize: this.textSize,
 			originX: 'center',
 			originY: 'center'

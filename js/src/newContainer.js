@@ -2,18 +2,18 @@ var YDYW_Container = SVG_Imitator.extend({
 
     init: function (canvas) { // Initialize
         //Attributes
-        this.left = this.left || 0;
-        this.top = this.top || 0;
-        this.width = this.width || 0;
-        this.height = this.height || 0;
-        this.fill = this.fill || "white";
-        this.stroke = this.stroke || "white";
-        this.buttonDataList = this.buttonDataList || [];
-        this.RowHeadings = this.RowHeadings || [];
-        this.RowIconNumber =  this.RowIconNumber || [];
+        this.left = 0;
+        this.top =  0;
+        this.width =  0;
+        this.height =  0;
+        this.fill = "white";
+        this.stroke = "white";
+        this.buttonDataList =  [];
+        this.RowHeadings =  [];
+        this.RowIconNumber =  [];
         this.controlAndOffsetList = [];
         this.board = null;
-        this.zoomFactor = this.zoomFactor || null;
+        this.zoomFactor = null;
         this.canvas = null;
         this.buttonList = [];
         this.showing = true;
@@ -75,7 +75,7 @@ var YDYW_Container = SVG_Imitator.extend({
                     zoomFactor: this.zoomFactor,
                     textSize: this.buttonDataList[index].textSize || 20, // textSize
                     radius: buttonRadius, // define a radius if you are going to make an icon. you dont need to do this for the label
-                    icon: this.buttonDataList[index].icon || '../js/assets/svg/incognito.svg', //icon asset path
+                    icon: this.buttonDataList[index].icon || 'js/assets/svg/incognito.svg', //icon asset path
                     cb: this.buttonDataList[index].cb || function(){},
                     visible:this.visible
                 });
@@ -83,7 +83,10 @@ var YDYW_Container = SVG_Imitator.extend({
                 this.buttonList.push(button);
                 index++;
             }
-
+            //canvas.add(new fabric.Line([ rowLeft + buttonHeight, rowTop, rowLeft + (2* indexh + 1)*buttonHeight,  rowTop], {
+            //
+            //    stroke: 'red'
+            //}));
             rowTop = rowTop + buttonHeight;
             console.log("Completed creating button " + indexv);
 
