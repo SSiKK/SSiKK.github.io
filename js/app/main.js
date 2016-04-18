@@ -405,12 +405,13 @@
                         text: "Child Safety"
                     },
                     {
+                        icon: 'js/assets/svg/key.svg',
+                        text: "Keys"
+                    },
+                    {
                         icon: 'js/assets/svg/housesecure.svg',
                         icon2: 'js/assets/svg/houseunsecure.svg',
                         text: "  Home Alarm"
-                    },
-                    {
-                        icon: 'js/assets/svg/incognito.svg'
                     },
                     //[
                     //    {
@@ -421,31 +422,40 @@
                     //    }
                     //],
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/users.svg',
+                        text: "Users"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/camera.svg',
+                        text: "Camera"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/mirror.svg',
+                        text: "Mirror"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/notes.svg',
+                        text: "Notes"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/maps.svg',
+                        text: "Maps"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/doorlog.svg',
+                        text: "Door Log"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/help.svg',
+                        text: "Tutorial"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/alert.svg',
+                        text: "Emergency"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/paint.svg',
+                        text: "Theme"
                     }],
             zoomFactor: zoomFactor
         });
