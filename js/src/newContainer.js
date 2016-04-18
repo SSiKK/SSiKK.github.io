@@ -77,6 +77,7 @@ var YDYW_Container = SVG_Imitator.extend({
                     radius: buttonRadius, // define a radius if you are going to make an icon. you dont need to do this for the label
                     icon: this.buttonDataList[index].icon || 'js/assets/svg/incognito.svg', //icon asset path
                     cb: this.buttonDataList[index].cb || function(){},
+                    icon2: this.buttonDataList[index].icon2 || null,
                     visible:this.visible
                 });
                 //button.hide();
