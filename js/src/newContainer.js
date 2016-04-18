@@ -6,8 +6,8 @@ var YDYW_Container = SVG_Imitator.extend({
         this.top =  0;
         this.width =  0;
         this.height =  0;
-        this.fill = "white";
-        this.stroke = "white";
+        this.fill = "#dddddd";
+        this.stroke = "#dddddd";
         this.buttonDataList =  [];
         this.RowHeadings =  [];
         this.RowIconNumber =  [];
@@ -34,8 +34,8 @@ var YDYW_Container = SVG_Imitator.extend({
             id: "controlBoard",
             left: this.left,
             top: this.top,
-            fill: "#dddddd",
-            stroke: "#dddddd",
+            fill: this.fill,
+            stroke: this.stroke,
             rx : 10,
             ry : 10,
             width: this.width,

@@ -53,7 +53,9 @@
     //DrawCameraView();
 
     //Weather layout
-    //DrawWeatherLayout();
+    var weatherView, WeatherContainer;
+    DrawWeatherLayout();
+
 
     //Maps Layout
     //DrawMaps();
@@ -67,10 +69,10 @@
     soundMgr.init();
     AddSounds();
 
-    var userManager = new YDYW_userManager();
-    userManager.init();
+    //var userManager = new YDYW_userManager();
+    //userManager.init();
     //Adding a few users to show
-    AddUsers();
+    //AddUsers();
 
     var doorLogManager = new YDYW_DoorLog();
     doorLogManager.init(canvas, imageManager);
@@ -214,13 +216,27 @@
     }
 
     function DrawWeatherLayout(){
-        var weatherView = new YDYW_Weather();
+        weatherView = new YDYW_Weather();
         weatherView.init(canvas);
         weatherView.set({
-            top: 500,
-            left: 300,
+            top: 520,
+            left: 320,
             height: 300.0,
-            width: 444.0
+            width: doorWidth,
+            visible: false
+        });
+        WeatherContainer = new YDYW_Container();
+        WeatherContainer.init(canvas);
+        WeatherContainer.set({
+            top: doorTop + 10 ,
+            left: insideDoorLeft + 10,
+            height: 190.0,
+            width: doorWidth - 20,
+            fill: "transparent",
+            stroke: "black",
+            visible: false,
+            zoomFactor: zoomFactor
+
         });
     }
 
@@ -321,13 +337,17 @@
             icon: "js/assets/svg/circle.svg", //icon asset path
             cb: function(){
                 if(menuButton.selected === true){
-                   // welcome.hide();
+                    //welcome.hide();
+                    WeatherContainer.hide();
+                    weatherView.hide();
                     Menu.hide();
                     soundCheckBox.hide();
                     languageCheckBox.hide();
                     menuButton.selected = false;
                 }else{
                    // welcome.show();
+                    WeatherContainer.show();
+                    weatherView.show();
                     Menu.show();
                     menuButton.selected = true;
                 }
@@ -343,8 +363,8 @@
             top: (doorTop + doorHeight/2.0) - 100,
             left: insideDoorLeft + doorWidth/2.0 - 150,
             height : 200,
-            width : 300,
-        }
+            width : 300
+        };
         soundCheckBox.addEntries(soundMgr.getIDs());
         soundCheckBox.onSelect(function(id) {
             soundMgr.setCurrent(id);
