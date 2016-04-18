@@ -25,7 +25,6 @@ var YDYW_imageLoader = Class.extend({
 
 	getPattern: function (id) {
 		var p = this.patterns[id] || this.patterns["donald"];
-		console.log("P-------------------------------------->" , p);
 		return p;
 	},
 	getImageIDs: function() {

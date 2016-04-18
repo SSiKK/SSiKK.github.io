@@ -67,6 +67,18 @@
     soundMgr.init();
     AddSounds();
 
+    var userManager = new YDYW_userManager();
+    userManager.init();
+    //Adding a few users to show
+    AddUsers();
+
+    var doorLogManager = new YDYW_DoorLog();
+    doorLogManager.init(canvas, imageManager);
+    var doorLogButton = new YDYW_Button();
+    doorLogButton.init(canvas);
+    
+    SetupDoorLogSystem();
+    
 
     var languageMgr = new YDYW_languageManager();
     languageMgr.init();
@@ -91,6 +103,7 @@
 
     SetupMenu();
     languageMgr.setLanguage("English");
+    DevControlFunctionality();
     // draw everything at the appropriate scale for this canvas
 
     zoomAll(zoomFactor);
@@ -261,9 +274,10 @@
             },
             cb: function() {
                 lock.toggleLockedStatusAndShow();
+
             }
         });
-
+        lock.toggleLockedStatusAndShow();
         doorBell = new YDYW_Button();
         doorBell.init(canvas);
         doorBell.set({
@@ -432,6 +446,48 @@
         imageManager.init();
         imageManager.addImage({url:"js/assets/img/profiles/KB.jpg", id:"krishna"});
         imageManager.addPattern({url:"js/assets/img/profiles/people1.jpg", id:"kid"});
+    }
+
+    function DevControlFunctionality () {
+        var approachIn = document.getElementById("doorApproachInside");
+        approachIn.addEventListener("click", function(){});
+        var approachOut = document.getElementById("doorApproachOutside");
+        approachOut.addEventListener("click", function(){});
+    }
+
+    function AddUsers() {
+        //passCode: 1234, handPrint:'js/assets/img/icons/hand.png'
+        userManager.addUser({name:"Kyle", img:'js/assets/img/icons/p3.jpg'});
+        userManager.addUser({name:"Shiwangi", img:'js/assets/img/icons/people2.jpg'});
+        userManager.addUser({name:"Saumya", img:'js/assets/img/icons/people1.jpg'});
+        userManager.addUser({name:"Krishna", img:'js/assets/img/icons/people4.jpg'});
+    }
+
+    function SetupDoorLogSystem(){
+        /*doorLogButton = new YDYW_Button();
+        doorLogButton.init(canvas);
+        doorLogButton.set({
+            left: insideDoorLeft + 80,
+            top: doorTop  + doorHeight/2.0 - 70,
+            type: "icon", // label/icon/tab
+            //text: "Menu", // displays the text inside the button
+            zoomFactor: zoomFactor,
+            textSize: 50, // textSize
+            radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+            icon: "js/assets/svg/circle.svg", //icon asset path
+            cb: function(){
+                if(menuButton.selected === true){
+                    Menu.hide();
+                    soundCheckBox.hide();
+                    languageCheckBox.hide();
+                    menuButton.selected = false;
+                }else{
+                    Menu.show();
+                    menuButton.selected = true;
+                }
+
+            }
+        });*/
     }
 
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/

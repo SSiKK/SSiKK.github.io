@@ -56,6 +56,11 @@ var YDYW_LockManager = SVG_Imitator.extend({
 		this.locked = !this.locked;
 		this.doorKnobOut.toggleLockedStatusAndShow();
 		this.deadBolt.toggleLockedStatusAndShow();
+		if (this.locked === false){
+			window.setTimeout(function() {
+				this.toggleLockedStatusAndShow();
+			}.bind(this), 5000);
+		}
 	}
 
 

@@ -12,6 +12,8 @@ body {
 
 div.canvas-container {
     margin-top: 50px;
+    display: block;
+    position: absolute;
 }
 /*body {*/
     /*background-color: lightgrey;*/
@@ -69,4 +71,18 @@ table {
 
 .smallImg {
     width: 500;
+}
+
+
+.devControl {
+    font-family: Helvetica;
+    font-size: 3.0rem;
+    display: block;
+    position: absolute;
+    margin-left: 2000;
+}
+
+.canvasContainer {
+    display: block;
+    position: absolute;
 }
