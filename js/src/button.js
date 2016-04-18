@@ -56,7 +56,79 @@ var YDYW_Button = SVG_Imitator.extend({
 		var shapeObject = null;
 		var promises = [];
 
-		if (this.type === "icon") {
+		if (this.type === "img"){
+
+			if(this.icon === null) this.icon = '../js/assets/img/icons/orange_circle.svg';
+			if(this.icon != null) {
+
+				var iconpromise1 = new Promise(function(resolve, reject){
+					fabric.Image.fromURL(that.icon,function(img) {
+						resolve(
+							img.set({
+								height: options.height,
+								width: options.width,
+								selectable: false,
+								hasBorders: false,
+								originX: 'center',
+								originY: 'center'
+							}).scale(that.radius/options.height)
+						);
+					});
+				});
+				promises.push(iconpromise1);
+				shapeObject = new fabric.Circle({
+					fill: 'transparent',
+					selectable: false,
+					stroke: 'black',
+					strokeWidth: that.strokeWidth,
+					radius: that.radius,
+					originX: 'center',
+					originY: 'center'
+				});
+
+				label.set({
+					top: shapeObject.top + that.radius * 2 ,
+					left: shapeObject.left, //(label.width/2),
+					originX: 'center',
+					originY: 'center'
+				});
+				Promise.all(promises)
+					.then(function(results) {
+						console.log(results);
+						var img1 = results[0];
+						if(img1!=null) {
+							that.button = new fabric.Group([img1, shapeObject, label], {
+								left: that.left * that.zoomFactor,
+								top: that.top * that.zoomFactor,
+								originX: 'center',
+								originY: 'center',
+								hasControls: false,
+								selectable: true,
+								hasBorders: false,
+								lockMovementX: true,
+								lockMovementY: true,
+								visible: that.visible
+							});
+						} else {
+							that.button = new fabric.Group([ shapeObject, label], {
+								left: that.left * that.zoomFactor,
+								top: that.top * that.zoomFactor,
+								originX: 'center',
+								originY: 'center',
+								hasControls: false,
+								selectable: true,
+								hasBorders: false,
+								lockMovementX: true,
+								lockMovementY: true,
+								visible: that.visible
+							});
+						}
+
+						that.canvas.add(that.button);
+					});
+
+			}
+		}else if (this.type === "icon") {
 
 
 
@@ -215,109 +287,6 @@ var YDYW_Button = SVG_Imitator.extend({
 						//}
 
 					});
-
-				//fabric.loadSVGFromURL(that.icon,function(objects,options){
-                //
-                //
-				//	shapeObject = new fabric.Circle({
-				//		fill: 'transparent',
-				//		selectable: false,
-				//		stroke: 'black',
-				//		strokeWidth: that.strokeWidth,
-				//		radius: that.radius,
-				//		originX: 'center',
-				//		originY: 'center'
-				//	});
-                //
-                //
-				//	img = fabric.util.groupSVGElements(objects, options);
-                //
-				//	//	var img = objects;
-				//	img.set({
-				//		height: options.height,
-				//		width: options.width,
-				//		selectable: false,
-				//		hasBorders: false,
-				//		originX: 'center',
-				//		originY: 'center'
-				//	}).scale(that.radius/options.height);
-                //
-				//	var promise = new Promise(function(resolve, reject) {
-				//		fabric.loadSVGFromURL(that.icon2, function(objects, options) {
-				//			img2 = fabric.util.groupSVGElements(objects, options);
-				//			img2.set({
-				//				height: options.height,
-				//				width: options.width,
-				//				selectable: false,
-				//				hasBorders: false,
-				//				originX: 'center',
-				//				originY: 'center'
-				//			}).scale(that.radius/options.height);
-                //
-				//		});
-				//	});
-                //
-                //
-                //
-                //
-				//	label.set({
-				//		top: shapeObject.top + that.radius * 2 ,
-				//		left: shapeObject.left, //(label.width/2),
-				//		originX: 'center',
-				//		originY: 'center'
-				//	});
-                //
-				//	that.img = img;
-                //
-				//	that.button = new fabric.Group([img,shapeObject,label], {
-				//		left: that.left * that.zoomFactor,
-				//		top: that.top * that.zoomFactor,
-				//		originX: 'center',
-				//		originY: 'center',
-				//		hasControls: false,
-				//		selectable: true,
-				//		hasBorders: false,
-				//		lockMovementX: true,
-				//		lockMovementY: true,
-				//		visible: that.visible
-				//	});
-                //
-				//	//console.log("This is the icon button",img);
-				//	that.button.on('mousedown', function(e) {
-                //
-				//		shapeObject.setStroke('white');
-				//		label.setColor('white');
-				//		that.img.setColor('white');
-				//		canvas.renderAll();
-				//		that.cb();
-                //
-				//	});
-                //
-				//	that.button.on('mouseup', function(e) {
-                //
-				//		shapeObject.setStroke('black');
-				//		label.setColor('black');
-				//		that.img.setColor('black');
-				//		canvas.renderAll();
-                //
-				//		//console.log ("hover event!", this);
-                //
-				//	});
-                //
-				//	//that.button.on()
-                //
-                //
-				//	that.canvas.add(that.button);
-				//	//that.canvas.add(img);
-                //
-                //
-				//});
-
-
-
-
-
-
 			}
 
 		}

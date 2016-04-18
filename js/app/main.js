@@ -89,6 +89,8 @@
     soundCheckBox.init(canvas);
     var languageCheckBox = new YDYW_CheckBox();
     languageCheckBox.init(canvas);
+    var wallpaperView = new YDYW_wallpaperManager();
+    wallpaperView.init(canvas);
 
     var Menu = new YDYW_Container();
     Menu.init(canvas);
@@ -403,6 +405,12 @@
         //Do this to whatever element needs to change its text when a new language is selected.
         languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
         languageMgr.addSetTextCallback(languageCheckBox.setTextCallback.bind(languageCheckBox));
+
+
+        wallpaperView.set({
+
+        });
+
 
         Menu.set({
             top: menuPosAndSize.top,
