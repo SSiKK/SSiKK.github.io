@@ -42,16 +42,45 @@
 
     placeElementsOnDoor();
     // Draw the Message Box
-    DrawMessageBox();
+    // DrawMessageBox();
 
     // Draw the Camera view and associated controls
-    DrawCameraView();
+    cameraView = new YDYW_Camera();
+        cameraView.init(canvas)
+        cameraView.set({
+            width: localWidth * .30,
+            height: localHeight * 0.25,
+            left: localWidth * 0.25,
+            top: localHeight * .3 // 250
+        })
+        // cameraView.hide();
+
+    // Draw the Camera view and associated controls
+    mirrorView = new YDYW_Mirror();
+        mirrorView.init(canvas)
+        mirrorView.set({
+            width: localWidth * .30,
+            height: localHeight * 0.25,
+            left: localWidth * 0.25,
+            top: localHeight * .3 // 250
+        })
+        // mirrorView.hide();
+
+
+
 
     //Weather layout
     DrawWeatherLayout();
 
     //Maps Layout
-    DrawMaps();
+    var mapView = new YDYW_Maps();
+    mapView.init(canvas);
+    mapView.set({
+        left: localWidth*0.25,
+        top: localHeight*0.5, // 250
+        width: localWidth*0.30,
+        height: localHeight*0.25
+    });
 
     //Draw Emergency mode
     //DrawEmergency();
@@ -74,15 +103,19 @@
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
-    var welcome = new YDYW_Welcome();
-    welcome.init(canvas);
-    welcome.set({
-        top: doorTop,
-        left: insideDoorLeft,
-        width: doorWidth,
-        height: doorHeight,
-        languageMgr: languageMgr
-    })
+    // var welcome = new YDYW_Welcome();
+    // welcome.init(canvas);
+    // welcome.set({
+    //     top: doorTop,
+    //     left: insideDoorLeft,
+    //     width: doorWidth,
+    //     height: doorHeight,
+    //     languageMgr: languageMgr
+    // })
+
+
+
+
 
     SetupMenu();
     languageMgr.setLanguage("English");
@@ -150,16 +183,6 @@
         canvas.add(outsideDoor);
     }
 
-    function DrawCameraView() {
-        var cameraView = new YDYW_Camera();
-            cameraView.init(canvas)
-            cameraView.set({
-                width: localWidth * .30,
-                height: localHeight * 0.25,
-                left: localWidth * 0.25,
-                top: localHeight * .3 // 250
-            });
-    }
 
     // Instantiate the message class to set the 4 parameters from SVG_Imitator
     function DrawMessageBox(){
@@ -322,7 +345,6 @@
 
 
 
-
         languageCheckBox.addEntries(languageMgr.getLanguages());
         languageCheckBox.onSelect(function(id) {
             languageMgr.setLanguage(id);
@@ -372,40 +394,66 @@
                         }
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/childsafe.svg',
+                        icon2: 'js/assets/svg/childunsafe.svg',
+                        text: "Child Safety"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/key.svg',
+                        text: "Keys"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/housesecure.svg',
+                        icon2: 'js/assets/svg/houseunsecure.svg',
+                        text: "  Home Alarm"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/users.svg',
+                        text: "Users"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/camera.svg',
+                        text: "Camera",
+                        cb: function() {
+                            cameraView.show();
+                            Menu.hide()
+                        }
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/mirror.svg',
+                        text: "Mirror",
+                        cb: function() {
+                            mirrorView.show();
+                            Menu.hide();
+                        }
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/notes.svg',
+                        text: "Notes"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/maps.svg',
+                        text: "Maps",
+                        cb: function() {
+                            mapView.show();
+                            Menu.hide();
+                        }
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/doorlog.svg',
+                        text: "Door Log"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/help.svg',
+                        text: "Tutorial"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/alert.svg',
+                        text: "Emergency"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/paint.svg',
+                        text: "Theme"
                     }],
             zoomFactor: zoomFactor
         });
