@@ -42,25 +42,21 @@
 
     placeElementsOnDoor();
     // Draw the Message Box
-    //DrawMessageBox();
+    DrawMessageBox();
 
     // Draw the Camera view and associated controls
-    //DrawCameraView();
+    DrawCameraView();
 
     //Weather layout
-    //DrawWeatherLayout();
+    DrawWeatherLayout();
 
     //Maps Layout
-    //DrawMaps();
+    DrawMaps();
 
     //Draw Emergency mode
     //DrawEmergency();
 
     //DrawThreeTapMode
-
-
-    //Weather layout
-    // DrawWeatherLayout();
 
     var soundMgr = new YDYW_soundManager();
     soundMgr.init();
