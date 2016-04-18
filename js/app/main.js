@@ -359,11 +359,13 @@
                     soundCheckBox.hide();
                     languageCheckBox.hide();
                     doorLogManager.hide();
+                    //wallpaperView.hide();
                     menuButton.selected = false;
                 }else{
                    // welcome.show();
                     WeatherContainer.show();
                     weatherView.show();
+                    //wallpaperView.show();
                     Menu.show();
                     menuButton.selected = true;
                 }
@@ -398,6 +400,26 @@
         });
         soundCheckBox.hide();
 
+
+        //wallpaperView.set({
+        //    top: menuPosAndSize.top,
+        //    left: menuPosAndSize.left,
+        //    height : menuPosAndSize.height,
+        //    width : menuPosAndSize.width,
+        //    zoomFactor: zoomFactor,
+        //    RowIconNumber : [1,1],
+        //    buttonDataList: [
+        //        {
+        //            type: "img",
+        //            icon: "js/assets/img/icons/orange_circle.png" //icon asset path
+        //        },
+        //        {
+        //                type: "img",
+        //                icon: "js/assets/img/icons/orange_circle.png" //icon asset path
+        //        }
+        //        ],
+        //        visible: false
+        //    });
 
 
 
@@ -527,8 +549,13 @@
                         text: "Emergency"
                     },
                     {
+                        type: "icon",
                         icon: 'js/assets/svg/paint.svg',
-                        text: "Theme"
+                        text: "Theme",
+                        cb:function(){
+                            //wallpaperView.show();
+                            //Menu.hide();
+                        }
                     }],
             zoomFactor: zoomFactor
         });
