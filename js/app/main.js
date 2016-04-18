@@ -240,7 +240,7 @@
             zoomFactor: zoomFactor,
             textSize: 50, // textSize
             radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
-            icon: "../js/assets/svg/circle.svg", //icon asset path
+            icon: "js/assets/svg/circle.svg", //icon asset path
             cb: function(){
                 if(menuButton.selected === true){
                     Menu.hide();
@@ -334,40 +334,40 @@
                         }
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
-                        icon: '../js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/incognito.svg'
                     }],
             zoomFactor: zoomFactor
         });
