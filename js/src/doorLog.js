@@ -13,6 +13,9 @@ var YDYW_DoorLog = SVG_Imitator.extend({
 		this.selectedColor = "rgba(135,168,193,1.0)";
 		this.fabEntries = [];
 		this.imageLoader = null;
+		this.zoomFactor = 1;
+		this.zoom = 1;
+		this.heightIncrement = 0;
 		this.defaults = {
 			hasControls: false,
 			hasBorders: false,
@@ -44,13 +47,13 @@ var YDYW_DoorLog = SVG_Imitator.extend({
 	},
 	addEntries: function(entries) {
 		for(var e in entries) {
-			this.imageLoader.addImage({url:entries[e].url,id:entries[e].time + entries[e].id});
+			this.imageLoader.addPattern({url:entries[e].url,id:entries[e].time});
 			this.entries.push(entries[e]);
 		}
 	},
 	draw: function () {
 		var e = 0;
-		
+		this.height = this.height + this.heightIncrement;
 		var entryHeight = this.height / (2.0*this.entries.length + 3);
 		var entryWidth = entryHeight;
 		var entryLeft = this.left + this.width/20;
@@ -60,26 +63,28 @@ var YDYW_DoorLog = SVG_Imitator.extend({
 		}
 		this.board.set({
 			id: "logBoard",
-            left: this.left,
-            top: this.top,
+            left: this.left * this.zoomFactor,
+            top: this.top * this.zoomFactor,
             fill: "#dddddd",
             stroke: "#dddddd",
             rx : 10,
             ry : 10,
             width: this.width,
             height: this.height,
-            angle: 0
+            angle: 0,
+            selectable: true
         });
+        this.board.on('selected',this.refreshCallback.bind(this));
         if (!this.heading) {
         	this.heading = new fabric.Text(this.caption, this.defaults);
         	this.canvas.add(this.heading);
         }
         this.heading.set({
 			fontFamily: 'Helvetica',
-		  	fontSize: 10 * this.zoomFactor,
+		  	fontSize: 10 * this.fontSize,
 		  	fill: "rgba(10,10,10,1.0)",
-		  	left: entryLeft,
-			top: this.top + entryHeight,
+		  	left: entryLeft * this.zoomFactor,
+			top: (this.top + entryHeight)* this.zoomFactor,
 			id: "logCaption",
 			originY: "top",
 			selectable:false
@@ -89,44 +94,36 @@ var YDYW_DoorLog = SVG_Imitator.extend({
 			if (!this.fabEntries[e]) {
 				this.fabEntries[e] = {
 					time: new fabric.Text(this.entries[e].time, this.defaults),
-					userName: new fabric.Text(this.entries[e].name, this.defaults),
-					userImg: this.imageLoader.getImage(this.entries[e].time + this.entries[e].id),
+					userImg: new fabric.Rect(this.defaults),
 				}
 				this.canvas.add(this.fabEntries[e].time);
-				this.canvas.add(this.fabEntries[e].userName);
 				this.canvas.add(this.fabEntries[e].userImg);
 			}
 			this.fabEntries[e].time.set({
 				fontFamily: 'Helvetica',
-			  	fontSize: 7 * this.zoomFactor,
+			  	fontSize: 7 * this.fontSize,
 			  	fill: "rgba(10,10,10,1.0)",
-			  	left: entryLeft,
-				top: this.top + (2*e + 3) * entryHeight,
+			  	left: entryLeft * this.zoomFactor,
+				top: (this.top + (2*e + 3) * entryHeight)* this.zoomFactor,
 				id: this.entries[e].time + this.entries[e].id,
 				originY: "center",
-				selectable:false
+				selectable:false,
+				scaleX: this.zoomFactor,
+				scaleY: this.zoomFactor
 			});
 			
-			this.fabEntries[e].userName.set({
-				fontFamily: 'Helvetica',
-			  	fontSize: 7 * this.zoomFactor,
-			  	fill: "rgba(10,10,10,1.0)",
-			  	left: entryLeft + 0.3*this.width,
-				top: this.top + (2*e + 3.6) * entryHeight,
-				id: this.entries[e].time + this.entries[e].id,
-				originY: "center",
-				selectable:false
-			});
 
 			this.fabEntries[e].userImg.set({
-				width: entryWidth * 0.6,
-				height: entryHeight * 0.6,
+				width: (entryWidth * 0.9),
+				height: (entryHeight * 0.9),
 				//stroke: this.selectedColor,
-				left: entryLeft + 0.6*this.width,
-				top: this.top + (2*e + 3) * entryHeight,
-				id: this.entries[e].time + this.entries[e].id
+				left: (entryLeft + 0.6*this.width)* this.zoomFactor,
+				top: (this.top + (2*e + 3) * entryHeight)* this.zoomFactor,
+				id: this.entries[e].time + this.entries[e].id,
+				scaleX: this.zoomFactor,
+				scaleY: this.zoomFactor,
+				originY: "center"
 			});
-			this.fabEntries[e].in.on('selected',this.checkEntry.bind(this));
 			console.log("added : " + this.entries[e].id);
 		}
 		return this;
@@ -137,7 +134,6 @@ var YDYW_DoorLog = SVG_Imitator.extend({
 		this.heading.set({visible: false});
 		for(var e in this.fabEntries) {
 			this.fabEntries[e].time.set({visible: false});
-			this.fabEntries[e].userName.set({visible: false});
 			this.fabEntries[e].userImg.set({visible: false});
 		}
 		this.showing = false;
@@ -147,8 +143,8 @@ var YDYW_DoorLog = SVG_Imitator.extend({
 		this.heading.set({visible: true});
 		for(var e in this.fabEntries) {
 			this.fabEntries[e].time.set({visible: true});
-			this.fabEntries[e].userName.set({visible: true});
-			this.fabEntries[e].userImg.set({visible: true});
+
+			this.fabEntries[e].userImg.set({fill:this.imageLoader.getPattern(this.entries[e].time, this.fabEntries[e].userImg.width, this.fabEntries[e].userImg.height, 2) , visible: true});
 		}
 		this.showing = true;
 	},
@@ -161,6 +157,14 @@ var YDYW_DoorLog = SVG_Imitator.extend({
 		}
 	},
 
+	onSelect: function(callback) {
+		this.callback = callback;
+	},
+	refreshCallback: function() {
+		this.canvas.deactivateAll();
+		this.canvas.renderAll();
+		this.callback();
+	},
 	//dict contains all text that are being used in the entire app
 	setTextCallback: function(dict) {
 		//var t;

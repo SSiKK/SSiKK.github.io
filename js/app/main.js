@@ -178,8 +178,8 @@
                 height: 60 * zoomFactor,
             });
             canvas.add(img);
-            var ptrn = imageManager.getPattern("donald");
-            outsideDoor.set({fill: ptrn});
+            var ptrnImg = imageManager.getPattern("donald", 100, 100);    
+            outsideDoor.set({fill: ptrnImg});
         });
 
 
@@ -235,9 +235,26 @@
         soundMgr.addSound({src:'js/assets/sound/trumpet.wav', img:'js/assets/img/icons/trumpet.ico', id: "trumpet"});
     }
 
-
+    function getTime (offset) {
+        if(!offset) {
+            offset = 0;
+        }
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+        var today = new Date();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds() + offset;
+        m = checkTime(m);
+        s = checkTime(s);
+        return h + ":" + m + ":" + s;
+    }
     function DrawMaps(){
-        console.log("draw bitch!");
+        //console.log("draw bitch!");
         var mapView = new YDYW_Maps();
         mapView.init(canvas);
         mapView.set({
@@ -305,6 +322,11 @@
             icon: "js/assets/img/icons/doorbell.svg", //icon asset path
             cb:function() {
                 soundMgr.play();
+                var val = 1 + Date.now() % 4;
+
+                doorLogManager.addEntries([{url:"js/assets/img/profiles/people" + val + ".jpg", time:getTime()}]);
+                doorLogManager.heightIncrement = 20;
+
             }
         });
 
@@ -325,6 +347,7 @@
                     Menu.hide();
                     soundCheckBox.hide();
                     languageCheckBox.hide();
+                    doorLogManager.hide();
                     menuButton.selected = false;
                 }else{
                    // welcome.show();
@@ -383,6 +406,21 @@
         //Do this to whatever element needs to change its text when a new language is selected.
         languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
         languageMgr.addSetTextCallback(languageCheckBox.setTextCallback.bind(languageCheckBox));
+
+
+        doorLogManager.onSelect(function() {
+            doorLogManager.hide();
+            Menu.show();
+        });
+        doorLogManager.set({
+            top: menuPosAndSize.top,
+            left: menuPosAndSize.left,
+            height : menuPosAndSize.height,
+            width : menuPosAndSize.width,
+            fontSize: zoomFactor,
+            caption: "log"
+        });
+        doorLogManager.hide();
 
         Menu.set({
             top: menuPosAndSize.top,
@@ -456,6 +494,12 @@
                         text: "Maps"
                     },
                     {
+                        type: "icon", // label/icon/tab
+                        cb:function() {
+                            doorLogManager.set({zoomFactor:zoomFactor});
+                            doorLogManager.show();
+                            Menu.hide();
+                        },
                         icon: 'js/assets/svg/doorlog.svg',
                         text: "Door Log"
                     },
@@ -524,6 +568,9 @@
 
             }
         });*/
+        doorLogManager.addEntries([{url:"js/assets/img/profiles/people1.jpg", time:getTime()},
+            {url:"js/assets/img/profiles/people4.jpg", time:getTime(1)}]);
+
     }
 
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/

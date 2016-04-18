@@ -12,20 +12,36 @@ var YDYW_imageLoader = Class.extend({
 
 	},
 	addPattern: function(data) {
-		fabric.util.loadImage(data.url, function(img) {
-			this.patterns[data.id] = new fabric.Pattern({
-				source: img,
-				repeat: "repeat"
-			});			
+		fabric.Image.fromURL(data.url, function(img) {
+			this.patterns[data.id] = img;
 		}.bind(this));
 	},
 	getImage: function (id) {
 		return this.images[id] || this.images["donald"];
 	},
 
-	getPattern: function (id) {
-		var p = this.patterns[id] || this.patterns["donald"];
-		return p;
+	getPattern: function (id, width, height, padding) {
+		var pattern;
+		if (!padding) padding = 1;
+		var img = this.patterns[id] || this.patterns["donald"];
+		img.scaleToWidth(width);
+
+	    var patternSourceCanvas = new fabric.StaticCanvas();
+	    patternSourceCanvas.add(img);
+
+	    pattern = new fabric.Pattern({
+	    	source: function() {
+		        patternSourceCanvas.setDimensions({
+		          width: img.getWidth() + padding,
+		          height: img.getHeight() + padding
+		        });
+		        return patternSourceCanvas.getElement();
+	      	},
+	      	repeat: 'no-repeat'
+	    });
+
+		
+		return pattern;
 	},
 	getImageIDs: function() {
 		return Object.keys(this.images);
