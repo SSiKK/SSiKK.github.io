@@ -14,28 +14,51 @@
     <!-- but keep the same aspect ratio -->
     <!-- we will use width="2714" height="2200" for presentations and evaluation -->
 
-    <canvas id="c" width="2714" height="2200" style="border:2px solid black;"></canvas>
-    <canvas id="subC" width="770" height="352" style="border:2px solid black; display:none; position:absolute"></canvas>
+    <div class="container-fluid">
+      <div class="row">
+        <div id='canvasDiv' class='col-md-10'>
+            <canvas id="c" width="2714" height="2200" style="border:2px solid black;"></canvas>
+            <canvas id="subC" width="770" height="352" style="border:2px solid black; display:none; position:absolute"></canvas>
+        </div>
 
-    <script type="text/javascript" src="../js/lib/fabric.min.js"></script>
-    <script type="text/javascript" src="../js/src/class.js"></script>
-    <script type="text/javascript" src="../js/src/SVG_Imitator.js"></script>
-    <script type="text/javascript" src="../js/src/doorKnob.js"></script>
-    <script type="text/javascript" src="../js/src/deadBolt.js"></script>
-    <script type="text/javascript" src="../js/src/lockManager.js"></script>
-    <script type="text/javascript" src="../js/src/soundManager.js"></script>
-    <script type="text/javascript" src="../js/src/camera.js"></script>
-	<script type="text/javascript" src="../js/src/message.js"></script>
-    <script type="text/javascript" src="../js/src/weather.js"></script>
-    <script type="text/javascript" src="../js/src/checkBox.js"></script>
-    <script type="text/javascript" src="../js/src/languageManager.js"></script>
-    <script type="text/javascript" src="../js/src/button.js"></script>
-    <script type="text/javascript" src="../js/src/welcome.js"></script>
-    <script type="text/javascript" src="../js/src/newContainer.js"></script>
+        <div id='sidebar' class='col-md-2'>
+            <form display="block" style="border:2px solid black;">
+                <button id="doorApproachInside">Approach door inside</button>
+                <button id="doorApproachOutside">Approach door outside</button>
+            </form>
+        </div>
+
+      </div>
+    </div>
+    <script type="text/javascript" src="js/lib/fabric.min.js"></script>
+    <script type="text/javascript" src="js/src/class.js"></script>
+    <script type="text/javascript" src="js/src/SVG_Imitator.js"></script>
+    <script type="text/javascript" src="js/src/doorKnob.js"></script>
+    <script type="text/javascript" src="js/src/deadBolt.js"></script>
+    <script type="text/javascript" src="js/src/lockManager.js"></script>
+    <script type="text/javascript" src="js/src/soundManager.js"></script>
+    <script type="text/javascript" src="js/src/message.js"></script>
+    <script type="text/javascript" src="js/src/camera.js"></script>
+    <script type="text/javascript" src="js/src/weather.js"></script>
+    <script type="text/javascript" src="js/src/checkBox.js"></script>
+    <script type="text/javascript" src="js/src/languageManager.js"></script>
+    <script type="text/javascript" src="js/src/button.js"></script>
+    <script type="text/javascript" src="js/src/maps.js"></script>
+    <script type="text/javascript" src="js/src/emergency.js"></script>
+
+    <script type="text/javascript" src="js/src/welcome.js"></script>
+    <script type="text/javascript" src="js/src/newContainer.js"></script>
     <script type="text/javascript" src="js/src/imageLoader.js"></script>
+
+    <script type="text/javascript" src="js/src/userManager.js"></script>
+    <script type="text/javascript" src="js/src/doorLog.js"></script>
+
+
     <!-- Main entrypoint of our application -->
-    <script type="text/javascript" src="../js/app/main.js"></script>
+    <script type="text/javascript" src="js/app/main.js"></script>
     <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+
 </body>
 
 </html>
