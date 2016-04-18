@@ -32,7 +32,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
         //Have a selectable rect with
         this.languageMgr.addSetTextCallback(this.setTextCallback.bind(this));
         // this.floatingWelcome();
-        this.chooseLangauge();
+        // this.chooseLangauge();
         // this.newUserImageCapture()
 
     },
@@ -263,9 +263,6 @@ var YDYW_Welcome = SVG_Imitator.extend({
                     clicked: 0
                 })
 
-                that.canvas.add(that.hipImagesArr);
-                that.hipImagesArr.item(index).setVisible(true).bringToFront();
-                that.hipImagesArr.bringToFront();
 
                 panels.forEach(function(panel, i) {
                     console.log(panel, i);
@@ -296,38 +293,9 @@ var YDYW_Welcome = SVG_Imitator.extend({
 
                     that.canvas.add(panel)
                 })
-
-                // that.hipImagesArr.item(index);
-
-
-                // imagesArray.map(function(img, i) {
-                //     img.set({
-                //         left: that.left + 800 + (i * 75),
-                //         top: that.top + 600
-                //     })
-                //         .on('mousemove', function() {
-                //             console.log("mouseOver");
-                //             var there = this;
-                //             results.forEach(function(t) {
-                //                 if (t !== this) {
-                //                     t.sendBackwards()
-                //                     t.opacity = 0.3;
-                //                 }
-                //                 there.opacity = 1.0;
-                //                 there.bringToFront();
-                //             })
-                //         })
-                //         .on('selected', function() {
-                //             results.map(function(t) {
-                //                 that.canvas.remove(t);
-                //                 that.canvas.remove(that.languageEntries['hiName']);
-                //                 that.canvas.remove(that.languageEntries['hasPhoneInstruct']);
-                //             })
-                //             that.handprintScanner();
-
-                //         })
-                //     that.canvas.add(img)
-                // })
+                that.canvas.add(that.hipImagesArr);
+                that.hipImagesArr.item(index).setVisible(true).bringToFront();
+                that.hipImagesArr.bringToFront();
             })
     },
 
@@ -387,6 +355,15 @@ var YDYW_Welcome = SVG_Imitator.extend({
             })
 
         }
+    },
+
+
+    show: function() {
+        this.floatingWelcome();
+    },
+
+    hide: function() {
+
     },
 
     getLangCode: function(id) {
