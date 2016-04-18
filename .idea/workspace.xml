@@ -21,10 +21,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="button.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="button.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/src/button.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.976356">
+            <state vertical-scroll-proportion="0.0">
               <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
               <folding>
                 <element signature="e#3965#4488#0" expanded="false" />
@@ -45,21 +45,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/app/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.183099">
-              <caret line="410" column="0" selection-start-line="410" selection-start-column="0" selection-end-line="410" selection-end-column="0" />
+            <state vertical-scroll-proportion="1.3981482">
+              <caret line="446" column="0" selection-start-line="446" selection-start-column="0" selection-end-line="446" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <element signature="e#3653#5697#0" expanded="false" />
-                <element signature="e#5729#6032#0" expanded="false" />
-                <element signature="e#6142#6403#0" expanded="false" />
-                <element signature="e#6437#7077#0" expanded="false" />
-                <element signature="e#7105#7639#0" expanded="false" />
-                <element signature="e#7665#7960#0" expanded="false" />
-                <element signature="e#7991#8386#0" expanded="false" />
-                <element signature="e#8424#11202#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -110,11 +102,11 @@
         <option value="$PROJECT_DIR$/js/src/camera.js" />
         <option value="$PROJECT_DIR$/js/src/newContainer.js" />
         <option value="$PROJECT_DIR$/js/src/weather.js" />
-        <option value="$PROJECT_DIR$/js/src/button.js" />
-        <option value="$PROJECT_DIR$/js/app/main.js" />
         <option value="$PROJECT_DIR$/js/src/wallpaperManager.js" />
         <option value="$PROJECT_DIR$/html/app.html" />
         <option value="$PROJECT_DIR$/dev.html" />
+        <option value="$PROJECT_DIR$/js/src/button.js" />
+        <option value="$PROJECT_DIR$/js/app/main.js" />
       </list>
     </option>
   </component>
@@ -760,24 +752,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/app/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.183099">
-          <caret line="410" column="0" selection-start-line="410" selection-start-column="0" selection-end-line="410" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#3653#5697#0" expanded="false" />
-            <element signature="e#5729#6032#0" expanded="false" />
-            <element signature="e#6142#6403#0" expanded="false" />
-            <element signature="e#6437#7077#0" expanded="false" />
-            <element signature="e#7105#7639#0" expanded="false" />
-            <element signature="e#7665#7960#0" expanded="false" />
-            <element signature="e#7991#8386#0" expanded="false" />
-            <element signature="e#8424#11202#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/src/newContainer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -804,12 +778,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/src/button.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.976356">
+        <state vertical-scroll-proportion="0.0">
           <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
           <folding>
             <element signature="e#3965#4488#0" expanded="false" />
             <element signature="e#7236#8156#0" expanded="false" />
             <element signature="e#7633#7797#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/app/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.3981482">
+          <caret line="446" column="0" selection-start-line="446" selection-start-column="0" selection-end-line="446" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
