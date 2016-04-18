@@ -20,12 +20,7 @@
     var doorTop = 0;
     var doorWidth = 555;
     var doorHeight = localHeight;
-
     var countTaps = 0;
-
-    //Special helper class to preload images that will be used later in the app
-    var imageManager ;
-    LoadImages();
 
     // Door elements
     var messageIn;
@@ -44,19 +39,19 @@
 
     // Draw the Basic In/Outside doors,
     DrawDoors();
-    //
+
     placeElementsOnDoor();
     // Draw the Message Box
-    //DrawMessageBox();
+    DrawMessageBox();
 
     // Draw the Camera view and associated controls
-    //DrawCameraView();
+    DrawCameraView();
 
     //Weather layout
-    //DrawWeatherLayout();
+    DrawWeatherLayout();
 
     //Maps Layout
-    //DrawMaps();
+    DrawMaps();
 
     //Draw Emergency mode
     //DrawEmergency();
@@ -79,27 +74,15 @@
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
-    //var welcome = new YDYW_Welcome();
-    //welcome.init(canvas);
-    //welcome.set({
-    //    top: doorTop,
-    //    left: insideDoorLeft,
-    //    width: doorWidth,
-    //    height: doorHeight,
-    //    languageMgr: languageMgr
-    //});
-
-    //var welcome = new YDYW_Button();
-    //welcome.init(canvas);
-    //welcome.set({
-    //    top: doorTop  + doorHeight/2.0 - 50,
-    //    left: outsideDoorLeft + 40,
-    //    type: "tab",
-    //    text : "outside door",
-    //    visible: false,
-    //    fill: '#c8878e',
-    //    zoomFactor: zoomFactor
-    //});
+    var welcome = new YDYW_Welcome();
+    welcome.init(canvas);
+    welcome.set({
+        top: doorTop,
+        left: insideDoorLeft,
+        width: doorWidth,
+        height: doorHeight,
+        languageMgr: languageMgr
+    })
 
     SetupMenu();
     languageMgr.setLanguage("English");
@@ -157,16 +140,7 @@
         outsideDoor.lockMovementX = outsideDoor.lockMovementY = true;
 
         outsideDoor.on('selected', function(options) {
-            var img = imageManager.getImage("krishna");
-            img.set({
-                left: (outsideDoorLeft + doorWidth/2.0 - 30) * zoomFactor,
-                top: (doorTop + doorHeight/2.0 - 30) *zoomFactor,
-                width: 60 * zoomFactor,
-                height: 60 * zoomFactor,
-            });
-            canvas.add(img);
-            var ptrn = imageManager.getPattern("donald");
-            outsideDoor.set({fill: ptrn});
+            lock.toggleLockedStatusAndShow();
         });
 
 
@@ -307,13 +281,11 @@
             icon: "js/assets/svg/circle.svg", //icon asset path
             cb: function(){
                 if(menuButton.selected === true){
-                   // welcome.hide();
                     Menu.hide();
                     soundCheckBox.hide();
                     languageCheckBox.hide();
                     menuButton.selected = false;
                 }else{
-                   // welcome.show();
                     Menu.show();
                     menuButton.selected = true;
                 }
@@ -400,26 +372,14 @@
                         }
                     },
                     {
-                        icon: 'js/assets/svg/childsafe.svg',
-                        icon2: 'js/assets/svg/childunsafe.svg',
-                        text: "Child Safety"
-                    },
-                    {
-                        icon: 'js/assets/svg/housesecure.svg',
-                        icon2: 'js/assets/svg/houseunsecure.svg',
-                        text: "  Home Alarm"
+                        icon: 'js/assets/svg/incognito.svg'
                     },
                     {
                         icon: 'js/assets/svg/incognito.svg'
                     },
-                    //[
-                    //    {
-                    //        text: 'inside door'
-                    //    },
-                    //    {
-                    //        text: 'outside door'
-                    //    }
-                    //],
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
                     {
                         icon: 'js/assets/svg/incognito.svg'
                     },
@@ -451,13 +411,6 @@
         });
 
         languageMgr.addSetTextCallback(Menu.setTextCallback.bind(Menu));
-    }
-
-    function LoadImages () {
-        imageManager = new YDYW_imageLoader();
-        imageManager.init();
-        imageManager.addImage({url:"js/assets/img/profiles/KB.jpg", id:"krishna"});
-        imageManager.addPattern({url:"js/assets/img/profiles/people1.jpg", id:"kid"});
     }
 
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/

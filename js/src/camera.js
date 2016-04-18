@@ -222,8 +222,8 @@ var YDYW_Camera = SVG_Imitator.extend({
                         lockMovementX: true,
                         lockMovementY: true,
                         visible: true
-                    }))
-                })
+                    }));
+                });
             }),
             new Promise(function(resolve, reject) {
                 fabric.loadSVGFromURL('js/assets/svg/expand.svg', function(obj, opt) {
@@ -244,8 +244,8 @@ var YDYW_Camera = SVG_Imitator.extend({
                         lockMovementX: true,
                         lockMovementY: true,
                         visible: true
-                    }))
-                })
+                    }));
+                });
             }),
             new Promise(function(resolve, reject) {
                 fabric.loadSVGFromURL('js/assets/svg/collapse.svg', function(obj, opt) {
@@ -266,9 +266,9 @@ var YDYW_Camera = SVG_Imitator.extend({
                         lockMovementX: true,
                         lockMovementY: true,
                         visible: this.fullScreenMode
-                    }))
-                })
-            })
+                    }));
+                });
+            });
         ]
 
         //--------------------------------
@@ -325,7 +325,7 @@ var YDYW_Camera = SVG_Imitator.extend({
         })
         .catch(function(error) {
             console.log("seems to be and error", error);
-        })
+        });
 
 
 
@@ -496,5 +496,39 @@ var YDYW_Camera = SVG_Imitator.extend({
         this.fullScreenMode = !this.fullScreenMode;
         this.expandButton.visible = !this.fullScreenMode;
         this.collapseButton.visible = this.fullScreenMode;
+    },
+
+    show: function(){
+        this.indoorView.setVisible(true); // The viewing window, should be a rect
+        this.indoorViewImage.setVisible(true);
+
+        this.outsideView.setVisible(true); // The outdoor viewing window, should be a rect
+        this.outsideViewImage.setVisible(true); // The outdoor viewing window, should be a rect
+
+        this.subView.setVisible(this.showsub); // The picture in picture display of owner
+        this.subViewImage.setVisible(true);
+
+        // The different buttons
+        this.cameraButton.setVisible(true); // The personal display view
+        this.incogButton.setVisible(true); // The incognito button
+        this.collapseButton.setVisible(this.fullScreenMode);
+        this.expandButton.setVisible(true);
+    },
+
+    hide: function(){
+        this.indoorView.setVisible(false); // The viewing window, should be a rect
+        this.indoorViewImage.setVisible(false);
+
+        this.outsideView.setVisible(false); // The outdoor viewing window, should be a rect
+        this.outsideViewImage.setVisible(false); // The outdoor viewing window, should be a rect
+
+        this.subView.setVisible(false); // The picture in picture display of owner
+        this.subViewImage.setVisible(false);
+
+        // The different buttons
+        this.cameraButton.setVisible(false); // The personal display view
+        this.incogButton.setVisible(false); // The incognito button
+        this.collapseButton.setVisible(false);
+        this.expandButton.setVisible(false);
     }
 });
