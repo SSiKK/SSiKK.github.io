@@ -39,7 +39,8 @@ var YDYW_Container = SVG_Imitator.extend({
             ry : 10,
             width: this.width,
             height: this.height,
-            angle: 0
+            angle: 0,
+            visible: this.visible
         });
         this.board.hasControls = this.board.hasBorders = false;
         this.board.lockMovementX = this.board.lockMovementY = true;
@@ -74,7 +75,9 @@ var YDYW_Container = SVG_Imitator.extend({
                     zoomFactor: this.zoomFactor,
                     textSize: this.buttonDataList[index].textSize || 20, // textSize
                     radius: buttonRadius, // define a radius if you are going to make an icon. you dont need to do this for the label
-                    icon: this.buttonDataList[index].icon || '../js/assets/svg/incognito.svg' //icon asset path
+                    icon: this.buttonDataList[index].icon || '../js/assets/svg/incognito.svg', //icon asset path
+                    cb: this.buttonDataList[index].cb || function(){},
+                    visible:this.visible
                 });
                 //button.hide();
                 this.buttonList.push(button);
@@ -103,8 +106,10 @@ var YDYW_Container = SVG_Imitator.extend({
             this.buttonList[index].show();
         this.showing = true;
     },
-    textCallback: function(str){
-        this.set({text: str});
+    setTextCallback: function(dict){
+        for(var index = 0; index < this.buttonList.length; index++) {
+            this.buttonList[index].setTextCallback(dict);
+        }
     }
 
 });

@@ -43,10 +43,10 @@
 
     placeElementsOnDoor();
     // Draw the Message Box
-    DrawMessageBox();
+    //DrawMessageBox();
 
     // Draw the Camera view and associated controls
-    DrawCameraView();
+    //DrawCameraView();
 
     //Weather layout
     DrawWeatherLayout();
@@ -71,14 +71,15 @@
         soundMgr.setCurrent(id);
         soundMgr.play();
         soundCheckBox.hide();
-        chimesButton.show();
+        Menu.show();
     });
     soundCheckBox.set({
-        left: outsideDoorLeft + 30,
-        top: doorTop,
-        width: doorWidth/3.0,
-        height: doorHeight/3.0,
-        zoomFactor: zoomFactor
+        top: (doorTop + doorHeight/2.0)-100,
+        left: insideDoorLeft + doorWidth/2.0-50,
+        height : 200,
+        width : 300,
+        zoomFactor: zoomFactor,
+        caption: "chimes"
     });
     soundCheckBox.hide();
 
@@ -90,20 +91,21 @@
     languageCheckBox.onSelect(function(id) {
         languageMgr.setLanguage(id);
         languageCheckBox.hide();
-        languageButton.show();
+        Menu.show();
     });
     languageCheckBox.set({
-        left: outsideDoorLeft + 30,
-        top: doorTop + doorHeight/2.0,
-        width: doorWidth/3.0,
-        height: doorHeight/3.0,
-        zoomFactor: zoomFactor
+        top: (doorTop + doorHeight/2.0)-100,
+        left: insideDoorLeft + doorWidth/2.0-50,
+        height : 200,
+        width : 300,
+        zoomFactor: zoomFactor,
+        caption: "language"
     });
     languageCheckBox.hide();
     //Do this to whatever element needs to change its text when a new language is selected.
     languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
-    //languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
-    languageMgr.setLanguage("english");
+    languageMgr.addSetTextCallback(languageCheckBox.setTextCallback.bind(languageCheckBox));
+    
 
 
 
@@ -112,23 +114,47 @@
     Menu.init(canvas);
     Menu.set({
         top: (doorTop + doorHeight/2.0)-100,
-        left: outsideDoorLeft + doorWidth/2.0-50,
+        left: insideDoorLeft + doorWidth/2.0-50,
         height : 200,
         width : 300,
         stroke : "white",
         fill : "white",
+        visible: false,
         RowHeadings : ["testing"],
         RowIconNumber : [1,2,1],
-        buttonDataList: [{icon: '../js/assets/svg/incognito.svg'},{icon: '../js/assets/svg/incognito.svg'},{icon: '../js/assets/svg/incognito.svg'},{icon: '../js/assets/svg/incognito.svg'}],
+        buttonDataList: [{
+                    type: "icon", // label/icon/tab
+                    text: "language", // displays the text inside the button
+                    icon: "js/assets/img/icons/language.svg", //icon asset path
+                    cb:function() {
+                        languageCheckBox.show();
+                        Menu.hide();
+                    }
+                },
+                {
+                    type: "icon", // label/icon/tab
+                    text: "chimes", // displays the text inside the button
+                    icon: "js/assets/img/icons/music.svg", //icon asset path
+                    cb:function() {
+                        soundCheckBox.show();
+                        Menu.hide();
+                    }
+                },
+                {
+                    icon: '../js/assets/svg/incognito.svg'
+                },
+                {
+                    icon: '../js/assets/svg/incognito.svg'
+                }],
         zoomFactor: zoomFactor
     });
 
-    var button = new YDYW_Button();
-    button.init(canvas);
-    button.set({
-        top: (doorTop + doorHeight/2.0) - 100,
-        //top: 100,
-        left: outsideDoorLeft + doorWidth/2.0 - 100,
+    languageMgr.addSetTextCallback(Menu.setTextCallback.bind(Menu));
+    var menuButton = new YDYW_Button();
+    menuButton.init(canvas);
+    menuButton.set({
+        left: insideDoorLeft + doorWidth - 80,
+        top: doorTop  + doorHeight/2.0 + 50,
         type: "icon", // label/icon/tab
         //text: "Menu", // displays the text inside the button
         zoomFactor: zoomFactor,
@@ -136,12 +162,12 @@
         radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
         icon: "../js/assets/svg/circle.svg", //icon asset path
         cb: function(){
-            if(button.selected === false){
+            if(menuButton.selected === true){
                 Menu.hide();
-                button.selected = true;
+                menuButton.selected = false;
             }else{
                 Menu.show();
-                button.selected = false;
+                menuButton.selected = true;
             }
 
         }
@@ -300,13 +326,13 @@
         languageButton.set({
             top: doorTop  + doorHeight/2.0 - 50,
             left: outsideDoorLeft + 100,
-            type: "icon", // label/icon/tab
-            text: "Language", // displays the text inside the button
             fill: '#c8878e',
             zoomFactor: zoomFactor,
             strokeWidth: 3,
             textSize: 30, // textSize
             radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+            type: "icon", // label/icon/tab
+            text: "language", // displays the text inside the button
             icon: "js/assets/img/icons/language.svg", //icon asset path
             cb:function() {
                 languageCheckBox.show();
@@ -319,13 +345,14 @@
         chimesButton.set({
             top: doorTop  + doorHeight/2.0 - 50,
             left: outsideDoorLeft + 150,
-            type: "icon", // label/icon/tab
-            text: "Chimes", // displays the text inside the button
+            
             fill: '#c8878e',
             zoomFactor: zoomFactor,
             strokeWidth: 3,
             textSize: 30, // textSize
             radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+            type: "icon", // label/icon/tab
+            text: "chimes", // displays the text inside the button
             icon: "js/assets/img/icons/music.svg", //icon asset path
             cb:function() {
                 soundCheckBox.show();
@@ -334,6 +361,7 @@
         });
 
     }
+    languageMgr.setLanguage("English");
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
     function zoomAll(SCALE_FACTOR) {

@@ -40,12 +40,13 @@ var YDYW_Button = SVG_Imitator.extend({
 		var that = this;
 		// Draw
 		console.log ("being drawn!", this);
-
+		
 		var label = new fabric.Text(this.text,{
 			fontSize: this.textSize,
 			originX: 'center',
 			originY: 'center'
 		});
+		this.label = label;
 		label.setColor('black');
 
 		var fillColor = this.fill;
@@ -104,9 +105,10 @@ var YDYW_Button = SVG_Imitator.extend({
 						originY: 'center',
 						hasControls: false,
 						selectable: true,
-						hasBorders: true,
+						hasBorders: false,
 						lockMovementX: true,
-						lockMovementY: true
+						lockMovementY: true,
+						visible: that.visible
 					});
 
 					//console.log("This is the icon button",img);
@@ -260,8 +262,8 @@ var YDYW_Button = SVG_Imitator.extend({
 
 	},
 
-	textCallback: function(dict){
-		this.label.set({text: dict[this.text]});
+	setTextCallback: function(dict){
+		this.label.set({text: dict[this.text] || this.text});
 	},
 
 	hide: function(){

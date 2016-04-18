@@ -27,7 +27,7 @@ var YDYW_languageManager = Class.extend({
 	},
 	populateDictionary: function() {
 		this.langauges = {
-			english:{
+			English:{
 				language: "Language",
 				temperature: "Temperature",
 				flow: "Rate of flow",
@@ -38,9 +38,10 @@ var YDYW_languageManager = Class.extend({
 				crow: "Crow",
 				violin: "Violin",
 				harmonica: "Harmonica",
-				trumpet: "Trumpet"
+				trumpet: "Trumpet",
+				chimes: "Chimes"
 			},
-			kannada: {
+			"ಕನ್ನಡ": {
 				language: "ಭಾಷೆ",
 				temperature: "ತಾಪಮಾನ",
 				flow: "ಹರಿವಿನ ಪ್ರಮಾಣ",
@@ -51,9 +52,10 @@ var YDYW_languageManager = Class.extend({
 				crow: "ಕಾಗೆ",
 				violin: "ಪಿಟೀಲು",
 				harmonica:"ಹಾರ್ಮೋನಿಕಾ",
-				trumpet: "ಕಹಳೆ"
+				trumpet: "ಕಹಳೆ",
+				chimes: "ಘಂಟಾಮೇಳ"
 			},
-			hindi: {
+			"हिंदी": {
 				language: "भाषा",
 				temperature: "तापमान",
 				flow: "प्रवाह की दर",
@@ -64,9 +66,10 @@ var YDYW_languageManager = Class.extend({
 				crow: "कौआ",
 				violin: "वायोलिन",
 				harmonica: "अकार्डियन",
-				trumpet: "तुरही"
+				trumpet: "तुरही",
+				chimes: "झंकार"
 			},
-			spanish: {
+			"Español": {
 				language: "Idioma",
 				temperature: "तापमान",
 				flow: "प्रवाह की दर",
@@ -77,15 +80,17 @@ var YDYW_languageManager = Class.extend({
 				crow: "cuervo",
 				violin: "violín",
 				harmonica: "harmónica",
-				trumpet: "trompeta"
+				trumpet: "trompeta",
+				chimes: "campaneo"
 			},
-			italian: {
+			"Italiano": {
 				language: "Lingua",
 				doorBell: "campanello di casa",
 				crow: "corvo",
 				violin: "violino",
 				harmonica: "armonica a bocca",
-				trumpet: "tromba"
+				trumpet: "tromba",
+				chimes: "Chime"
 			}
 		};	
 	}
