@@ -16,7 +16,7 @@ var YDYW_LockManager = SVG_Imitator.extend({
 		this.holder = null;
 		//Feature specific status flags
 		this.locked = false;
-
+		this.cb = null;
 		if (canvas!==undefined && canvas!== null) {
 			this.attachToCanvas(canvas);
 		}
@@ -41,6 +41,7 @@ var YDYW_LockManager = SVG_Imitator.extend({
 			this.deadBolt = new YDYW_DeadBolt();
 			this.deadBolt.init(canvas); 
 		}
+		this.deadBoltPosition.cb = this.cb;
 		this.doorKnobIn.set(this.doorKnobInPosition);
 		this.doorKnobOut.set(this.doorKnobOutPosition);
 		this.deadBolt.set(this.deadBoltPosition);

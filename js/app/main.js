@@ -27,8 +27,8 @@
     var messageIn;
     var lock;
     var doorBell;
-    var languageButton;
-    var chimesButton;
+    var menuButton;
+    
 
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
@@ -43,10 +43,11 @@
 
     placeElementsOnDoor();
     // Draw the Message Box
-    // DrawMessageBox();
+    //DrawMessageBox();
 
     // Draw the Camera view and associated controls
-    // DrawCameraView();
+    //DrawCameraView();
+
 
     //Weather layout
     // DrawWeatherLayout();
@@ -54,12 +55,18 @@
     var soundMgr = new YDYW_soundManager();
     soundMgr.init();
     AddSounds();
+    
 
     var languageMgr = new YDYW_languageManager();
     languageMgr.init();
 
     var soundCheckBox = new YDYW_CheckBox();
     soundCheckBox.init(canvas);
+    var languageCheckBox = new YDYW_CheckBox();
+    languageCheckBox.init(canvas);
+
+    var Menu = new YDYW_Container();
+    Menu.init(canvas);
 
     var welcome = new YDYW_Welcome();
     welcome.init(canvas);
@@ -71,87 +78,18 @@
         languageMgr: languageMgr
     })
 
-    soundCheckBox.addEntries(soundMgr.getIDs());
-    soundCheckBox.onSelect(function(id) {
-        soundMgr.setCurrent(id);
-        soundMgr.play();
-        soundCheckBox.hide();
-        chimesButton.show();
-    });
-    soundCheckBox.set({
-        left: outsideDoorLeft + 30,
-        top: doorTop,
-        width: doorWidth/3.0,
-        height: doorHeight/3.0,
-        zoomFactor: zoomFactor
-    });
-    soundCheckBox.hide();
-
-
-    var languageCheckBox = new YDYW_CheckBox();
-    languageCheckBox.init(canvas);
-
-    languageCheckBox.addEntries(languageMgr.getLanguages());
-    languageCheckBox.onSelect(function(id) {
-        languageMgr.setLanguage(id);
-        languageCheckBox.hide();
-        languageButton.show();
-    });
-    languageCheckBox.set({
-        left: outsideDoorLeft + 30,
-        top: doorTop + doorHeight/2.0,
-        width: doorWidth/3.0,
-        height: doorHeight/3.0,
-        zoomFactor: zoomFactor
-    });
-    languageCheckBox.hide();
-    //Do this to whatever element needs to change its text when a new language is selected.
-    languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
-    //languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
-    languageMgr.setLanguage("english");
+    
+    
 
 
 
 
-    var Menu = new YDYW_Container();
-    Menu.init(canvas);
-    Menu.set({
-        top: (doorTop + doorHeight/2.0)-100,
-        left: outsideDoorLeft + doorWidth/2.0-50,
-        height : 200,
-        width : 300,
-        stroke : "white",
-        fill : "white",
-        RowHeadings : ["testing"],
-        RowIconNumber : [1,2,1],
-        buttonDataList: [{icon: '../js/assets/svg/incognito.svg'},{icon: '../js/assets/svg/incognito.svg'},{icon: '../js/assets/svg/incognito.svg'},{icon: '../js/assets/svg/incognito.svg'}],
-        zoomFactor: zoomFactor
-    });
-
-    var button = new YDYW_Button();
-    button.init(canvas);
-    button.set({
-        top: (doorTop + doorHeight/2.0) - 100,
-        //top: 100,
-        left: outsideDoorLeft + doorWidth/2.0 - 100,
-        type: "icon", // label/icon/tab
-        //text: "Menu", // displays the text inside the button
-        zoomFactor: zoomFactor,
-        textSize: 50, // textSize
-        radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
-        icon: "../js/assets/svg/circle.svg", //icon asset path
-        cb: function(){
-            if(button.selected === false){
-                Menu.hide();
-                button.selected = true;
-            }else{
-                Menu.show();
-                button.selected = false;
-            }
-
-        }
-    });
-
+    
+   
+    
+    
+    SetupMenu();
+    languageMgr.setLanguage("English");
     // draw everything at the appropriate scale for this canvas
 
     zoomAll(zoomFactor);
@@ -268,6 +206,9 @@
                 cy: doorTop + doorHeight/2.0,
                 cx: outsideDoorLeft + 40,
                 radius: 20.0
+            },
+            cb: function() {
+                lock.toggleLockedStatusAndShow();
             }
         });
 
@@ -289,46 +230,152 @@
             }
         });
 
-        languageButton = new YDYW_Button();
-        languageButton.init(canvas);
-        languageButton.set({
-            top: doorTop  + doorHeight/2.0 - 50,
-            left: outsideDoorLeft + 100,
+        menuButton = new YDYW_Button();
+        menuButton.init(canvas);
+        menuButton.set({
+            left: insideDoorLeft + doorWidth - 40,
+            top: doorTop  + doorHeight/2.0 + 70,
             type: "icon", // label/icon/tab
-            text: "Language", // displays the text inside the button
-            fill: '#c8878e',
+            //text: "Menu", // displays the text inside the button
             zoomFactor: zoomFactor,
-            strokeWidth: 3,
-            textSize: 30, // textSize
+            textSize: 50, // textSize
             radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
-            icon: "js/assets/img/icons/language.svg", //icon asset path
-            cb:function() {
-                languageCheckBox.show();
-                languageButton.hide();
+            icon: "js/assets/svg/circle.svg", //icon asset path
+            cb: function(){
+                if(menuButton.selected === true){
+                    Menu.hide();
+                    soundCheckBox.hide();
+                    languageCheckBox.hide();
+                    menuButton.selected = false;
+                }else{
+                    Menu.show();
+                    menuButton.selected = true;
+                }
+
             }
         });
 
-        chimesButton = new YDYW_Button();
-        chimesButton.init(canvas);
-        chimesButton.set({
-            top: doorTop  + doorHeight/2.0 - 50,
-            left: outsideDoorLeft + 150,
-            type: "icon", // label/icon/tab
-            text: "Chimes", // displays the text inside the button
-            fill: '#c8878e',
-            zoomFactor: zoomFactor,
-            strokeWidth: 3,
-            textSize: 30, // textSize
-            radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
-            icon: "js/assets/img/icons/music.svg", //icon asset path
-            cb:function() {
-                soundCheckBox.show();
-                chimesButton.hide();
-            }
-        });
 
     }
 
+    function SetupMenu () {
+        var menuPosAndSize = {
+            top: (doorTop + doorHeight/2.0) - 100,
+            left: insideDoorLeft + doorWidth/2.0 - 150,
+            height : 200,
+            width : 300,
+        }
+        soundCheckBox.addEntries(soundMgr.getIDs());
+        soundCheckBox.onSelect(function(id) {
+            soundMgr.setCurrent(id);
+            soundMgr.play();
+            soundCheckBox.hide();
+            Menu.show();
+        });
+        soundCheckBox.set({
+            top: menuPosAndSize.top,
+            left: menuPosAndSize.left,
+            height : menuPosAndSize.height,
+            width : menuPosAndSize.width,
+            zoomFactor: zoomFactor,
+            caption: "chimes"
+        });
+        soundCheckBox.hide();
+
+
+        
+
+        languageCheckBox.addEntries(languageMgr.getLanguages());
+        languageCheckBox.onSelect(function(id) {
+            languageMgr.setLanguage(id);
+            languageCheckBox.hide();
+            Menu.show();
+        });
+        languageCheckBox.set({
+            top: menuPosAndSize.top,
+            left: menuPosAndSize.left,
+            height : menuPosAndSize.height,
+            width : menuPosAndSize.width,
+            zoomFactor: zoomFactor,
+            caption: "language"
+        });
+        languageCheckBox.hide();
+        //Do this to whatever element needs to change its text when a new language is selected.
+        languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
+        languageMgr.addSetTextCallback(languageCheckBox.setTextCallback.bind(languageCheckBox));
+
+        Menu.set({
+            top: menuPosAndSize.top,
+            left: menuPosAndSize.left,
+            height : menuPosAndSize.height,
+            width : menuPosAndSize.width,
+            stroke : "white",
+            fill : "white",
+            visible: false,
+            RowHeadings : ["testing"],
+            RowIconNumber : [5,4,5],
+            buttonDataList: [
+                    {
+                        type: "icon", // label/icon/tab
+                        text: "language", // displays the text inside the button
+                        icon: "js/assets/img/icons/language.svg", //icon asset path
+                        cb:function() {
+                            languageCheckBox.show();
+                            Menu.hide();
+                        }
+                    },
+                    {
+                        type: "icon", // label/icon/tab
+                        text: "chimes", // displays the text inside the button
+                        icon: "js/assets/img/icons/music.svg", //icon asset path
+                        cb:function() {
+                            soundCheckBox.show();
+                            Menu.hide();
+                        }
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    }],
+            zoomFactor: zoomFactor
+        });
+
+        languageMgr.addSetTextCallback(Menu.setTextCallback.bind(Menu));
+    }
+
+    
 
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas

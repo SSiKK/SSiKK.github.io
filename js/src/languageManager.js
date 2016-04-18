@@ -27,7 +27,7 @@ var YDYW_languageManager = Class.extend({
 	},
 	populateDictionary: function() {
 		this.langauges = {
-			english:{
+			English:{
 				language: "Language",
 				temperature: "Temperature",
 				flow: "Rate of flow",
@@ -39,6 +39,7 @@ var YDYW_languageManager = Class.extend({
 				violin: "Violin",
 				harmonica: "Harmonica",
 				trumpet: "Trumpet",
+				chimes: "Chimes",
 
 				// welcome
 	    		hiName: "Hello, Name!",
@@ -51,7 +52,7 @@ var YDYW_languageManager = Class.extend({
 	    		sweet: "SWEET",
 	    		aFewMore: "A couple more things and you are all set"
 			},
-			kannada: {
+			"ಕನ್ನಡ": {
 				language: "ಭಾಷೆ",
 				temperature: "ತಾಪಮಾನ",
 				flow: "ಹರಿವಿನ ಪ್ರಮಾಣ",
@@ -63,6 +64,7 @@ var YDYW_languageManager = Class.extend({
 				violin: "ಪಿಟೀಲು",
 				harmonica:"ಹಾರ್ಮೋನಿಕಾ",
 				trumpet: "ಕಹಳೆ",
+				chimes: "ಘಂಟಾಮೇಳ",
 
 				// welcome
 	    		hiName: "ಹಲೋ, ಹೆಸರು!",
@@ -73,9 +75,10 @@ var YDYW_languageManager = Class.extend({
 	    		handInstruct: "ಜಾಗದಲ್ಲಿ ನಿಮ್ಮ ಕೈ ಇರಿಸಿ",
 	    		greenHand: "ಗ್ರೇಟ್! ಈಗ ನೀವು ಬಳಕೆದಾರ ನಿಮ್ಮ ಬಾಗಿಲು ಅನ್ಲಾಕ್ ನಿಮ್ಮ ಕೈ ಮುದ್ರಿಸಬಹುದು!",
 	    		sweet: "ಸಿಹಿ",
-	    		aFewMore: "ಒಂದೆರಡು ಹೆಚ್ಚು ವಿಷಯಗಳನ್ನು ಮತ್ತು ನೀವು ಎಲ್ಲಾ ಸೆಟ್ ಇವೆ",
+	    		aFewMore: "ಒಂದೆರಡು ಹೆಚ್ಚು ವಿಷಯಗಳನ್ನು ಮತ್ತು ನೀವು ಎಲ್ಲಾ ಸೆಟ್ ಇವೆ"
+
 			},
-			hindi: {
+			"हिंदी": {
 				language: "भाषा",
 				temperature: "तापमान",
 				flow: "प्रवाह की दर",
@@ -87,6 +90,8 @@ var YDYW_languageManager = Class.extend({
 				violin: "वायोलिन",
 				harmonica: "अकार्डियन",
 				trumpet: "तुरही",
+				chimes: "झंकार",
+
 				// welcome
 				hiName: "हैलो, नाम!",
 				hasPhoneInstruct: "यदि आप अपने प्रोफ़ाइल तस्वीर बदलने के लिए चाहते हैं, तो कैमरे को छूने या एक तस्वीर का चयन",
@@ -98,9 +103,8 @@ var YDYW_languageManager = Class.extend({
 				sweet: "मिठाई",
 				aFewMore: "कुछ और बातें और तुम सब सेट कर रहे हैं"
 
-
 			},
-			spanish: {
+			"Español": {
 				language: "Idioma",
 				temperature: "तापमान",
 				flow: "प्रवाह की दर",
@@ -112,6 +116,7 @@ var YDYW_languageManager = Class.extend({
 				violin: "violín",
 				harmonica: "harmónica",
 				trumpet: "trompeta",
+				chimes: "campaneo",
 
 				// welcome
 	    		hiName: "Hola, Nombre!",
@@ -123,14 +128,16 @@ var YDYW_languageManager = Class.extend({
 	    		greenHand: "Great! Ahora puedes usuario de su mano de impresión para desbloquear la puerta!",
 	    		sweet: "SUAVE",
 	    		aFewMore: "Un par de cosas más y que está todo listo"
+
 			},
-			italian: {
+			"Italiano": {
 				language: "Lingua",
 				doorBell: "campanello di casa",
 				crow: "corvo",
 				violin: "violino",
 				harmonica: "armonica a bocca",
 				trumpet: "tromba",
+				chimes: "Chime",
 
 				// welcome
 	    		hiName: "Ciao, nome!",
