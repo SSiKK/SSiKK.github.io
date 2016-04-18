@@ -39,7 +39,7 @@ var YDYW_Button = SVG_Imitator.extend({
 	draw: function () {
 		var that = this;
 		// Draw
-		console.log ("being drawn!", this);
+		// console.log ("being drawn!", this);
 
 		var label = new fabric.Text(this.text,{
 			fontSize: this.textSize,
@@ -49,7 +49,7 @@ var YDYW_Button = SVG_Imitator.extend({
 		label.setColor('black');
 
 		var fillColor = this.fill;
-		console.log("The fill color is "+ fillColor);
+		// console.log("The fill color is "+ fillColor);
 		var shapeObject = null;
 
 

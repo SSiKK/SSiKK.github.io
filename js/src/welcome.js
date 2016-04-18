@@ -7,15 +7,13 @@ var YDYW_Welcome = SVG_Imitator.extend({
         this.height = null;
 
         this.languageMgr = null;
-        this.languageEntries = [];
+        this.languageKeys = []; // Array containing keys to phrases that need to be translated
+        this.languageEntries = {}; // Matching array containing tranlated phrases
         //create an array of images
         this.hipImagesArr = [];
 
         // Canvas on which the object is created.
         this.canvas = null;
-
-
-
         //Feature specific status flags
         this.on = false;
         if (canvas !== undefined && canvas !== null) {
@@ -25,13 +23,38 @@ var YDYW_Welcome = SVG_Imitator.extend({
 
     attachToCanvas: function(canvas) {
         this.canvas = canvas;
+        this.buildLanguageEntries();
+    },
+
+    buildLanguageEntries: function() {
+        var common = {
+            originY: 'center',
+            originX: 'center',
+            left: this.left * 4,
+            fontFamily: 'Helvetica',
+            fontSize: 35
+        }
+
+        this.languageEntries = {
+            hiName: new fabric.Text("Hello, Name!", common),
+            hasPhoneInstruct: new fabric.Text("If you would like to change your profile picture, touch the camera or choose a photo", common),
+            getKnowU: new fabric.Text("Getting to know you...", common),
+            noPhoneInstruct: new fabric.Text("Touch the camera icon to take your profile picture\nOR\nswipe through the array of available photos", common),
+            fTfKeys: new fabric.Text("First things first. Keys...", common),
+            handInstruct: new fabric.Text("Place your hand in the space provided", common),
+            greenHand: new fabric.Text("Great! Now you can user your hand-print to unlock your door!", common),
+            sweet: new fabric.Text("SWEET", common),
+            aFewMore: new fabric.Text("A couple more things and you are all set", common)
+        }
     },
 
     draw: function() {
         // Draw
         console.log("being drawn!", this);
         //Have a selectable rect with
-        this.floatingWelcome();
+        this.languageMgr.addSetTextCallback(this.setTextCallback.bind(this));
+        // this.floatingWelcome();
+        this.chooseLangauge();
 
     },
 
@@ -116,36 +139,14 @@ var YDYW_Welcome = SVG_Imitator.extend({
     // Welcome State 2
     chooseLangauge: function() {
         var that = this;
-        var code = '';
         //Promises with language icons.
         var languagePromises = [];
 
         for (var i = 0; i < 24; i++) {
-            var url = 'js/assets/flags/byIndex/' + i + '.png'
-
-            switch (i) {
-                case 13:
-                    code = 'italian';
-                    break;
-                case 9:
-                    code = 'hindi';
-                    break;
-                case 8:
-                    code = 'kannada';
-                    break;
-                case 7:
-                case 19:
-                case 20:
-                case 23:
-                    code = 'spanish';
-                    break;
-                default:
-                    code = 'english';
-                    break;
-            }
-            console.log( code );
+			console.log(i, getLangCode(i));
             languagePromises.push(
                 new Promise(function(resolve, reject) {
+            		var url = 'js/assets/flags/byIndex/' + i + '.png'
                     fabric.Image.fromURL(url, function(img) {
                         resolve(img.set({
                             scaleX: .5,
@@ -156,8 +157,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
                             hasControls: false,
                             hasBorders: false,
                             lockMovementX: true,
-                            lockMovementY: true,
-                            code: code
+                            lockMovementY: true
                         }))
                     })
                 })
@@ -166,23 +166,28 @@ var YDYW_Welcome = SVG_Imitator.extend({
 
         Promise.all(languagePromises)
             .then(function(results) {
-                results.forEach(function(tex, i) {
+
+                results.forEach(function(flag, i) {
                     var x = i % 4;
                     var y = Math.floor(i / 4);
-                    tex.set({
+                    console.log(i, x, y, flag );
+                    flag.set({
                         top: that.top + 500 + (y * 250),
                         left: that.left + 200 + (x * 250)
                     })
-                    tex.on('selected', function(){
-                    	that.languageMgr.setLanguage(tex.code);
-                    	results.forEach(function(lang) {
-                    		that.canvas.remove(lang);
-                    	})
+                    // console.log(i, flag.positionID, getLangCode(flag.positionID), flag.code);
+                    flag.on('selected', function() {
+                    	console.log('flag selected!', getLangCode(i));
+                        that.languageMgr.setLanguage(getLangCode(i));
 
-                    	that.newUserImageCapture();
+                        results.forEach(function(lang) {
+                            that.canvas.remove(lang);
+                        })
+
+                        that.newUserImageCapture();
 
                     })
-                    that.canvas.add(tex);
+                    that.canvas.add(flag);
                 })
 
                 // 13: italian
@@ -190,51 +195,78 @@ var YDYW_Welcome = SVG_Imitator.extend({
                 // 2,3,8,12: english
                 // 7,19,20,23
             })
-
     },
 
     // Welcome State 3
     newUserImageCapture: function() {
         var that = this;
         // New user provided with camera and an array of hip images to set his profile picture.
-        var commonParams = {
-            scaleX: .1,
-            scaleY: .1,
-            originX: 'center',
-            originY: 'center',
-			stroke : 'black',
-	        strokeWidth : 100,
-            selectable: false,
-            hasControls: false,
-            hasBorders: false,
-            lockMovementX: true,
-            lockMovementY: true
-        }
+
         var hipPromises = [];
 
+        this.canvas.add(
+        	this.languageEntries['hiName'].set({
+            'fontSize': 80,
+            'top': that.top + 500,
+            'left': that.left + 700
+        }));
+
         for (var i = 0; i < 5; i++) {
-        	url = 'js/assets/img/profiles/p' + i + '.jpg'
-        	hipPromises.push(
-	            new Promise(function(resolve, reject) {
-	                fabric.Image.fromURL(url,
-	                	function(img) { resolve(img.set( commonParams ))
-	                })
-	            })
-        	)
+            url = 'js/assets/img/profiles/p' + i + '.jpg'
+            hipPromises.push(
+                new Promise(function(resolve, reject) {
+                    fabric.Image.fromURL(url,
+                        function(img) {
+                            resolve(img.set({
+                                scaleX: .1,
+                                scaleY: .1,
+                                originX: 'center',
+                                originY: 'center',
+                                stroke: 'black',
+                                strokeWidth: 25,
+                                opacity: 0.3,
+                                selectable: true,
+                                hasControls: false,
+                                hasBorders: false,
+                                lockMovementX: true,
+                                lockMovementY: true
+                            }))
+                        })
+                })
+            )
         }
+
+
+        // Resolve all of the Promises
         Promise.all(hipPromises)
-        .then(function(results) {
-        	that.hipImagesArr = results.map(function(img, i) {
-        		img.set({
-        			left: that.left + 400 + (i * 100),
-        			top: that.top + 200
-        		})
-        		.on('mouse:over', function() {
-        			this.bringToFront();
-        		})
-        		that.canvas.add(img)
-        	})
-        })
+            .then(function(results) {
+                that.hipImagesArr = results.map(function(img, i) {
+                    img.set({
+                        left: that.left + 800 + (i * 75),
+                        top: that.top + 600
+                    })
+                    .on('mousemove', function() {
+                        console.log("mouseOver");
+                        var there = this;
+                        results.forEach(function(t) {
+                            if (t !== this) {
+                                t.sendBackwards()
+                                t.opacity = 0.3;
+                            }
+                            there.opacity = 1.0;
+                            there.bringToFront();
+                        })
+                    })
+                    .on('selected', function() {
+                        results.map(function(t) {
+                            that.canvas.remove(t);
+                        })
+                        this.handprintScanner();
+
+                    })
+                    that.canvas.add(img)
+                })
+            })
     },
 
     // Welcome State 3.1 : Alternate
@@ -260,16 +292,35 @@ var YDYW_Welcome = SVG_Imitator.extend({
 
     },
 
-	//dict contains all text that are being used in the entire app
-	setTextCallback: function(dict) {
-		var t;
-		for (var e = 0; e<this.entries.length; e++) {
-			t = dict[this.entries[e]] || this.entries[e];
-			//console.log(t);
-			//Set the text attribute of text elements to dictionary lookup value
-			this.fabEntries[e].label.set({text: t});
-		}
-	}
+    //dict contains all text that are being used in the entire app
+    setTextCallback: function(dict) {
+        for (var key in this.languageEntries) {
+            console.log(key, dict[key]);
+            this.languageEntries[key].set({text: dict[key]})
+
+        }
+    }
 });
 
-//http://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
+function getLangCode(id) {
+    switch (id) {
+        case 11:
+            return 'italian';
+            break;
+        case 9:
+            return 'hindi';
+            break;
+        case 8:
+            return 'kannada';
+            break;
+        case 7:
+        case 19:
+        case 20:
+        case 23:
+            return 'spanish';
+            break;
+        default:
+            return 'english';
+            break;
+    }
+}

@@ -132,6 +132,7 @@ var YDYW_Camera = SVG_Imitator.extend({
             //     HERE BE IMAGES
             //------------------------
             new Promise(function(resolve, reject) {
+
                 fabric.Image.fromURL("js/assets/img/visitorF.png", function(img) {
                     resolve(img.set({
                         left: that.indoorView.left*3,
