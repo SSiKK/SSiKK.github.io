@@ -48,11 +48,9 @@
     // Draw the Camera view and associated controls
     //DrawCameraView();
 
+
     //Weather layout
-    DrawWeatherLayout();
-
-
-    
+    // DrawWeatherLayout();
 
     var soundMgr = new YDYW_soundManager();
     soundMgr.init();
@@ -63,8 +61,16 @@
 
     var soundCheckBox = new YDYW_CheckBox();
     soundCheckBox.init(canvas);
-    
 
+    var welcome = new YDYW_Welcome();
+    welcome.init(canvas);
+    welcome.set({
+        top: doorTop,
+        left: insideDoorLeft,
+        width: doorWidth,
+        height: doorHeight,
+        languageMgr: languageMgr
+    })
 
     soundCheckBox.addEntries(soundMgr.getIDs());
     soundCheckBox.onSelect(function(id) {
@@ -172,7 +178,6 @@
 
         }
     });
-    //Menu.hide();
 
     // draw everything at the appropriate scale for this canvas
 
@@ -223,11 +228,6 @@
         canvas.add(outsideDoor);
     }
 
-
-    function DrawDoorKnob() {
-
-    }
-
     function DrawCameraView() {
         var cameraView = new YDYW_Camera();
             cameraView.init(canvas)
@@ -241,12 +241,6 @@
 
     // Instantiate the message class to set the 4 parameters from SVG_Imitator
     function DrawMessageBox(){
-        // subC = document.createElement('canvas')
-        // subC.id = 'subC';
-        // subC.width = canvas.height * 0.3036437247 + "";
-        // subC.height = canvas.height * 0.25 +"";
-        // subC.style.border = "2px solid black"
-        // document.body.appendChild(subC);
 
         messageIn = new YDYW_Message();
         messageIn.init(canvas);
@@ -268,6 +262,7 @@
             width: 444.0
         });
     }
+
 
     function AddSounds() {
         soundMgr.addSound();
@@ -361,7 +356,9 @@
         });
 
     }
+
     languageMgr.setLanguage("English");
+
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
     function zoomAll(SCALE_FACTOR) {
