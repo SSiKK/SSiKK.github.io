@@ -45,42 +45,18 @@
     // DrawMessageBox();
 
     // Draw the Camera view and associated controls
-    cameraView = new YDYW_Camera();
-        cameraView.init(canvas)
-        cameraView.set({
-            width: localWidth * .30,
-            height: localHeight * 0.25,
-            left: localWidth * 0.25,
-            top: localHeight * .3 // 250
-        })
-        // cameraView.hide();
+    var cameraView = initCamera(canvas);
 
     // Draw the Camera view and associated controls
-    mirrorView = new YDYW_Mirror();
-        mirrorView.init(canvas)
-        mirrorView.set({
-            width: localWidth * .30,
-            height: localHeight * 0.25,
-            left: localWidth * 0.25,
-            top: localHeight * .3 // 250
-        })
-        // mirrorView.hide();
+    var mirrorView = initMirror(canvas);
 
+    //Maps Layout
+    var mapView = initMap(canvas);
 
 
 
     //Weather layout
     DrawWeatherLayout();
-
-    //Maps Layout
-    var mapView = new YDYW_Maps();
-    mapView.init(canvas);
-    mapView.set({
-        left: localWidth*0.25,
-        top: localHeight*0.5, // 250
-        width: localWidth*0.30,
-        height: localHeight*0.25
-    });
 
     //Draw Emergency mode
     //DrawEmergency();
@@ -95,6 +71,9 @@
     userManager.init();
     //Adding a few users to show
     AddUsers();
+
+    // Initialize the ImageManager
+    var imageManager = initImageLoader();
 
     var doorLogManager = new YDYW_DoorLog();
     doorLogManager.init(canvas, imageManager);
@@ -522,6 +501,52 @@
 
             }
         });*/
+    }
+
+
+    function initMirror(canvas) {
+        var mirror = new YDYW_Mirror();
+            mirror.init(canvas)
+            mirror.set({
+                width: localWidth * .30,
+                height: localHeight * 0.25,
+                left: localWidth * 0.25,
+                top: localHeight * .3 // 250
+            })
+        return mirror
+    }
+
+
+    function initCamera(canvas){
+        var camera = new YDYW_Camera();
+            camera.init(canvas)
+            camera.set({
+                width: localWidth * .30,
+                height: localHeight * 0.25,
+                left: localWidth * 0.25,
+                top: localHeight * .3 // 250
+            })
+        return camera
+    }
+
+    function initMap(canvas){
+        var map = new YDYW_Maps();
+        map.init(canvas);
+        map.set({
+            left: localWidth*0.25,
+            top: localHeight*0.5, // 250
+            width: localWidth*0.30,
+            height: localHeight*0.25
+        });
+        return map
+    }
+
+    function initImageLoader() {
+        var imgLoader = new YDYW_imageLoader();
+        imgLoader.init();
+        imgLoader.addImage({url:"js/assets/img/profiles/KB.jpg", id:"krishna"});
+        imgLoader.addPattern({url:"js/assets/img/profiles/people1.jpg", id:"kid"});
+        return imgLoader;
     }
 
 

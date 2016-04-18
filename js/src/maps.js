@@ -62,12 +62,17 @@ var YDYW_Maps = SVG_Imitator.extend({
         })
 
         var cancelPromise = new Promise(function(resolve, reject) {
-            fabric.Image.fromURL("js/assets/img/cancel.png", function(img) {
-                resolve(img.set({
-                    left: leftRef + 280,
+            fabric.loadSVGFromURL('js/assets/svg/close.svg', function(obj, opt) {
+                resolve(fabric.util.groupSVGElements(obj, {
+                    width: opt.width,
+                    height: opt.height,
+                    svgUid: opt.svgUid,
+                    toBeParsed: opt.toBeParsed,
+                    left: leftRef + 400,
                     top: topRef - 200,
-                    scaleX: 0.3,
-                    scaleY: 0.3,
+                    scaleX: 0.2,
+                    scaleY: 0.2,
+                    fill: 'white',
                     originX: 'center',
                     originY: 'center',
                     selectable: true,
@@ -94,10 +99,10 @@ var YDYW_Maps = SVG_Imitator.extend({
                     });
                 that.canvas.add(that.mapBox);
                 that.canvas.add(that.mapBoxCancel);
-				that.canvas.renderAll();
+                that.canvas.renderAll();
 
                 if (that.firstTime)
-                	that.hide();
+                    that.hide();
             })
     },
 
