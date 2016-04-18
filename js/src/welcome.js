@@ -202,6 +202,8 @@ var YDYW_Welcome = SVG_Imitator.extend({
             scaleY: .1,
             originX: 'center',
             originY: 'center',
+			stroke : 'black',
+	        strokeWidth : 100,
             selectable: false,
             hasControls: false,
             hasBorders: false,
@@ -226,6 +228,9 @@ var YDYW_Welcome = SVG_Imitator.extend({
         		img.set({
         			left: that.left + 400 + (i * 100),
         			top: that.top + 200
+        		})
+        		.on('mouse:over', function() {
+        			this.bringToFront();
         		})
         		that.canvas.add(img)
         	})
