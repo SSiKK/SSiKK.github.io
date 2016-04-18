@@ -6,11 +6,15 @@ var YDYW_Welcome = SVG_Imitator.extend({
         this.width = null;
         this.height = null;
 
+        this.languageMgr = null;
+        this.languageEntries = [];
         //create an array of images
         this.hipImagesArr = [];
 
         // Canvas on which the object is created.
         this.canvas = null;
+
+
 
         //Feature specific status flags
         this.on = false;
@@ -18,6 +22,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
             this.attachToCanvas(canvas);
         }
     },
+
     attachToCanvas: function(canvas) {
         this.canvas = canvas;
     },
@@ -111,17 +116,22 @@ var YDYW_Welcome = SVG_Imitator.extend({
     // Welcome State 2
     chooseLangauge: function() {
         var that = this;
+        var code = '';
         //Promises with language icons.
         var languagePromises = [];
+
         for (var i = 0; i < 24; i++) {
             var url = 'js/assets/flags/byIndex/' + i + '.png'
-            var code = '';
+
             switch (i) {
                 case 13:
                     code = 'italian';
                     break;
                 case 9:
                     code = 'hindi';
+                    break;
+                case 8:
+                    code = 'kannada';
                     break;
                 case 7:
                 case 19:
@@ -133,7 +143,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
                     code = 'english';
                     break;
             }
-
+            console.log( code );
             languagePromises.push(
                 new Promise(function(resolve, reject) {
                     fabric.Image.fromURL(url, function(img) {
@@ -142,7 +152,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
                             scaleY: .5,
                             originX: 'center',
                             originY: 'center',
-                            selectable: false,
+                            selectable: true,
                             hasControls: false,
                             hasBorders: false,
                             lockMovementX: true,
@@ -163,6 +173,15 @@ var YDYW_Welcome = SVG_Imitator.extend({
                         top: that.top + 500 + (y * 250),
                         left: that.left + 200 + (x * 250)
                     })
+                    tex.on('selected', function(){
+                    	that.languageMgr.setLanguage(tex.code);
+                    	results.forEach(function(lang) {
+                    		that.canvas.remove(lang);
+                    	})
+
+                    	that.newUserImageCapture();
+
+                    })
                     that.canvas.add(tex);
                 })
 
@@ -178,7 +197,39 @@ var YDYW_Welcome = SVG_Imitator.extend({
     newUserImageCapture: function() {
         var that = this;
         // New user provided with camera and an array of hip images to set his profile picture.
+        var commonParams = {
+            scaleX: .1,
+            scaleY: .1,
+            originX: 'center',
+            originY: 'center',
+            selectable: false,
+            hasControls: false,
+            hasBorders: false,
+            lockMovementX: true,
+            lockMovementY: true
+        }
+        var hipPromises = [];
 
+        for (var i = 0; i < 5; i++) {
+        	url = 'js/assets/img/profiles/p' + i + '.jpg'
+        	hipPromises.push(
+	            new Promise(function(resolve, reject) {
+	                fabric.Image.fromURL(url,
+	                	function(img) { resolve(img.set( commonParams ))
+	                })
+	            })
+        	)
+        }
+        Promise.all(hipPromises)
+        .then(function(results) {
+        	that.hipImagesArr = results.map(function(img, i) {
+        		img.set({
+        			left: that.left + 400 + (i * 100),
+        			top: that.top + 200
+        		})
+        		that.canvas.add(img)
+        	})
+        })
     },
 
     // Welcome State 3.1 : Alternate
@@ -202,12 +253,18 @@ var YDYW_Welcome = SVG_Imitator.extend({
         var that = this;
         // To ask user to set the passcode.
 
-    }
+    },
 
-
+	//dict contains all text that are being used in the entire app
+	setTextCallback: function(dict) {
+		var t;
+		for (var e = 0; e<this.entries.length; e++) {
+			t = dict[this.entries[e]] || this.entries[e];
+			//console.log(t);
+			//Set the text attribute of text elements to dictionary lookup value
+			this.fabEntries[e].label.set({text: t});
+		}
+	}
 });
 
 //http://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
-function randomRange(min, max) {
-    return Math.random() * (max - min + 1) + min;
-}

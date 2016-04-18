@@ -51,9 +51,6 @@
     //Weather layout
     // DrawWeatherLayout();
 
-    DrawWelcome();
-
-
     var soundMgr = new YDYW_soundManager();
     soundMgr.init();
     AddSounds();
@@ -64,7 +61,15 @@
     var soundCheckBox = new YDYW_CheckBox();
     soundCheckBox.init(canvas);
 
-
+    var welcome = new YDYW_Welcome();
+    welcome.init(canvas);
+    welcome.set({
+        top: doorTop,
+        left: insideDoorLeft,
+        width: doorWidth,
+        height: doorHeight,
+        languageMgr: languageMgr
+    })
 
     soundCheckBox.addEntries(soundMgr.getIDs());
     soundCheckBox.onSelect(function(id) {
@@ -209,12 +214,6 @@
 
     // Instantiate the message class to set the 4 parameters from SVG_Imitator
     function DrawMessageBox(){
-        // subC = document.createElement('canvas')
-        // subC.id = 'subC';
-        // subC.width = canvas.height * 0.3036437247 + "";
-        // subC.height = canvas.height * 0.25 +"";
-        // subC.style.border = "2px solid black"
-        // document.body.appendChild(subC);
 
         messageIn = new YDYW_Message();
         messageIn.init(canvas);
@@ -235,18 +234,6 @@
             height: 300.0,
             width: 444.0
         });
-    }
-
-
-    function DrawWelcome() {
-        var welcome = new YDYW_Welcome();
-        welcome.init(canvas);
-        welcome.set({
-            top: doorTop,
-            left: insideDoorLeft,
-            width: doorWidth,
-            height: doorHeight
-        })
     }
 
 
