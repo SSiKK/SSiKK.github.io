@@ -323,6 +323,36 @@
             }
         });
         lock.toggleLockedStatusAndShow();
+
+        var leaveMsgMsg1 = new fabric.Text("We are not in right now!",defaultValuesForFabricObjects);
+        leaveMsgMsg1.set({
+            fontSize: 12 * zoomFactor,
+            width: doorWidth/2.5,
+            height: doorHeight/18.0,
+            fill: "rgba(0,0,0,1.0)",
+            top: doorTop + doorHeight/2.0 - doorHeight/6.0,
+            left: outsideDoorLeft + doorWidth/2.0,
+            visible: false,
+            selectable:true,
+            id: "authReqMsg"
+        });
+        canvas.add(leaveMsgMsg1);
+
+        var leaveMsgMsg2 = new fabric.Text("Touch anywhere \nto leave a message",defaultValuesForFabricObjects);
+        leaveMsgMsg2.set({
+            fontSize: 10 * zoomFactor,
+            width: doorWidth/2.5,
+            height: doorHeight/18.0,
+            fill: "rgba(0,0,0,1.0)",
+            top: doorTop + doorHeight/2.0 - doorHeight/12.0,
+            left: outsideDoorLeft + doorWidth/2.0,
+            visible: false,
+            selectable:true,
+            textAlign: 'center',
+            id: "authReqMsg"
+        });
+        canvas.add(leaveMsgMsg2);
+
         doorBell = new YDYW_Button();
         doorBell.init(canvas);
         doorBell.set({
@@ -342,7 +372,15 @@
 
                 doorLogManager.addEntries([{url:"js/assets/img/profiles/people" + val + ".jpg", time:getTime()}]);
                 doorLogManager.heightIncrement = 20;
-
+                
+                window.setTimeout(function(){
+                    leaveMsgMsg1.set({visible:true});
+                    leaveMsgMsg2.set({visible:true});
+                }, 5000);
+                window.setTimeout(function(){
+                    leaveMsgMsg1.set({visible:false});
+                    leaveMsgMsg2.set({visible:false});
+                }, 10000);
             }
         });
 
@@ -583,9 +621,9 @@
             fontSize: 9 * zoomFactor,
             width: doorWidth/2.5,
             height: doorHeight/18.0,
-            fill: "rgba(230,230,230,1.0)",
-            top: doorTop + doorHeight/2.0 + doorHeight/18.0,
-            left: outsideDoorLeft - doorWidth/9.0 + 150,
+            fill: "rgba(0,0,0,1.0)",
+            top: doorTop + doorHeight/2.0 + doorHeight/12.0,
+            left: outsideDoorLeft - doorWidth/8.0 + 150,
             visible: false,
             selectable:true,
             id: "authReqMsg",
@@ -597,21 +635,26 @@
         approachIn.addEventListener("click", function(){
             
         });
+        var approachOutFlag = false;
         var approachOut = document.getElementById("doorApproachOutside");
         approachOut.addEventListener("click", function(){
             console.log("Somebody at the door!");
             handRect.set({fill:imageManager.getPattern("hand", handRect.width, handRect.height, 5), visible:true});
             mobileRect.set({fill:imageManager.getPattern("mobile", mobileRect.width, mobileRect.height, 5), visible:true});
             authReqMsg.set({visible:true});
+            approachOutFlag = true;
         });
 
         var authSuccess = document.getElementById("authenticationSuccess");
         authSuccess.addEventListener("click", function(){
-            console.log("Somebody at the door!");
-            handRect.set({visible:false});
-            mobileRect.set({visible:false});
-            authReqMsg.set({visible:false});
-            lock.toggleLockedStatusAndShow();
+            if (approachOutFlag === true) {
+                console.log("Somebody at the door!");
+                handRect.set({visible:false});
+                mobileRect.set({visible:false});
+                authReqMsg.set({visible:false});
+                lock.toggleLockedStatusAndShow();
+            }
+            approachOutFlag = false;
         });
     }
 
