@@ -20,7 +20,12 @@
     var doorTop = 0;
     var doorWidth = 555;
     var doorHeight = localHeight;
+
     var countTaps = 0;
+
+    //Special helper class to preload images that will be used later in the app
+    var imageManager ;
+    LoadImages();
 
     // Door elements
     var messageIn;
@@ -42,16 +47,16 @@
 
     placeElementsOnDoor();
     // Draw the Message Box
-    DrawMessageBox();
+    //DrawMessageBox();
 
     // Draw the Camera view and associated controls
-    DrawCameraView();
+    //DrawCameraView();
 
     //Weather layout
     DrawWeatherLayout();
 
     //Maps Layout
-    DrawMaps();
+    //DrawMaps();
 
     //Draw Emergency mode
     //DrawEmergency();
@@ -140,7 +145,16 @@
         outsideDoor.lockMovementX = outsideDoor.lockMovementY = true;
 
         outsideDoor.on('selected', function(options) {
-            lock.toggleLockedStatusAndShow();
+            var img = imageManager.getImage("krishna");
+            img.set({
+                left: (outsideDoorLeft + doorWidth/2.0 - 30) * zoomFactor,
+                top: (doorTop + doorHeight/2.0 - 30) *zoomFactor,
+                width: 60 * zoomFactor,
+                height: 60 * zoomFactor,
+            });
+            canvas.add(img);
+            var ptrn = imageManager.getPattern("donald");
+            outsideDoor.set({fill: ptrn});
         });
 
 
@@ -411,6 +425,13 @@
         });
 
         languageMgr.addSetTextCallback(Menu.setTextCallback.bind(Menu));
+    }
+
+    function LoadImages () {
+        imageManager = new YDYW_imageLoader();
+        imageManager.init();
+        imageManager.addImage({url:"js/assets/img/profiles/KB.jpg", id:"krishna"});
+        imageManager.addPattern({url:"js/assets/img/profiles/people1.jpg", id:"kid"});
     }
 
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
