@@ -97,6 +97,8 @@
     soundCheckBox.init(canvas);
     var languageCheckBox = new YDYW_CheckBox();
     languageCheckBox.init(canvas);
+    var wallpaperView = new YDYW_wallpaperManager();
+    wallpaperView.init(canvas);
 
     var Menu = new YDYW_Container();
     Menu.init(canvas);
@@ -426,6 +428,7 @@
         languageMgr.addSetTextCallback(languageCheckBox.setTextCallback.bind(languageCheckBox));
 
 
+
         doorLogManager.onSelect(function() {
             doorLogManager.hide();
             Menu.show();
@@ -439,6 +442,7 @@
             caption: "log"
         });
         doorLogManager.hide();
+
 
         Menu.set({
             top: menuPosAndSize.top,
