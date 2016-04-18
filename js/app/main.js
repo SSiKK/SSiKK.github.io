@@ -28,7 +28,7 @@
     var lock;
     var doorBell;
     var menuButton;
-    
+
 
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
@@ -55,7 +55,7 @@
     var soundMgr = new YDYW_soundManager();
     soundMgr.init();
     AddSounds();
-    
+
 
     var languageMgr = new YDYW_languageManager();
     languageMgr.init();
@@ -78,16 +78,6 @@
         languageMgr: languageMgr
     })
 
-    
-    
-
-
-
-
-    
-   
-    
-    
     SetupMenu();
     languageMgr.setLanguage("English");
     // draw everything at the appropriate scale for this canvas
@@ -283,7 +273,7 @@
         soundCheckBox.hide();
 
 
-        
+
 
         languageCheckBox.addEntries(languageMgr.getLanguages());
         languageCheckBox.onSelect(function(id) {
@@ -375,7 +365,7 @@
         languageMgr.addSetTextCallback(Menu.setTextCallback.bind(Menu));
     }
 
-    
+
 
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
