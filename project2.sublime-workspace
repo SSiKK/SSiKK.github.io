@@ -1,0 +1,1018 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"map",
+				"mapBoxCancel"
+			],
+			[
+				"top",
+				"topRef"
+			],
+			[
+				"to",
+				"toRef"
+			],
+			[
+				"left",
+				"leftRef"
+			],
+			[
+				"p",
+				"p	Tag"
+			],
+			[
+				"image",
+				"imagePath"
+			],
+			[
+				"weathe",
+				"weatherIcons"
+			],
+			[
+				"weat",
+				"weatherImg"
+			],
+			[
+				"url",
+				"urlext"
+			],
+			[
+				"loca",
+				"localext"
+			],
+			[
+				"subC",
+				"subCanvas"
+			],
+			[
+				"sub",
+				"subCanvasHTML"
+			],
+			[
+				"on",
+				"on"
+			],
+			[
+				"can",
+				"cancelButton"
+			],
+			[
+				"sen",
+				"sendButton"
+			],
+			[
+				"messa",
+				"messageBox"
+			],
+			[
+				"ma",
+				"maxPath"
+			],
+			[
+				"in",
+				"indexA"
+			],
+			[
+				"size_",
+				"size_a"
+			],
+			[
+				"inde",
+				"indexM"
+			],
+			[
+				"size",
+				"size_b"
+			],
+			[
+				"index",
+				"indexM"
+			],
+			[
+				"siz",
+				"size_b"
+			],
+			[
+				"root",
+				"rootB"
+			],
+			[
+				"roo",
+				"rootB"
+			],
+			[
+				"maxSu",
+				"maxSubArray"
+			],
+			[
+				"max",
+				"maxIndexUntilNow"
+			],
+			[
+				"Array",
+				"ArrayList"
+			],
+			[
+				"current",
+				"currentClock"
+			],
+			[
+				"curre",
+				"currentText"
+			],
+			[
+				"wetaher",
+				"weatherText"
+			],
+			[
+				"menu",
+				"menuText"
+			],
+			[
+				"font",
+				"fontWeight"
+			],
+			[
+				"set",
+				"setVisible"
+			],
+			[
+				"cur",
+				"currentflow"
+			],
+			[
+				"wa",
+				"btnWaterflow"
+			],
+			[
+				"tap",
+				"tapDraw"
+			],
+			[
+				"btnShower",
+				"btnShower"
+			],
+			[
+				"rate",
+				"rate1Group"
+			],
+			[
+				"rate3",
+				"rate3Group"
+			],
+			[
+				"weater",
+				"weatherText"
+			],
+			[
+				"curren",
+				"currentImage"
+			],
+			[
+				"backgr",
+				"backgroundImages"
+			],
+			[
+				"rate1",
+				"rate1Group"
+			],
+			[
+				"menu4",
+				"menu4Group"
+			],
+			[
+				"menu2",
+				"menu2Group"
+			],
+			[
+				"menu1",
+				"menu1Group"
+			],
+			[
+				"T",
+				"T"
+			],
+			[
+				"C",
+				"C"
+			],
+			[
+				"tempDisp",
+				"tempDispText"
+			],
+			[
+				"clock",
+				"clock"
+			],
+			[
+				"sun",
+				"sunshineGroup"
+			],
+			[
+				"suns",
+				"sunshineImg"
+			],
+			[
+				"back",
+				"backgroundImage"
+			],
+			[
+				"bac",
+				"backgroundImage"
+			],
+			[
+				"de",
+				"deactivateAll"
+			],
+			[
+				"c",
+				"c"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"fill",
+				"filltubImg"
+			],
+			[
+				"co",
+				"console"
+			],
+			[
+				"backdrop",
+				"backdrop1"
+			],
+			[
+				"ins",
+				"insertBT"
+			],
+			[
+				"count",
+				"countNodes"
+			],
+			[
+				"find",
+				"findMaxData"
+			],
+			[
+				"findmin",
+				"findMinData"
+			],
+			[
+				"node",
+				"node"
+			],
+			[
+				"Node",
+				"Node"
+			],
+			[
+				"b",
+				"b"
+			],
+			[
+				"r",
+				"r"
+			],
+			[
+				"data",
+				"data"
+			],
+			[
+				"str",
+				"strain_01"
+			],
+			[
+				"strain",
+				"strain_22"
+			],
+			[
+				"stra",
+				"strain_02"
+			],
+			[
+				"st",
+				"strain_01"
+			],
+			[
+				"temp",
+				"temp_store"
+			],
+			[
+				"temp_",
+				"temp_w"
+			],
+			[
+				"tem",
+				"temp_store"
+			],
+			[
+				"csv",
+				"csvfile"
+			],
+			[
+				"tes",
+				"testing_labels"
+			],
+			[
+				"testing",
+				"testing_inputs"
+			],
+			[
+				"test",
+				"testing_list"
+			],
+			[
+				"sp",
+				"splitted_velz"
+			],
+			[
+				"splitted_",
+				"splitted_vely"
+			],
+			[
+				"spl",
+				"splitted_y"
+			],
+			[
+				"splitted",
+				"splitted_velx"
+			],
+			[
+				"splitt",
+				"splitted_velz"
+			],
+			[
+				"z",
+				"z"
+			],
+			[
+				"vel",
+				"vel_end_elem"
+			],
+			[
+				"nu",
+				"nu_end_elem"
+			],
+			[
+				"nu_x",
+				"nu_x_end_elem"
+			],
+			[
+				"csv_file_scalar",
+				"csv_file_scalar1"
+			],
+			[
+				"wr",
+				"writerow"
+			],
+			[
+				"nu_",
+				"nu_start_elem"
+			],
+			[
+				"num",
+				"num_elements"
+			],
+			[
+				"write",
+				"writerow"
+			],
+			[
+				"csv_",
+				"csv_file_temp"
+			],
+			[
+				"cou",
+				"count_temp"
+			],
+			[
+				"data_",
+				"data_file"
+			],
+			[
+				"split",
+				"splitted_x"
+			],
+			[
+				"x",
+				"x_writer"
+			],
+			[
+				"sl",
+				"splitted_x"
+			],
+			[
+				"writ",
+				"write_string"
+			],
+			[
+				"cs",
+				"csv_file"
+			],
+			[
+				"training_",
+				"training_data"
+			],
+			[
+				"inte",
+				"intensity_entry"
+			],
+			[
+				"store",
+				"storePoints"
+			],
+			[
+				"po",
+				"point_data"
+			],
+			[
+				"stor",
+				"storePoints"
+			],
+			[
+				"te",
+				"temp_end_elem"
+			],
+			[
+				"points_",
+				"points_end_elem"
+			],
+			[
+				"sc",
+				"script"
+			],
+			[
+				"d3",
+				"d3js"
+			],
+			[
+				"background",
+				"background-color"
+			],
+			[
+				"char",
+				"charset"
+			],
+			[
+				"error",
+				"errorRate"
+			],
+			[
+				"decis",
+				"decision"
+			],
+			[
+				"ra",
+				"random_bit_generator"
+			],
+			[
+				"ran",
+				"rand_num"
+			],
+			[
+				"S",
+				"String"
+			],
+			[
+				"inner",
+				"inner-description"
+			],
+			[
+				"inn",
+				"inner"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "js/app/main.js",
+			"settings":
+			{
+				"buffer_size": 9242,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "project2.sublime-project",
+			"settings":
+			{
+				"buffer_size": 73,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/src/maps.js",
+			"settings":
+			{
+				"buffer_size": 2765,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/src/emergency.js",
+			"settings":
+			{
+				"buffer_size": 1143,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html"
+	],
+	"file_history":
+	[
+		"/C/Users/Shiwangi/Desktop/CS422/shiwangi27.github.io/index.html",
+		"/C/Users/Shiwangi/Documents/MATLAB/SodParticlesMultiple/mlp.py",
+		"/C/Users/Shiwangi/Documents/MATLAB/SodParticlesMultiple/convolutional_mlp.py",
+		"/C/Users/Shiwangi/Documents/Python/SdA.py",
+		"/C/Users/Shiwangi/Documents/Python/generategz.py",
+		"/E/TensorData/python/DBN.py",
+		"/C/Users/Shiwangi/Downloads/naivebayes.py",
+		"/C/Users/Shiwangi/Downloads/fabric.js",
+		"/C/Users/Shiwangi/Documents/MATLAB/SodParticlesMultiple/logistic_sgd.py",
+		"/C/Users/Shiwangi/Documents/MATLAB/SodParticlesMultiple/DeepNet.py",
+		"/C/Users/Shiwangi/Documents/MATLAB/SodParticlesMultiple/multipleFileGeneratorPlt.py",
+		"/C/Users/Shiwangi/Documents/MATLAB/ExampleData/multipleFileGenerator.py",
+		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/js/src/doorKnob.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/downloadImg.py",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/languageManager.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/checkBox.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/welcome.js",
+		"/C/Users/Shiwangi/Downloads/googlemaps.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/security.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/weather.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/camera.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/index.html",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/dev.html",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html/documentation.html",
+		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/js/src/SVG_Imitator.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/message.js",
+		"/C/Users/Shiwangi/Desktop/CS422/shiwangi27.github.io/project1template.html",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/app/main.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/app/script.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/util.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/container.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/button.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html/home.html",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/Documentation.html",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html/final.html",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html/app.html",
+		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/js/src/container.js",
+		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/js/src/class.js",
+		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/html/shiwangi.html",
+		"/C/Users/Shiwangi/Desktop/CS422/project2template.html",
+		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/js/src/message.js",
+		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/html/app.html",
+		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/js/src/camera.js",
+		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/js/src/button.js",
+		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/js/src/util.js",
+		"/E/TensorData/python/mlp.py",
+		"/E/TensorData/python/logistic_sgd.py",
+		"/C/Users/Shiwangi/Documents/Python/CS 412/leaf_project/leaf_data_loader.py",
+		"/C/Users/Shiwangi/Documents/Python/Springleaf_Marketing/analyzedata.py",
+		"/E/TensorData/python/pandas_input.py",
+		"/C/Users/Shiwangi/Documents/Python/div_input.py",
+		"/C/Users/Shiwangi/Documents/MATLAB/SodParticles/multipleFileGenerator.py",
+		"/C/Users/Shiwangi/Documents/Python/kmeans.py",
+		"/C/Users/Shiwangi/Documents/Python/Springleaf_Marketing/featureNormalize.py",
+		"/C/Users/Shiwangi/Documents/Interview/Impln.java",
+		"/C/Users/Shiwangi/Documents/Python/splitter.py",
+		"/C/Users/Shiwangi/Documents/Interview/BFSMatrix.java",
+		"/C/Users/Shiwangi/Documents/Interview/BFS.java",
+		"/C/Users/Shiwangi/Documents/Interview/StringArrayStuff.java",
+		"/C/Users/Shiwangi/Documents/Interview/GenericsEx.java",
+		"/C/Users/Shiwangi/Documents/Interview/reversearray.java",
+		"/C/Users/Shiwangi/Documents/Interview/Linkedlist.java",
+		"/C/Users/Shiwangi/Documents/Interview/UniqueC.java",
+		"/C/Users/Shiwangi/Documents/Interview/BitManip.java",
+		"/C/Users/Shiwangi/Documents/Interview/UniqueChar.java",
+		"/C/Users/Shiwangi/Documents/Interview/optimizedinsertionsort.java",
+		"/C/Users/Shiwangi/Documents/Interview/Optimizedbubblesort.java",
+		"/C/Users/Shiwangi/Documents/Interview/Graph.java",
+		"/C/Users/Shiwangi/Documents/MATLAB/SodParticlesMultiple/matrixRepresentation.py",
+		"/C/Users/Shiwangi/Documents/Python/nltool.py",
+		"/C/Users/Shiwangi/Documents/Interview/FindSumPath.java",
+		"/C/Users/Shiwangi/Documents/Interview/MaxPathBinaryTree.java",
+		"/C/Users/Shiwangi/Documents/Interview/MergeSortedArray.java",
+		"/C/Users/Shiwangi/Documents/Interview/IdenticalBinaryTree.java",
+		"/C/Users/Shiwangi/Documents/Interview/LastMinutePrep.java",
+		"/C/Users/Shiwangi/Documents/Interview/MaxSubset.java",
+		"/C/Users/Shiwangi/Desktop/javas.js",
+		"/C/Users/Shiwangi/Desktop/DetourDistance.java",
+		"/C/Users/Shiwangi/Desktop/CS422/startbootstrap-landing-page-1.0.5/test.html",
+		"/C/Users/Shiwangi/Documents/Interview/RemoveDup.java",
+		"/C/Users/Shiwangi/Documents/Interview/BuildTree.java",
+		"/C/Users/Shiwangi/Documents/Interview/GraphN.java",
+		"/C/Users/Shiwangi/Documents/Interview/Node.java",
+		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/html/final.html",
+		"/C/Users/Shiwangi/Documents/Python/inputs.py",
+		"/C/Users/Shiwangi/Documents/Javascript/GameJS/drawscenes.js",
+		"/C/Users/Shiwangi/Documents/Javascript/GameJS/buttonClick.js",
+		"/C/Users/Shiwangi/Documents/Javascript/GameJS/flipthetiles.js",
+		"/C/Users/Shiwangi/Documents/Javascript/GameJS/changingtilegame.js",
+		"/C/Users/Shiwangi/Desktop/CS422/index.html",
+		"/C/Users/Shiwangi/Desktop/CS422/startbootstrap-landing-page-1.0.5/js/app.js",
+		"/C/Users/Shiwangi/Desktop/CS422/css/main.css",
+		"/C/Users/Shiwangi/Desktop/AppView.js",
+		"/C/Users/Shiwangi/Desktop/script.js",
+		"/C/Users/Shiwangi/Desktop/server.js",
+		"/C/Users/Shiwangi/Desktop/md5.js",
+		"/C/Users/Shiwangi/Desktop/CS422/startbootstrap-landing-page-1.0.5/css/landing-page.css",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/js/main.js",
+		"/C/Users/Shiwangi/Desktop/CS422/startbootstrap-landing-page-1.0.5/index.html",
+		"/C/Users/Shiwangi/Desktop/CS422/shiwangi27.github.io/homework1.html",
+		"/C/Users/Shiwangi/Desktop/CS422/shiwangi27.github.io/interface.html",
+		"/C/Users/Shiwangi/Desktop/CS422/shiwangi27.github.io/instructions.html",
+		"/C/Users/Shiwangi/Desktop/CS422/shiwangi27.github.io/sketches.html",
+		"/C/Users/Shiwangi/Downloads/project1template.html",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/index.html",
+		"/C/Users/Shiwangi/Desktop/CS422/startbootstrap-landing-page-1.0.5/js/jquery.js",
+		"/C/Users/Shiwangi/Desktop/TankController.cs",
+		"/C/Users/Shiwangi/Documents/Interview/AreAnagrams.java",
+		"/C/Users/Shiwangi/Desktop/start/example1.js",
+		"/C/Users/Shiwangi/Desktop/start/relay/index.js",
+		"/C/Users/Shiwangi/Desktop/airline/package.json",
+		"/C/Users/Shiwangi/Desktop/start/announce.js",
+		"/C/Users/Shiwangi/Desktop/start/example4.js",
+		"/C/Users/Shiwangi/Desktop/start/proclaim.js",
+		"/C/Users/Shiwangi/Desktop/airline/index.js",
+		"/C/Users/Shiwangi/Documents/nodejs/Ex_Files_Node_JS_EssT/Exercise Files/chap03/02/start/airline/package.json",
+		"/C/Users/Shiwangi/Desktop/start/example3.js",
+		"/C/Users/Shiwangi/Documents/Interview/Fillspace.java",
+		"/E/TensorData/kmeans.m",
+		"/C/Users/Shiwangi/Documents/Python/Springleaf_Marketing/util.py",
+		"/C/Users/Shiwangi/Documents/Python/Springleaf_Marketing/clean.py",
+		"/C/Users/Shiwangi/Documents/Python/Springleaf_Marketing/analyzedata (1).py",
+		"/C/Users/Shiwangi/Documents/Python/filecopy.py",
+		"/C/Users/Shiwangi/Documents/Python/CS 412/nb.py",
+		"/C/Users/Shiwangi/Downloads/inputs.py",
+		"/C/Users/Shiwangi/Desktop/wordwrap.py",
+		"/C/Users/Shiwangi/Documents/MATLAB/ExampleData/generateCSV.py",
+		"/C/Users/Shiwangi/AppData/Local/Temp/7zO732.tmp/kmeansExample.py"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"DrawEmergency",
+			"insideDoor",
+			"inside",
+			"insideDoor",
+			"mapView",
+			"DrawMaps",
+			"renderAll",
+			"render",
+			"element",
+			"getMap",
+			"toggleWeather",
+			"DrawMaps",
+			"displayWeather",
+			"currentTime",
+			"image",
+			"text",
+			"weatherIcon",
+			"tempera",
+			"DrawWeatherLayout",
+			"DrawMessageBox()",
+			"localwi",
+			"values",
+			"cx",
+			"feedback",
+			">\n",
+			"clock.png",
+			"flow",
+			"weatherText",
+			"showeror",
+			"weatherText",
+			"showeror",
+			"tempDisp",
+			"display",
+			"Text",
+			"btnbath",
+			"Group",
+			"tempdisp",
+			"tap",
+			"rate1",
+			"btnBath",
+			"btnShower",
+			"btnBath",
+			"tap",
+			"btnBath",
+			"tap",
+			"btnBath",
+			"bath",
+			"btnB",
+			"btn",
+			"rate",
+			"btnBath",
+			"btnShower",
+			"btnSafety",
+			"bath",
+			"canvas.add",
+			"weatherText",
+			"btnWeather",
+			"btnClock",
+			"tempText",
+			"btnClock",
+			"sunshine",
+			"snowflake",
+			"Opacity",
+			"setOpacity",
+			"tempDispText",
+			"imgSafety",
+			"Safety",
+			"btnBackgroundOnSelect",
+			"2Group",
+			"btnBackgroundOnSelect",
+			"todo",
+			"TODO",
+			"showerHead",
+			"ctx",
+			"tolive",
+			"setact",
+			"circle",
+			"canvas",
+			"showerHe",
+			"int",
+			";\n",
+			"])\n",
+			"close()",
+			"close",
+			"point",
+			">\n",
+			"import"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"clock"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "js/app/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9242,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4735,
+								4735
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2834.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "project2.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 73,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								58,
+								58
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "js/src/maps.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2765,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								928,
+								928
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 594.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "js/src/emergency.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1143,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								249,
+								249
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "project2.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 208.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

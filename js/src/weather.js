@@ -77,7 +77,7 @@ var YDYW_Weather = SVG_Imitator.extend({
 
         this.displayWeather()
         	.then(function(response){
-        		console.log("our weather response is", response);
+        		//console.log("our weather response is", response);
         		var resJSON = JSON.parse(response);
         		var temp = resJSON.query.results.channel.item.condition.temp + " F";
         		console.log("temp is", temp);

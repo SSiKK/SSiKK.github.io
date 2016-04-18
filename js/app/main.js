@@ -20,8 +20,7 @@
     var doorTop = 0;
     var doorWidth = 555;
     var doorHeight = localHeight;
-
-
+    var countTaps = 0;
 
     // Door elements
     var messageIn;
@@ -47,6 +46,17 @@
 
     // Draw the Camera view and associated controls
     //DrawCameraView();
+
+    //Weather layout
+    //DrawWeatherLayout();
+
+    //Maps Layout
+    //DrawMaps();
+
+    //Draw Emergency mode
+    //DrawEmergency();
+
+    //DrawThreeTapMode
 
 
     //Weather layout
@@ -102,9 +112,23 @@
         });
 
         // the doors will not be selectable or movable
-        insideDoor.hasControls = insideDoor.hasBorders = insideDoor.selectable = false;
+        insideDoor.hasControls = insideDoor.hasBorders = false;
+        insideDoor.selectable = true;
         insideDoor.lockMovementX = insideDoor.lockMovementY = true;
 
+
+        // Tapping (or clicking ) three times on the Inside door within 2 seconds will bring Emergency mode On feature.
+        insideDoor.on('selected', function(options){
+            countTaps++;
+            console.log("Tap Count is " + countTaps);
+            if(countTaps === 3){
+                console.log('3 taps bitches')
+                DrawEmergency();
+                countTaps=0;
+            }
+            canvas.deactivateAll();
+            canvas.renderAll();
+        });
 
         var outsideDoor = new fabric.Rect({
             left: outsideDoorLeft,
@@ -122,6 +146,7 @@
         outsideDoor.on('selected', function(options) {
             lock.toggleLockedStatusAndShow();
         });
+
 
         // add all of the elements to the canvas
 
@@ -174,6 +199,33 @@
         soundMgr.addSound({src:'js/assets/sound/harp.wav', img:'js/assets/img/icons/harp.png', id: "harmonica"});
         soundMgr.addSound({src:'js/assets/sound/trumpet.wav', img:'js/assets/img/icons/trumpet.ico', id: "trumpet"});
     }
+
+
+    function DrawMaps(){
+        console.log("draw bitch!");
+        var mapView = new YDYW_Maps();
+        mapView.init(canvas);
+        mapView.set({
+            left: localWidth*0.25,
+            top: localHeight*0.5, // 250
+            width: localWidth*0.30,
+            height: localHeight*0.25
+        });
+    }
+
+    function DrawEmergency (){
+        var emergencyView = new YDYW_Emergency();
+        emergencyView.init(canvas);
+        emergencyView.set({
+            //left: doorWidth - doorWidth/2 + 22,
+            //top: localHeight - localHeight/2 , // 250
+            left: doorWidth + 110,
+            top: localHeight + 110, // 250
+            width: doorWidth*2 + 130,
+            height: localHeight*2 + 220
+        });
+    }
+
 
     function placeElementsOnDoor() {
         // Doorknob stuff
@@ -364,8 +416,6 @@
 
         languageMgr.addSetTextCallback(Menu.setTextCallback.bind(Menu));
     }
-
-
 
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
