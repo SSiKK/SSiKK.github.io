@@ -20,10 +20,14 @@
     var doorTop = 0;
     var doorWidth = 555;
     var doorHeight = localHeight;
-
     var countTaps = 0;
-    var messageIn;
 
+    // Door elements
+    var messageIn;
+    var lock;
+    var doorBell;
+    var menuButton;
+    
 
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
@@ -36,6 +40,7 @@
     // Draw the Basic In/Outside doors,
     DrawDoors();
 
+    placeElementsOnDoor();
     // Draw the Message Box
     //DrawMessageBox();
 
@@ -54,92 +59,39 @@
     //DrawThreeTapMode
 
 
-
-    // Doorknob stuff
-    var lock = new YDYW_LockManager();
-    lock.init(canvas);
-    lock.set({
-        deadBoltPosition: {
-            left: insideDoorLeft + doorWidth - 80,
-            top: doorTop  + doorHeight/2.0 - 50,
-            width: doorWidth/8.0,
-            height: 30,
-            zoomFactor: zoomFactor
-        },
-        doorKnobInPosition: {
-            cy: doorTop + doorHeight/2.0,
-            cx: insideDoorLeft + doorWidth - 40,
-            radius: 20.0
-        },
-        doorKnobOutPosition: {
-            cy: doorTop + doorHeight/2.0,
-            cx: outsideDoorLeft + 40,
-            radius: 20.0
-        }
-    });
+    //Weather layout
+    // DrawWeatherLayout();
 
     var soundMgr = new YDYW_soundManager();
     soundMgr.init();
     AddSounds();
+    
 
     var languageMgr = new YDYW_languageManager();
     languageMgr.init();
 
     var soundCheckBox = new YDYW_CheckBox();
     soundCheckBox.init(canvas);
-
-    soundCheckBox.addEntries(soundMgr.getIDs());
-    soundCheckBox.onSelect(function(id) {
-        soundMgr.setCurrent(id);
-        soundMgr.play();
-    });
-    soundCheckBox.set({
-        left: outsideDoorLeft + 30,
-        top: doorTop,
-        width: doorWidth/3.0,
-        height: doorHeight/3.0,
-        zoomFactor: zoomFactor
-    });
-
     var languageCheckBox = new YDYW_CheckBox();
     languageCheckBox.init(canvas);
 
-    languageCheckBox.addEntries(languageMgr.getLanguages());
-    languageCheckBox.onSelect(function(id) {
-        languageMgr.setLanguage(id);
-    });
-    languageCheckBox.set({
-        left: outsideDoorLeft + 30,
-        top: doorTop + doorHeight/2.0,
-        width: doorWidth/3.0,
-        height: doorHeight/3.0,
-        zoomFactor: zoomFactor
-    });
+    var Menu = new YDYW_Container();
+    Menu.init(canvas);
 
-    //Do this to whatever element needs to change its text when a new language is selected.
-    languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
-    languageMgr.setLanguage("english");
+    var welcome = new YDYW_Welcome();
+    welcome.init(canvas);
+    welcome.set({
+        top: doorTop,
+        left: insideDoorLeft,
+        width: doorWidth,
+        height: doorHeight,
+        languageMgr: languageMgr
+    })
 
-    var button = new YDYW_Button();
-    button.init(canvas);
-    button.set({
-        top: (doorTop + doorHeight/2.0),
-        //top: 100,
-        left: outsideDoorLeft + doorWidth/2.0,
-        type: "label", // label/icon/tab
-        text: "cancel", // displays the text inside the button
-        fill: 'red',
-        zoomFactor: zoomFactor,
-        textSize: 100, // textSize
-        radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
-        icon: "../js/assets/svg/incognito.svg" //icon asset path
-    });
-
-
-
-
+    
+    SetupMenu();
+    languageMgr.setLanguage("English");
     // draw everything at the appropriate scale for this canvas
-
 
     zoomAll(zoomFactor);
 
@@ -194,8 +146,6 @@
 
         outsideDoor.on('selected', function(options) {
             lock.toggleLockedStatusAndShow();
-            soundMgr.play();
-            soundCheckBox.toggle();
         });
 
 
@@ -203,11 +153,6 @@
 
         canvas.add(insideDoor);
         canvas.add(outsideDoor);
-    }
-
-
-    function DrawDoorKnob() {
-
     }
 
     function DrawCameraView() {
@@ -223,12 +168,6 @@
 
     // Instantiate the message class to set the 4 parameters from SVG_Imitator
     function DrawMessageBox(){
-        // subC = document.createElement('canvas')
-        // subC.id = 'subC';
-        // subC.width = canvas.height * 0.3036437247 + "";
-        // subC.height = canvas.height * 0.25 +"";
-        // subC.style.border = "2px solid black"
-        // document.body.appendChild(subC);
 
         messageIn = new YDYW_Message();
         messageIn.init(canvas);
@@ -251,12 +190,17 @@
         });
     }
 
+
     function AddSounds() {
         soundMgr.addSound();
         soundMgr.setCurrent("doorBell");
 
         soundMgr.addSound({src:'js/assets/sound/crow.mp3', img:'js/assets/img/icons/crow.jpg', id: "crow"});
+        soundMgr.addSound({src:'js/assets/sound/violin.wav', img:'js/assets/img/icons/violin.png', id: "violin"});
+        soundMgr.addSound({src:'js/assets/sound/harp.wav', img:'js/assets/img/icons/harp.png', id: "harmonica"});
+        soundMgr.addSound({src:'js/assets/sound/trumpet.wav', img:'js/assets/img/icons/trumpet.ico', id: "trumpet"});
     }
+
     
     function DrawMaps(){
         console.log("draw bitch!");
@@ -283,6 +227,200 @@
         });
     }
 
+
+    function placeElementsOnDoor() {
+        // Doorknob stuff
+        lock = new YDYW_LockManager();
+        lock.init(canvas);
+        lock.set({
+            deadBoltPosition: {
+                left: insideDoorLeft + doorWidth - 80,
+                top: doorTop  + doorHeight/2.0 - 50,
+                width: doorWidth/8.0,
+                height: 30,
+                zoomFactor: zoomFactor
+            },
+            doorKnobInPosition: {
+                cy: doorTop + doorHeight/2.0,
+                cx: insideDoorLeft + doorWidth - 40,
+                radius: 20.0
+            },
+            doorKnobOutPosition: {
+                cy: doorTop + doorHeight/2.0,
+                cx: outsideDoorLeft + 40,
+                radius: 20.0
+            },
+            cb: function() {
+                lock.toggleLockedStatusAndShow();
+            }
+        });
+
+        doorBell = new YDYW_Button();
+        doorBell.init(canvas);
+        doorBell.set({
+            top: doorTop  + doorHeight/2.0 - 50,
+            left: outsideDoorLeft + 40,
+            type: "icon", // label/icon/tab
+            //text: "cancel", // displays the text inside the button
+            fill: '#c8878e',
+            zoomFactor: zoomFactor,
+            strokeWidth: 3,
+            textSize: 50, // textSize
+            radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+            icon: "js/assets/img/icons/doorbell.svg", //icon asset path
+            cb:function() {
+                soundMgr.play();
+            }
+        });
+
+        menuButton = new YDYW_Button();
+        menuButton.init(canvas);
+        menuButton.set({
+            left: insideDoorLeft + doorWidth - 40,
+            top: doorTop  + doorHeight/2.0 + 70,
+            type: "icon", // label/icon/tab
+            //text: "Menu", // displays the text inside the button
+            zoomFactor: zoomFactor,
+            textSize: 50, // textSize
+            radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+            icon: "js/assets/svg/circle.svg", //icon asset path
+            cb: function(){
+                if(menuButton.selected === true){
+                    Menu.hide();
+                    soundCheckBox.hide();
+                    languageCheckBox.hide();
+                    menuButton.selected = false;
+                }else{
+                    Menu.show();
+                    menuButton.selected = true;
+                }
+
+            }
+        });
+
+
+    }
+
+    function SetupMenu () {
+        var menuPosAndSize = {
+            top: (doorTop + doorHeight/2.0) - 100,
+            left: insideDoorLeft + doorWidth/2.0 - 150,
+            height : 200,
+            width : 300,
+        }
+        soundCheckBox.addEntries(soundMgr.getIDs());
+        soundCheckBox.onSelect(function(id) {
+            soundMgr.setCurrent(id);
+            soundMgr.play();
+            soundCheckBox.hide();
+            Menu.show();
+        });
+        soundCheckBox.set({
+            top: menuPosAndSize.top,
+            left: menuPosAndSize.left,
+            height : menuPosAndSize.height,
+            width : menuPosAndSize.width,
+            zoomFactor: zoomFactor,
+            caption: "chimes"
+        });
+        soundCheckBox.hide();
+
+
+        
+
+        languageCheckBox.addEntries(languageMgr.getLanguages());
+        languageCheckBox.onSelect(function(id) {
+            languageMgr.setLanguage(id);
+            languageCheckBox.hide();
+            Menu.show();
+        });
+        languageCheckBox.set({
+            top: menuPosAndSize.top,
+            left: menuPosAndSize.left,
+            height : menuPosAndSize.height,
+            width : menuPosAndSize.width,
+            zoomFactor: zoomFactor,
+            caption: "language"
+        });
+        languageCheckBox.hide();
+        //Do this to whatever element needs to change its text when a new language is selected.
+        languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
+        languageMgr.addSetTextCallback(languageCheckBox.setTextCallback.bind(languageCheckBox));
+
+        Menu.set({
+            top: menuPosAndSize.top,
+            left: menuPosAndSize.left,
+            height : menuPosAndSize.height,
+            width : menuPosAndSize.width,
+            stroke : "white",
+            fill : "white",
+            visible: false,
+            RowHeadings : ["testing"],
+            RowIconNumber : [5,4,5],
+            buttonDataList: [
+                    {
+                        type: "icon", // label/icon/tab
+                        text: "language", // displays the text inside the button
+                        icon: "js/assets/img/icons/language.svg", //icon asset path
+                        cb:function() {
+                            languageCheckBox.show();
+                            Menu.hide();
+                        }
+                    },
+                    {
+                        type: "icon", // label/icon/tab
+                        text: "chimes", // displays the text inside the button
+                        icon: "js/assets/img/icons/music.svg", //icon asset path
+                        cb:function() {
+                            soundCheckBox.show();
+                            Menu.hide();
+                        }
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    },
+                    {
+                        icon: 'js/assets/svg/incognito.svg'
+                    }],
+            zoomFactor: zoomFactor
+        });
+
+        languageMgr.addSetTextCallback(Menu.setTextCallback.bind(Menu));
+    }
+
+    
+
+>>>>>>> 587850be42086c2c389a5cf86bc11c66c7395c53
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
     function zoomAll(SCALE_FACTOR) {
