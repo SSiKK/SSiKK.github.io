@@ -20,14 +20,27 @@
     var doorTop = 0;
     var doorWidth = 555;
     var doorHeight = localHeight;
+
     var countTaps = 0;
+
+    //Special helper class to preload images that will be used later in the app
+    var imageManager ;
+    LoadImages();
 
     // Door elements
     var messageIn;
     var lock;
     var doorBell;
     var menuButton;
-    
+    var defaultValuesForFabricObjects = {
+        originX: 'center',
+        originY: 'center',
+        hasControls: false,
+        hasBorders: false,
+        selectable: false,
+        lockMovementX: true,
+        lockMovementY: true
+    };
 
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
@@ -39,7 +52,7 @@
 
     // Draw the Basic In/Outside doors,
     DrawDoors();
-
+    //
     placeElementsOnDoor();
     // Draw the Message Box
     DrawMessageBox();
@@ -48,7 +61,9 @@
     //DrawCameraView();
 
     //Weather layout
-    //DrawWeatherLayout();
+    var weatherView, WeatherContainer;
+    DrawWeatherLayout();
+
 
     //Maps Layout
     //DrawMaps();
@@ -58,13 +73,21 @@
 
     //DrawThreeTapMode
 
-
-    //Weather layout
-    // DrawWeatherLayout();
-
     var soundMgr = new YDYW_soundManager();
     soundMgr.init();
     AddSounds();
+
+    //var userManager = new YDYW_userManager();
+    //userManager.init();
+    //Adding a few users to show
+    //AddUsers();
+
+    var doorLogManager = new YDYW_DoorLog();
+    doorLogManager.init(canvas, imageManager);
+    var doorLogButton = new YDYW_Button();
+    doorLogButton.init(canvas);
+    
+    SetupDoorLogSystem();
     
 
     var languageMgr = new YDYW_languageManager();
@@ -74,23 +97,30 @@
     soundCheckBox.init(canvas);
     var languageCheckBox = new YDYW_CheckBox();
     languageCheckBox.init(canvas);
+    var wallpaperView = new YDYW_wallpaperManager();
+    wallpaperView.init(canvas);
 
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
-    // var welcome = new YDYW_Welcome();
-    // welcome.init(canvas);
-    // welcome.set({
-    //     top: doorTop,
-    //     left: insideDoorLeft,
-    //     width: doorWidth,
-    //     height: doorHeight,
-    //     languageMgr: languageMgr
-    // })
 
-    
+
+    //var welcome = new YDYW_Button();
+    //welcome.init(canvas);
+    //welcome.set({
+    //    top: doorTop  + doorHeight/2.0 - 50,
+    //    left: outsideDoorLeft + 40,
+    //    type: "tab",
+    //    text : "outside door",
+    //    visible: false,
+    //    fill: '#c8878e',
+    //    zoomFactor: zoomFactor
+    //});
+
+
     SetupMenu();
     languageMgr.setLanguage("English");
+    DevControlFunctionality();
     // draw everything at the appropriate scale for this canvas
 
     zoomAll(zoomFactor);
@@ -117,10 +147,10 @@
         insideDoor.selectable = true;
         insideDoor.lockMovementX = insideDoor.lockMovementY = true;
 
-        
+
         // Tapping (or clicking ) three times on the Inside door within 2 seconds will bring Emergency mode On feature.
         insideDoor.on('selected', function(options){
-            countTaps++; 
+            countTaps++;
             console.log("Tap Count is " + countTaps);
             if(countTaps === 3){
                 console.log('3 taps bitches')
@@ -145,7 +175,6 @@
         outsideDoor.lockMovementX = outsideDoor.lockMovementY = true;
 
         outsideDoor.on('selected', function(options) {
-            lock.toggleLockedStatusAndShow();
         });
 
 
@@ -180,13 +209,27 @@
     }
 
     function DrawWeatherLayout(){
-        var weatherView = new YDYW_Weather();
+        weatherView = new YDYW_Weather();
         weatherView.init(canvas);
         weatherView.set({
-            top: 500,
-            left: 300,
+            top: 520,
+            left: 320,
             height: 300.0,
-            width: 444.0
+            width: doorWidth,
+            visible: false
+        });
+        WeatherContainer = new YDYW_Container();
+        WeatherContainer.init(canvas);
+        WeatherContainer.set({
+            top: doorTop + 10 ,
+            left: insideDoorLeft + 10,
+            height: 190.0,
+            width: doorWidth - 20,
+            fill: "transparent",
+            stroke: "black",
+            visible: false,
+            zoomFactor: zoomFactor
+
         });
     }
 
@@ -201,17 +244,34 @@
         soundMgr.addSound({src:'js/assets/sound/trumpet.wav', img:'js/assets/img/icons/trumpet.ico', id: "trumpet"});
     }
 
-    
+    function getTime (offset) {
+        if(!offset) {
+            offset = 0;
+        }
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+        var today = new Date();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds() + offset;
+        m = checkTime(m);
+        s = checkTime(s);
+        return h + ":" + m + ":" + s;
+    }
     function DrawMaps(){
-        console.log("draw bitch!");
+        //console.log("draw bitch!");
         var mapView = new YDYW_Maps();
         mapView.init(canvas);
         mapView.set({
             left: localWidth*0.25,
-            top: localHeight*0.5, // 250 
+            top: localHeight*0.5, // 250
             width: localWidth*0.30,
-            height: localHeight*0.25               
-        });    
+            height: localHeight*0.25
+        });
     }
 
     function DrawEmergency (){
@@ -219,11 +279,11 @@
         emergencyView.init(canvas);
         emergencyView.set({
             //left: doorWidth - doorWidth/2 + 22,
-            //top: localHeight - localHeight/2 , // 250 
+            //top: localHeight - localHeight/2 , // 250
             left: doorWidth + 110,
             top: localHeight + 110, // 250
             width: doorWidth*2 + 130,
-            height: localHeight*2 + 220 
+            height: localHeight*2 + 220
         });
     }
 
@@ -252,9 +312,10 @@
             },
             cb: function() {
                 lock.toggleLockedStatusAndShow();
+
             }
         });
-
+        lock.toggleLockedStatusAndShow();
         doorBell = new YDYW_Button();
         doorBell.init(canvas);
         doorBell.set({
@@ -270,6 +331,11 @@
             icon: "js/assets/img/icons/doorbell.svg", //icon asset path
             cb:function() {
                 soundMgr.play();
+                var val = 1 + Date.now() % 4;
+
+                doorLogManager.addEntries([{url:"js/assets/img/profiles/people" + val + ".jpg", time:getTime()}]);
+                doorLogManager.heightIncrement = 20;
+
             }
         });
 
@@ -286,11 +352,18 @@
             icon: "js/assets/svg/circle.svg", //icon asset path
             cb: function(){
                 if(menuButton.selected === true){
+                    //welcome.hide();
+                    WeatherContainer.hide();
+                    weatherView.hide();
                     Menu.hide();
                     soundCheckBox.hide();
                     languageCheckBox.hide();
+                    doorLogManager.hide();
                     menuButton.selected = false;
                 }else{
+                   // welcome.show();
+                    WeatherContainer.show();
+                    weatherView.show();
                     Menu.show();
                     menuButton.selected = true;
                 }
@@ -306,8 +379,8 @@
             top: (doorTop + doorHeight/2.0) - 100,
             left: insideDoorLeft + doorWidth/2.0 - 150,
             height : 200,
-            width : 300,
-        }
+            width : 300
+        };
         soundCheckBox.addEntries(soundMgr.getIDs());
         soundCheckBox.onSelect(function(id) {
             soundMgr.setCurrent(id);
@@ -326,7 +399,7 @@
         soundCheckBox.hide();
 
 
-        
+
 
         languageCheckBox.addEntries(languageMgr.getLanguages());
         languageCheckBox.onSelect(function(id) {
@@ -346,6 +419,23 @@
         //Do this to whatever element needs to change its text when a new language is selected.
         languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
         languageMgr.addSetTextCallback(languageCheckBox.setTextCallback.bind(languageCheckBox));
+
+
+
+        doorLogManager.onSelect(function() {
+            doorLogManager.hide();
+            Menu.show();
+        });
+        doorLogManager.set({
+            top: menuPosAndSize.top,
+            left: menuPosAndSize.left,
+            height : menuPosAndSize.height,
+            width : menuPosAndSize.width,
+            fontSize: zoomFactor,
+            caption: "log"
+        });
+        doorLogManager.hide();
+
 
         Menu.set({
             top: menuPosAndSize.top,
@@ -377,45 +467,183 @@
                         }
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/childsafe.svg',
+                        icon2: 'js/assets/svg/childunsafe.svg',
+                        text: "Child Safety"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/key.svg',
+                        text: "Keys"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/housesecure.svg',
+                        icon2: 'js/assets/svg/houseunsecure.svg',
+                        text: "  Home Alarm"
+                    },
+                    //[
+                    //    {
+                    //        text: 'inside door'
+                    //    },
+                    //    {
+                    //        text: 'outside door'
+                    //    }
+                    //],
+                    {
+                        icon: 'js/assets/svg/users.svg',
+                        text: "Users"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/camera.svg',
+                        text: "Camera"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/mirror.svg',
+                        text: "Mirror"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/notes.svg',
+                        text: "Notes"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/maps.svg',
+                        text: "Maps"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        type: "icon", // label/icon/tab
+                        cb:function() {
+                            doorLogManager.set({zoomFactor:zoomFactor});
+                            doorLogManager.show();
+                            Menu.hide();
+                        },
+                        icon: 'js/assets/svg/doorlog.svg',
+                        text: "Door Log"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/help.svg',
+                        text: "Tutorial"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/alert.svg',
+                        text: "Emergency"
                     },
                     {
-                        icon: 'js/assets/svg/incognito.svg'
-                    },
-                    {
-                        icon: 'js/assets/svg/incognito.svg'
+                        icon: 'js/assets/svg/paint.svg',
+                        text: "Theme"
                     }],
             zoomFactor: zoomFactor
         });
 
         languageMgr.addSetTextCallback(Menu.setTextCallback.bind(Menu));
+    }
+
+    function LoadImages () {
+        imageManager = new YDYW_imageLoader();
+        imageManager.init();
+        imageManager.addImage({url:"js/assets/img/profiles/KB.jpg", id:"krishna"});
+        imageManager.addPattern({url:"js/assets/img/profiles/people1.jpg", id:"kid"});
+    }
+
+    function DevControlFunctionality () {
+        imageManager.addPattern({url:"js/assets/img/icons/hand.png", id:"hand"});
+        imageManager.addPattern({url:"js/assets/img/icons/mobile.png", id:"mobile"});
+        var handRect = new fabric.Rect(defaultValuesForFabricObjects);
+        handRect.set({
+            width: doorWidth/5.0,
+            height: doorHeight/9.0,
+            stroke: "rgba(20,20,20,1.0)",
+            top: doorTop + doorHeight/2.0,
+            left: outsideDoorLeft + 150,
+            visible: false,
+            selectable:true,
+            id: "handScannerImg"
+        });
+        canvas.add(handRect);
+
+        var mobileRect = new fabric.Rect(defaultValuesForFabricObjects);
+        mobileRect.set({
+            width: doorWidth/5.0,
+            height: doorHeight/9.0,
+            stroke: "rgba(20,20,20,1.0)",
+            top: doorTop + doorHeight/2.0,
+            left: outsideDoorLeft + doorWidth/5.0 + 170,
+            visible: false,
+            selectable:true,
+            id: "handScannerImg"
+        });
+        canvas.add(mobileRect);
+        var authReqMsg = new fabric.Text("To unlock, place hand or tap phone",defaultValuesForFabricObjects);
+        authReqMsg.set({
+            fontSize: 9 * zoomFactor,
+            width: doorWidth/2.5,
+            height: doorHeight/18.0,
+            fill: "rgba(230,230,230,1.0)",
+            top: doorTop + doorHeight/2.0 + doorHeight/18.0,
+            left: outsideDoorLeft - doorWidth/9.0 + 150,
+            visible: false,
+            selectable:true,
+            id: "authReqMsg",
+            originX: "left"
+        });
+        canvas.add(authReqMsg);
+
+        var approachIn = document.getElementById("doorApproachInside");
+        approachIn.addEventListener("click", function(){
+            
+        });
+        var approachOut = document.getElementById("doorApproachOutside");
+        approachOut.addEventListener("click", function(){
+            console.log("Somebody at the door!");
+            handRect.set({fill:imageManager.getPattern("hand", handRect.width, handRect.height, 5), visible:true});
+            mobileRect.set({fill:imageManager.getPattern("mobile", mobileRect.width, mobileRect.height, 5), visible:true});
+            authReqMsg.set({visible:true});
+        });
+
+        var authSuccess = document.getElementById("authenticationSuccess");
+        authSuccess.addEventListener("click", function(){
+            console.log("Somebody at the door!");
+            handRect.set({visible:false});
+            mobileRect.set({visible:false});
+            authReqMsg.set({visible:false});
+            lock.toggleLockedStatusAndShow();
+        });
+    }
+
+    function AddUsers() {
+        //passCode: 1234, handPrint:'js/assets/img/icons/hand.png'
+        userManager.addUser({name:"Kyle", img:'js/assets/img/icons/p3.jpg'});
+        userManager.addUser({name:"Shiwangi", img:'js/assets/img/icons/people2.jpg'});
+        userManager.addUser({name:"Saumya", img:'js/assets/img/icons/people1.jpg'});
+        userManager.addUser({name:"Krishna", img:'js/assets/img/icons/people4.jpg'});
+    }
+
+    function SetupDoorLogSystem(){
+        /*doorLogButton = new YDYW_Button();
+        doorLogButton.init(canvas);
+        doorLogButton.set({
+            left: insideDoorLeft + 80,
+            top: doorTop  + doorHeight/2.0 - 70,
+            type: "icon", // label/icon/tab
+            //text: "Menu", // displays the text inside the button
+            zoomFactor: zoomFactor,
+            textSize: 50, // textSize
+            radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+            icon: "js/assets/svg/circle.svg", //icon asset path
+            cb: function(){
+                if(menuButton.selected === true){
+                    Menu.hide();
+                    soundCheckBox.hide();
+                    languageCheckBox.hide();
+                    menuButton.selected = false;
+                }else{
+                    Menu.show();
+                    menuButton.selected = true;
+                }
+
+            }
+        });*/
+        doorLogManager.addEntries([{url:"js/assets/img/profiles/people1.jpg", time:getTime()},
+            {url:"js/assets/img/profiles/people4.jpg", time:getTime(1)}]);
+
     }
 
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/

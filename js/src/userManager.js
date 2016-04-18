@@ -9,11 +9,12 @@ var YDYW_userManager = Class.extend({
 		var user = {
 			name: data.name || 'Jane',
 			img: data.img || 'js/assets/img/icons/people1.jpg',
-			id:  (data.name || "Jane") + Date.now(),
+			id:  data.name || 'Jane',
 			passCode: data.passCode || '1234',
-			handPrint: data.handPrint
+			handPrint: data.handPrint || 'js/assets/img/icons/hand.png'
 		};
 		this.users[user.id] = user;
+		return user.id;
 	},
 	addUserData: function (data) {
 		if(this.users.hasOwnProperty(data.id) === true) {

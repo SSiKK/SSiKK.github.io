@@ -26,28 +26,6 @@ var YDYW_Welcome = SVG_Imitator.extend({
         this.buildLanguageEntries();
     },
 
-    buildLanguageEntries: function() {
-        var common = {
-            originY: 'center',
-            originX: 'center',
-            left: this.left * 4,
-            fontFamily: 'Helvetica',
-            fontSize: 35
-        }
-
-        this.languageEntries = {
-            hiName: new fabric.Text("Hello, Name!", common),
-            hasPhoneInstruct: new fabric.Text("If you would like to change your profile picture, touch the camera or choose a photo", common),
-            getKnowU: new fabric.Text("Getting to know you...", common),
-            noPhoneInstruct: new fabric.Text("Touch the camera icon to take your profile picture\nOR\nswipe through the array of available photos", common),
-            fTfKeys: new fabric.Text("First things first. Keys...", common),
-            handInstruct: new fabric.Text("Place your hand in the space provided", common),
-            greenHand: new fabric.Text("Great! Now you can user your hand-print to unlock your door!", common),
-            sweet: new fabric.Text("SWEET", common),
-            aFewMore: new fabric.Text("A couple more things and you are all set", common)
-        }
-    },
-
     draw: function() {
         // Draw
         console.log("being drawn!", this);
@@ -206,10 +184,16 @@ var YDYW_Welcome = SVG_Imitator.extend({
 
         this.canvas.add(
         	this.languageEntries['hiName'].set({
-            'fontSize': 80,
-            'top': that.top + 500,
-            'left': that.left + 700
-        }));
+                'fontSize': 80,
+                'top': that.top + 500,
+                'left': that.left + 700
+            }),
+            this.languageEntries['hasPhoneInstruct'].set({
+                'fontSize': 35,
+                'top': that.top + 1200,
+                'left': that.left + 500
+            })
+        );
 
         for (var i = 0; i < 5; i++) {
             url = 'js/assets/img/profiles/p' + i + '.jpg'
@@ -260,8 +244,10 @@ var YDYW_Welcome = SVG_Imitator.extend({
                     .on('selected', function() {
                         results.map(function(t) {
                             that.canvas.remove(t);
+                            that.canvas.remove(that.languageEntries['hiName']);
+                            that.canvas.remove(that.languageEntries['hasPhoneInstruct']);
                         })
-                        this.handprintScanner();
+                        that.handprintScanner();
 
                     })
                     that.canvas.add(img)
@@ -292,6 +278,30 @@ var YDYW_Welcome = SVG_Imitator.extend({
 
     },
 
+
+    buildLanguageEntries: function() {
+        var common = {
+            originY: 'center',
+            originX: 'center',
+            left: this.left * 4,
+            fontFamily: 'Helvetica',
+            fontSize: 35
+        }
+
+        this.languageEntries = {
+            hiName: new fabric.Text("Hello, Name!", common),
+            hasPhoneInstruct: new fabric.Text("If you would like to change your profile picture, touch the camera or choose a photo", common),
+            getKnowU: new fabric.Text("Getting to know you...", common),
+            noPhoneInstruct: new fabric.Text("Touch the camera icon to take your profile picture\nOR\nswipe through the array of available photos", common),
+            fTfKeys: new fabric.Text("First things first. Keys...", common),
+            handInstruct: new fabric.Text("Place your hand in the space provided", common),
+            greenHand: new fabric.Text("Great! Now you can user your hand-print to unlock your door!", common),
+            sweet: new fabric.Text("SWEET", common),
+            aFewMore: new fabric.Text("A couple more things and you are all set", common)
+        }
+    },
+
+
     //dict contains all text that are being used in the entire app
     setTextCallback: function(dict) {
         for (var key in this.languageEntries) {
@@ -305,22 +315,22 @@ var YDYW_Welcome = SVG_Imitator.extend({
 function getLangCode(id) {
     switch (id) {
         case 11:
-            return 'italian';
+            return "Italiano";
             break;
         case 9:
-            return 'hindi';
+            return "हिंदी";
             break;
         case 8:
-            return 'kannada';
+            return "ಕನ್ನಡ";
             break;
         case 7:
         case 19:
         case 20:
         case 23:
-            return 'spanish';
+            return "Español";
             break;
         default:
-            return 'english';
+            return 'English';
             break;
     }
 }

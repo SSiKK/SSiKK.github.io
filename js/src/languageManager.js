@@ -43,7 +43,7 @@ var YDYW_languageManager = Class.extend({
 
 				// welcome
 	    		hiName: "Hello, Name!",
-	    		hasPhoneInstruct: "If you would like to change your profile picture, touch the camera or choose a photo",
+	    		hasPhoneInstruct: "If you would like to\nchange your profile\npicture, touch the\ncamera or choose a\nphoto",
 	    		getKnowU: "Getting to know you...",
 	    		noPhoneInstruct: "Touch the camera icon to take your profile picture\nOR\nswipe through the array of available photos",
 	    		fTfKeys: "First things first. Keys...",
@@ -52,6 +52,7 @@ var YDYW_languageManager = Class.extend({
 	    		sweet: "SWEET",
 	    		aFewMore: "A couple more things and you are all set"
 			},
+
 			"ಕನ್ನಡ": {
 				language: "ಭಾಷೆ",
 				temperature: "ತಾಪಮಾನ",
@@ -68,7 +69,7 @@ var YDYW_languageManager = Class.extend({
 
 				// welcome
 	    		hiName: "ಹಲೋ, ಹೆಸರು!",
-	    		hasPhoneInstruct: "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಚಿತ್ರ ಬದಲಾಯಿಸಲು ಬಯಸುತ್ತೀರಿ, ಕ್ಯಾಮರಾ ಸ್ಪರ್ಶಕ್ಕೆ ಅಥವಾ ಫೋಟೋ ಆಯ್ಕೆ",
+	    		hasPhoneInstruct: "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಚಿತ್ರ\nಬದಲಾಯಿಸಲು ಬಯಸುತ್ತೀರಿ,\nಕ್ಯಾಮರಾ ಸ್ಪರ್ಶಕ್ಕೆ\nಅಥವಾ ಫೋಟೋ ಆಯ್ಕೆ",
 	    		getKnowU: "ನೀವು ತಿಳಿಯಲು ಗೆಟ್ಟಿಂಗ್ ...",
 	    		noPhoneInstruct: "ಕ್ಯಾಮರಾ ಐಕಾನ್ ಲಭ್ಯವಿರುವ ಛಾಯಾಚಿತ್ರಗಳನ್ನು ರಚನೆಯ ಮೂಲಕ ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಚಿತ್ರ ಅಥವಾ ಸ್ವೈಪ್ ತೆಗೆದುಕೊಳ್ಳಲು ಟಚ್",
 	    		fTfKeys: "ಮೊದಲ ವಿಷಯಗಳು ಮೊದಲು. ಕೀಸ್ ...",

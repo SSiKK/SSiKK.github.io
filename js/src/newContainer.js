@@ -6,8 +6,8 @@ var YDYW_Container = SVG_Imitator.extend({
         this.top =  0;
         this.width =  0;
         this.height =  0;
-        this.fill = "white";
-        this.stroke = "white";
+        this.fill = "#dddddd";
+        this.stroke = "#dddddd";
         this.buttonDataList =  [];
         this.RowHeadings =  [];
         this.RowIconNumber =  [];
@@ -17,6 +17,7 @@ var YDYW_Container = SVG_Imitator.extend({
         this.canvas = null;
         this.buttonList = [];
         this.showing = true;
+        //this.visible = true;
         if (canvas!==undefined && canvas!== null) {
             this.attachToCanvas(canvas);
         }
@@ -33,8 +34,8 @@ var YDYW_Container = SVG_Imitator.extend({
             id: "controlBoard",
             left: this.left,
             top: this.top,
-            fill: "#dddddd",
-            stroke: "#dddddd",
+            fill: this.fill,
+            stroke: this.stroke,
             rx : 10,
             ry : 10,
             width: this.width,
@@ -67,20 +68,48 @@ var YDYW_Container = SVG_Imitator.extend({
 
                 var button = new YDYW_Button();
                 button.init(this.canvas);
-                button.set({
-                    top: rowTop + buttonHeight,
-                    left: rowLeft + (indexh + 1)*buttonHeight,
-                    type: this.buttonDataList[index].type || "icon", // label/icon/tab
-                    text: this.buttonDataList[index].text || "blah", // displays the text inside the button
-                    zoomFactor: this.zoomFactor,
-                    textSize: this.buttonDataList[index].textSize || 20, // textSize
-                    radius: buttonRadius, // define a radius if you are going to make an icon. you dont need to do this for the label
-                    icon: this.buttonDataList[index].icon || 'js/assets/svg/incognito.svg', //icon asset path
-                    cb: this.buttonDataList[index].cb || function(){},
-                    visible:this.visible
-                });
-                //button.hide();
-                this.buttonList.push(button);
+
+                if(this.buttonDataList[index] instanceof Array ){
+
+                    var array = this.buttonDataList[index];
+                    var ind = array.length;
+
+                    for(var i =0; i<ind; ++i) {
+
+                        button.set({
+                            top: rowTop + buttonHeight,
+                            left: rowLeft + (i + 1) * buttonHeight,
+                            type: array[i].type || "tab", // label/icon/tab
+                            text: array[i].text || "blah", // displays the text inside the button
+                            zoomFactor: this.zoomFactor,
+                            textSize: array[i].textSize || 20, // textSize
+                            fill: array[i].fill || "#6699ff",
+                            cb: array[i].cb || function () {
+                            },
+                            visible: this.visible
+                        });
+
+                        this.buttonList.push(button);
+                    }
+                    rowTop = rowTop + buttonHeight;
+                }
+                else {
+                    button.set({
+                        top: rowTop + buttonHeight,
+                        left: rowLeft + (indexh + 1)*buttonHeight,
+                        type: this.buttonDataList[index].type || "icon", // label/icon/tab
+                        text: this.buttonDataList[index].text || "blah", // displays the text inside the button
+                        zoomFactor: this.zoomFactor,
+                        textSize: this.buttonDataList[index].textSize || 20, // textSize
+                        radius: buttonRadius, // define a radius if you are going to make an icon. you dont need to do this for the label
+                        icon: this.buttonDataList[index].icon || 'js/assets/svg/incognito.svg', //icon asset path
+                        cb: this.buttonDataList[index].cb || function(){},
+                        icon2: this.buttonDataList[index].icon2 || null,
+                        visible: this.visible
+                    });
+                    this.buttonList.push(button);
+                    //button.hide();
+                }
                 index++;
             }
             //canvas.add(new fabric.Line([ rowLeft + buttonHeight, rowTop, rowLeft + (2* indexh + 1)*buttonHeight,  rowTop], {
