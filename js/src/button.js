@@ -21,8 +21,8 @@ var YDYW_Button = SVG_Imitator.extend({
 		this.zoomFactor = null;
 		this.canvas = null;
 		this.strokeWidth = 1;
-		this.cb = null;
-
+		this.cb = function(){};
+        this.visible = true;
 		//Feature specific status flags
 		this.on = false;
 		this.selected = false;

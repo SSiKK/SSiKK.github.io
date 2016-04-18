@@ -12,11 +12,11 @@ var YDYW_Container = SVG_Imitator.extend({
         this.RowHeadings = this.RowHeadings || [];
         this.RowIconNumber =  this.RowIconNumber || [];
         this.controlAndOffsetList = [];
-        this.board = this.board || null;
+        this.board = null;
         this.zoomFactor = this.zoomFactor || null;
         this.canvas = null;
-        this.buttonList = new Array();
-
+        this.buttonList = [];
+        this.showing = true;
         if (canvas!==undefined && canvas!== null) {
             this.attachToCanvas(canvas);
         }
@@ -27,6 +27,8 @@ var YDYW_Container = SVG_Imitator.extend({
     },
 
     draw: function () {
+
+
         this.board = new fabric.Rect({
             id: "controlBoard",
             left: this.left,
@@ -74,6 +76,7 @@ var YDYW_Container = SVG_Imitator.extend({
                     radius: buttonRadius, // define a radius if you are going to make an icon. you dont need to do this for the label
                     icon: this.buttonDataList[index].icon || '../js/assets/svg/incognito.svg' //icon asset path
                 });
+                //button.hide();
                 this.buttonList.push(button);
                 index++;
             }
@@ -87,6 +90,19 @@ var YDYW_Container = SVG_Imitator.extend({
 
     },
 
+    hide: function(){
+        console.log("HIDING THINGS");
+        this.board.set({visible:false});
+        for(var index = 0; index < this.buttonList.length; index++)
+            this.buttonList[index].hide();
+        this.showing = false;
+    },
+    show: function(){
+        this.board.set({visible:true});
+        for(var index = 0; index < this.buttonList.length; index++)
+            this.buttonList[index].show();
+        this.showing = true;
+    },
     textCallback: function(str){
         this.set({text: str});
     }
