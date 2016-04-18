@@ -1,4 +1,5 @@
 var YDYW_Maps = SVG_Imitator.extend({
+
     init: function(canvas) { // Initialize
         //Attributes
         this.left = null;

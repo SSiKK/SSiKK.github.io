@@ -27,7 +27,15 @@
     var lock;
     var doorBell;
     var menuButton;
-
+    var defaultValuesForFabricObjects = {
+        originX: 'center',
+        originY: 'center',
+        hasControls: false,
+        hasBorders: false,
+        selectable: false,
+        lockMovementX: true,
+        lockMovementY: true
+    };
 
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
@@ -42,7 +50,9 @@
 
     placeElementsOnDoor();
     // Draw the Message Box
+
     // DrawMessageBox();
+
 
     // Draw the Camera view and associated controls
     var cameraView = initCamera(canvas);
@@ -99,6 +109,8 @@
     soundCheckBox.init(canvas);
     var languageCheckBox = new YDYW_CheckBox();
     languageCheckBox.init(canvas);
+    var wallpaperView = new YDYW_wallpaperManager();
+    wallpaperView.init(canvas);
 
     var Menu = new YDYW_Container();
     Menu.init(canvas);
@@ -163,7 +175,10 @@
         outsideDoor.lockMovementX = outsideDoor.lockMovementY = true;
 
         outsideDoor.on('selected', function(options) {
-            lock.toggleLockedStatusAndShow();
+// <<<<<<< HEAD
+//             lock.toggleLockedStatusAndShow();
+// =======
+// >>>>>>> 92ac5788263939cbb6862919744679f3fac2a9df
         });
 
 
@@ -224,6 +239,51 @@
     }
 
 
+    function getTime (offset) {
+        if(!offset) {
+            offset = 0;
+        }
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+        var today = new Date();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds() + offset;
+        m = checkTime(m);
+        s = checkTime(s);
+        return h + ":" + m + ":" + s;
+    }
+    function DrawMaps(){
+        //console.log("draw bitch!");
+        var mapView = new YDYW_Maps();
+        mapView.init(canvas);
+        mapView.set({
+            left: localWidth*0.25,
+            top: localHeight*0.5, // 250
+            width: localWidth*0.30,
+            height: localHeight*0.25
+        });
+    }
+
+    function DrawEmergency (){
+        var emergencyView = new YDYW_Emergency();
+        emergencyView.init(canvas);
+        emergencyView.set({
+            //left: doorWidth - doorWidth/2 + 22,
+            //top: localHeight - localHeight/2 , // 250
+            left: doorWidth + 110,
+            top: localHeight + 110, // 250
+            width: doorWidth*2 + 130,
+            height: localHeight*2 + 220
+        });
+    }
+
+
+
     function placeElementsOnDoor() {
         // Doorknob stuff
         lock = new YDYW_LockManager();
@@ -267,6 +327,11 @@
             icon: "js/assets/img/icons/doorbell.svg", //icon asset path
             cb:function() {
                 soundMgr.play();
+                var val = 1 + Date.now() % 4;
+
+                doorLogManager.addEntries([{url:"js/assets/img/profiles/people" + val + ".jpg", time:getTime()}]);
+                doorLogManager.heightIncrement = 20;
+
             }
         });
 
@@ -290,11 +355,14 @@
                     Menu.hide();
                     soundCheckBox.hide();
                     languageCheckBox.hide();
+                    doorLogManager.hide();
+                    //wallpaperView.hide();
                     menuButton.selected = false;
                 }else{
                    // welcome.show();
                     WeatherContainer.show();
                     weatherView.show();
+                    //wallpaperView.show();
                     Menu.show();
                     menuButton.selected = true;
                 }
@@ -330,6 +398,26 @@
         soundCheckBox.hide();
 
 
+        //wallpaperView.set({
+        //    top: menuPosAndSize.top,
+        //    left: menuPosAndSize.left,
+        //    height : menuPosAndSize.height,
+        //    width : menuPosAndSize.width,
+        //    zoomFactor: zoomFactor,
+        //    RowIconNumber : [1,1],
+        //    buttonDataList: [
+        //        {
+        //            type: "img",
+        //            icon: "js/assets/img/icons/orange_circle.png" //icon asset path
+        //        },
+        //        {
+        //                type: "img",
+        //                icon: "js/assets/img/icons/orange_circle.png" //icon asset path
+        //        }
+        //        ],
+        //        visible: false
+        //    });
+
 
         languageCheckBox.addEntries(languageMgr.getLanguages());
         languageCheckBox.onSelect(function(id) {
@@ -349,6 +437,23 @@
         //Do this to whatever element needs to change its text when a new language is selected.
         languageMgr.addSetTextCallback(soundCheckBox.setTextCallback.bind(soundCheckBox));
         languageMgr.addSetTextCallback(languageCheckBox.setTextCallback.bind(languageCheckBox));
+
+
+
+        doorLogManager.onSelect(function() {
+            doorLogManager.hide();
+            Menu.show();
+        });
+        doorLogManager.set({
+            top: menuPosAndSize.top,
+            left: menuPosAndSize.left,
+            height : menuPosAndSize.height,
+            width : menuPosAndSize.width,
+            fontSize: zoomFactor,
+            caption: "log"
+        });
+        doorLogManager.hide();
+
 
         Menu.set({
             top: menuPosAndSize.top,
@@ -426,6 +531,12 @@
                         }
                     },
                     {
+                        type: "icon", // label/icon/tab
+                        cb:function() {
+                            doorLogManager.set({zoomFactor:zoomFactor});
+                            doorLogManager.show();
+                            Menu.hide();
+                        },
                         icon: 'js/assets/svg/doorlog.svg',
                         text: "Door Log"
                     },
@@ -438,8 +549,13 @@
                         text: "Emergency"
                     },
                     {
+                        type: "icon",
                         icon: 'js/assets/svg/paint.svg',
-                        text: "Theme"
+                        text: "Theme",
+                        cb:function(){
+                            //wallpaperView.show();
+                            //Menu.hide();
+                        }
                     }],
             zoomFactor: zoomFactor
         });
@@ -455,10 +571,68 @@
     }
 
     function DevControlFunctionality () {
+        imageManager.addPattern({url:"js/assets/img/icons/hand.png", id:"hand"});
+        imageManager.addPattern({url:"js/assets/img/icons/mobile.png", id:"mobile"});
+        var handRect = new fabric.Rect(defaultValuesForFabricObjects);
+        handRect.set({
+            width: doorWidth/5.0,
+            height: doorHeight/9.0,
+            stroke: "rgba(20,20,20,1.0)",
+            top: doorTop + doorHeight/2.0,
+            left: outsideDoorLeft + 150,
+            visible: false,
+            selectable:true,
+            id: "handScannerImg"
+        });
+        canvas.add(handRect);
+
+        var mobileRect = new fabric.Rect(defaultValuesForFabricObjects);
+        mobileRect.set({
+            width: doorWidth/5.0,
+            height: doorHeight/9.0,
+            stroke: "rgba(20,20,20,1.0)",
+            top: doorTop + doorHeight/2.0,
+            left: outsideDoorLeft + doorWidth/5.0 + 170,
+            visible: false,
+            selectable:true,
+            id: "handScannerImg"
+        });
+        canvas.add(mobileRect);
+        var authReqMsg = new fabric.Text("To unlock, place hand or tap phone",defaultValuesForFabricObjects);
+        authReqMsg.set({
+            fontSize: 9 * zoomFactor,
+            width: doorWidth/2.5,
+            height: doorHeight/18.0,
+            fill: "rgba(230,230,230,1.0)",
+            top: doorTop + doorHeight/2.0 + doorHeight/18.0,
+            left: outsideDoorLeft - doorWidth/9.0 + 150,
+            visible: false,
+            selectable:true,
+            id: "authReqMsg",
+            originX: "left"
+        });
+        canvas.add(authReqMsg);
+
         var approachIn = document.getElementById("doorApproachInside");
-        approachIn.addEventListener("click", function(){});
+        approachIn.addEventListener("click", function(){
+
+        });
         var approachOut = document.getElementById("doorApproachOutside");
-        approachOut.addEventListener("click", function(){});
+        approachOut.addEventListener("click", function(){
+            console.log("Somebody at the door!");
+            handRect.set({fill:imageManager.getPattern("hand", handRect.width, handRect.height, 5), visible:true});
+            mobileRect.set({fill:imageManager.getPattern("mobile", mobileRect.width, mobileRect.height, 5), visible:true});
+            authReqMsg.set({visible:true});
+        });
+
+        var authSuccess = document.getElementById("authenticationSuccess");
+        authSuccess.addEventListener("click", function(){
+            console.log("Somebody at the door!");
+            handRect.set({visible:false});
+            mobileRect.set({visible:false});
+            authReqMsg.set({visible:false});
+            lock.toggleLockedStatusAndShow();
+        });
     }
 
     function AddUsers() {
@@ -494,6 +668,9 @@
 
             }
         });*/
+        doorLogManager.addEntries([{url:"js/assets/img/profiles/people1.jpg", time:getTime()},
+            {url:"js/assets/img/profiles/people4.jpg", time:getTime(1)}]);
+
     }
 
 
