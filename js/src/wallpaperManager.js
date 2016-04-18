@@ -1,72 +1,123 @@
 var YDYW_wallpaperManager = SVG_Imitator.extend({
+
     init: function (canvas) { // Initialize
         //Attributes
-        this.left = null;
-        this.top = null;
-        this.width = null;
-        this.height = null;
-        this.selected = null;
-        this.visible = false;
-        this.container = null;
-        this.zoomFactor = null;
+        this.left = 0;
+        this.top =  0;
+        this.width =  0;
+        this.height =  0;
+        this.fill = "#dddddd";
+        this.stroke = "#dddddd";
         this.buttonDataList =  [];
-        this.showing = false;
-
-        this.defaults = {
-            hasControls: false,
-            hasBorders: false,
-            selectable: true,
-            lockMovementX: true,
-            lockMovementY: true
-        };
-        // Canvas on which the object is created.
+        this.RowHeadings =  [];
+        this.RowIconNumber =  [];
+        this.controlAndOffsetList = [];
+        this.board = null;
+        this.zoomFactor = null;
         this.canvas = null;
-        this.selectedEntry = 0;
+        this.buttonList = [];
+        this.visible = false;
         this.showing = false;
-
+        //this.visible = true;
         if (canvas!==undefined && canvas!== null) {
             this.attachToCanvas(canvas);
         }
-        return this;
+
     },
     attachToCanvas: function(canvas) {
         this.canvas = canvas;
-        return this;
-    },
-    draw: function () {
-        this.container = new YDYW_Container();
-        this.container.init(this.canvas);
-        this.container.set({
-            top: this.top ,
-            left: this.left,
-            height: this.height,
-            width: this.width,
-            visible: this.visible,
-            buttonDataList : this.buttonDataList,
-            zoomFactor: this.zoomFactor
-        });
-        return this;
-    },
-    hide: function(){
-        this.container.hide();
-    },
-    show: function(){
-        this.container.show();
     },
 
-    //dict contains all text that are being used in the entire app
-    setTextCallback: function(dict) {
-        var t;
-        this.heading.set({text: dict[this.caption]});
-        for (var e = 0; e<this.entries.length; e++) {
-            t = dict[this.entries[e]] || this.entries[e];
-            //console.log(t);
-            //Set the text attribute of text elements to dictionary lookup value
-            this.fabEntries[e].label.set({text: t});
+    draw: function () {
+
+        this.board = new fabric.Rect({
+            left: this.left,
+            top: this.top,
+            fill: this.fill,
+            stroke: this.stroke,
+            rx : 10,
+            ry : 10,
+            width: this.width,
+            height: this.height,
+            angle: 0,
+            visible: this.visible
+        });
+        this.board.hasControls = this.board.hasBorders = false;
+        this.board.lockMovementX = this.board.lockMovementY = true;
+
+
+        var index = 0,indexh = 0,indexv = 0, len = this.buttonList.length;
+
+        var n = this.RowIconNumber.length;
+        console.log("The number of rows are " + n);
+        //Setting up individual button size.
+        var buttonHeight = this.height/(n + 1);
+        var buttonRadius = buttonHeight/2;
+
+        var rowTop = this.top, rowLeft = this.left;
+
+        //iterate through the rows
+        for (indexv = 0; indexv <n; ++indexv) {
+
+            console.log("Creating the row number " + indexv + " which has number of icons " + this.RowIconNumber[indexv]);
+
+            for(indexh = 0;indexh < this.RowIconNumber[indexv]; ++indexh) {
+
+
+                //canvas.add(new fabric.Line([ rowLeft + buttonHeight, rowTop, rowLeft + (2* indexh + 1)*buttonHeight,  rowTop], {
+                //
+                //    stroke: 'red'
+                //}));
+            }
+            rowTop = rowTop + buttonHeight;
+            console.log("Completed creating button " + indexv);
+
+        }
+
+        this.canvas.add(this.board);
+        return this;
+
+    },
+
+    hide: function(){
+        console.log("HIDING THINGS");
+        this.board.set({visible:false});
+        for(var index = 0; index < this.buttonList.length; index++)
+            this.buttonList[index].hide();
+        this.showing = false;
+    },
+    show: function(){
+        this.board.set({visible:true});
+        for(var index = 0; index < this.buttonList.length; index++)
+            this.buttonList[index].show();
+        this.showing = true;
+    },
+    setTextCallback: function(dict){
+        for(var index = 0; index < this.buttonList.length; index++) {
+            this.buttonList[index].setTextCallback(dict);
         }
     }
 
-
-
 });
 
+
+//Hex value is used to define the color, -.10 ( make it ten percent darker), 0.20 (make it twenty percent lighter)
+function colorLuminance(hex, lum) {
+
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+        hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    }
+    lum = lum || 0;
+
+    // convert to decimal and change luminosity
+    var rgb = "#", c, i;
+    for (i = 0; i < 3; i++) {
+        c = parseInt(hex.substr(i*2,2), 16);
+        c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+        rgb += ("00"+c).substr(c.length);
+    }
+
+    return rgb;
+}

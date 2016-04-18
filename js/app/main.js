@@ -55,7 +55,7 @@
     //
     placeElementsOnDoor();
     // Draw the Message Box
-    //DrawMessageBox();
+    DrawMessageBox();
 
     // Draw the Camera view and associated controls
     //DrawCameraView();
@@ -103,15 +103,7 @@
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
-    //var welcome = new YDYW_Welcome();
-    //welcome.init(canvas);
-    //welcome.set({
-    //    top: doorTop,
-    //    left: insideDoorLeft,
-    //    width: doorWidth,
-    //    height: doorHeight,
-    //    languageMgr: languageMgr
-    //});
+
 
     //var welcome = new YDYW_Button();
     //welcome.init(canvas);
@@ -124,6 +116,7 @@
     //    fill: '#c8878e',
     //    zoomFactor: zoomFactor
     //});
+
 
     SetupMenu();
     languageMgr.setLanguage("English");
@@ -404,11 +397,13 @@
                     soundCheckBox.hide();
                     languageCheckBox.hide();
                     doorLogManager.hide();
+                    //wallpaperView.hide();
                     menuButton.selected = false;
                 }else{
                    // welcome.show();
                     WeatherContainer.show();
                     weatherView.show();
+                    //wallpaperView.show();
                     Menu.show();
                     menuButton.selected = true;
                 }
@@ -443,6 +438,26 @@
         });
         soundCheckBox.hide();
 
+
+        //wallpaperView.set({
+        //    top: menuPosAndSize.top,
+        //    left: menuPosAndSize.left,
+        //    height : menuPosAndSize.height,
+        //    width : menuPosAndSize.width,
+        //    zoomFactor: zoomFactor,
+        //    RowIconNumber : [1,1],
+        //    buttonDataList: [
+        //        {
+        //            type: "img",
+        //            icon: "js/assets/img/icons/orange_circle.png" //icon asset path
+        //        },
+        //        {
+        //                type: "img",
+        //                icon: "js/assets/img/icons/orange_circle.png" //icon asset path
+        //        }
+        //        ],
+        //        visible: false
+        //    });
 
 
 
@@ -572,8 +587,13 @@
                         text: "Emergency"
                     },
                     {
+                        type: "icon",
                         icon: 'js/assets/svg/paint.svg',
-                        text: "Theme"
+                        text: "Theme",
+                        cb:function(){
+                            //wallpaperView.show();
+                            //Menu.hide();
+                        }
                     }],
             zoomFactor: zoomFactor
         });

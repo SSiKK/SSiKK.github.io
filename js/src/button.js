@@ -58,6 +58,8 @@ var YDYW_Button = SVG_Imitator.extend({
 
 		if (this.type === "img"){
 
+			console.log("Trying to load an img");
+
 			if(this.icon === null) this.icon = '../js/assets/img/icons/orange_circle.svg';
 			if(this.icon != null) {
 
@@ -65,13 +67,13 @@ var YDYW_Button = SVG_Imitator.extend({
 					fabric.Image.fromURL(that.icon,function(img) {
 						resolve(
 							img.set({
-								height: options.height,
-								width: options.width,
+								height: img.height,
+								width: img.width,
 								selectable: false,
 								hasBorders: false,
 								originX: 'center',
 								originY: 'center'
-							}).scale(that.radius/options.height)
+							}).scale(that.radius/img.height)
 						);
 					});
 				});
@@ -96,6 +98,7 @@ var YDYW_Button = SVG_Imitator.extend({
 					.then(function(results) {
 						console.log(results);
 						var img1 = results[0];
+						console.log("Is the image visible? " + that.visible);
 						if(img1!=null) {
 							that.button = new fabric.Group([img1, shapeObject, label], {
 								left: that.left * that.zoomFactor,
@@ -128,9 +131,8 @@ var YDYW_Button = SVG_Imitator.extend({
 					});
 
 			}
-		}else if (this.type === "icon") {
-
-
+		}
+		else if (this.type === "icon") {
 
 			if(this.icon === null) this.icon = '../js/assets/svg/camera.svg';
 			//if(this.icon2 === null) this.icon2 = '../js/assets/svg/camera.svg';
@@ -200,7 +202,7 @@ var YDYW_Button = SVG_Imitator.extend({
 
 				Promise.all(promises)
 					.then(function(results){
-						console.log(results);
+
 						var img1, img2;
 
 						//if(that.icon2 === null){
@@ -341,7 +343,7 @@ var YDYW_Button = SVG_Imitator.extend({
 			});
 
 		}
-		else if(this.type = "tab"){
+		else if(this.type === "tab"){
 
 			var rectWidth = this.width || label.width + 10;
 			var rectHeight = this.height || this.textSize + 5;
@@ -418,10 +420,14 @@ var YDYW_Button = SVG_Imitator.extend({
 	hide: function(){
 		this.button.set({visible:false});
 		this.showing = false;
+		if(this.button.type === "img")
+			console.log("hiding the images")
 	},
 	show: function(){
 		this.button.set({visible:true});
 		this.showing = true;
+		if(this.button.type === "img")
+			console.log("showing the images")
 	},
 	toggle: function() {
 		if (this.showing) {
