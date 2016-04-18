@@ -32,7 +32,15 @@
     var lock;
     var doorBell;
     var menuButton;
-
+    var defaultValuesForFabricObjects = {
+        originX: 'center',
+        originY: 'center',
+        hasControls: false,
+        hasBorders: false,
+        selectable: false,
+        lockMovementX: true,
+        lockMovementY: true
+    };
 
     window.canvas = this.__canvas = new fabric.Canvas('c');
 
@@ -172,16 +180,6 @@
         outsideDoor.lockMovementX = outsideDoor.lockMovementY = true;
 
         outsideDoor.on('selected', function(options) {
-            var img = imageManager.getImage("krishna");
-            img.set({
-                left: (outsideDoorLeft + doorWidth/2.0 - 30) * zoomFactor,
-                top: (doorTop + doorHeight/2.0 - 30) *zoomFactor,
-                width: 60 * zoomFactor,
-                height: 60 * zoomFactor,
-            });
-            canvas.add(img);
-            var ptrnImg = imageManager.getPattern("donald", 100, 100);    
-            outsideDoor.set({fill: ptrnImg});
         });
 
 
@@ -549,10 +547,68 @@
     }
 
     function DevControlFunctionality () {
+        imageManager.addPattern({url:"js/assets/img/icons/hand.png", id:"hand"});
+        imageManager.addPattern({url:"js/assets/img/icons/mobile.png", id:"mobile"});
+        var handRect = new fabric.Rect(defaultValuesForFabricObjects);
+        handRect.set({
+            width: doorWidth/5.0,
+            height: doorHeight/9.0,
+            stroke: "rgba(20,20,20,1.0)",
+            top: doorTop + doorHeight/2.0,
+            left: outsideDoorLeft + 150,
+            visible: false,
+            selectable:true,
+            id: "handScannerImg"
+        });
+        canvas.add(handRect);
+
+        var mobileRect = new fabric.Rect(defaultValuesForFabricObjects);
+        mobileRect.set({
+            width: doorWidth/5.0,
+            height: doorHeight/9.0,
+            stroke: "rgba(20,20,20,1.0)",
+            top: doorTop + doorHeight/2.0,
+            left: outsideDoorLeft + doorWidth/5.0 + 170,
+            visible: false,
+            selectable:true,
+            id: "handScannerImg"
+        });
+        canvas.add(mobileRect);
+        var authReqMsg = new fabric.Text("To unlock, place hand or tap phone",defaultValuesForFabricObjects);
+        authReqMsg.set({
+            fontSize: 9 * zoomFactor,
+            width: doorWidth/2.5,
+            height: doorHeight/18.0,
+            fill: "rgba(230,230,230,1.0)",
+            top: doorTop + doorHeight/2.0 + doorHeight/18.0,
+            left: outsideDoorLeft - doorWidth/9.0 + 150,
+            visible: false,
+            selectable:true,
+            id: "authReqMsg",
+            originX: "left"
+        });
+        canvas.add(authReqMsg);
+
         var approachIn = document.getElementById("doorApproachInside");
-        approachIn.addEventListener("click", function(){});
+        approachIn.addEventListener("click", function(){
+            
+        });
         var approachOut = document.getElementById("doorApproachOutside");
-        approachOut.addEventListener("click", function(){});
+        approachOut.addEventListener("click", function(){
+            console.log("Somebody at the door!");
+            handRect.set({fill:imageManager.getPattern("hand", handRect.width, handRect.height, 5), visible:true});
+            mobileRect.set({fill:imageManager.getPattern("mobile", mobileRect.width, mobileRect.height, 5), visible:true});
+            authReqMsg.set({visible:true});
+        });
+
+        var authSuccess = document.getElementById("authenticationSuccess");
+        authSuccess.addEventListener("click", function(){
+            console.log("Somebody at the door!");
+            handRect.set({visible:false});
+            mobileRect.set({visible:false});
+            authReqMsg.set({visible:false});
+            lock.toggleLockedStatusAndShow();
+        });
     }
 
     function AddUsers() {
