@@ -21,8 +21,9 @@
     var doorWidth = 555;
     var doorHeight = localHeight;
 
-
-
+    //Special helper class to preload images that will be used later in the app
+    var imageManager ;
+    LoadImages();
     // Door elements
     var messageIn;
     var lock;
@@ -130,7 +131,16 @@
         outsideDoor.lockMovementX = outsideDoor.lockMovementY = true;
 
         outsideDoor.on('selected', function(options) {
-            lock.toggleLockedStatusAndShow();
+            var img = imageManager.getImage("krishna");
+            img.set({
+                left: (outsideDoorLeft + doorWidth/2.0 - 30) * zoomFactor,
+                top: (doorTop + doorHeight/2.0 - 30) *zoomFactor,
+                width: 60 * zoomFactor,
+                height: 60 * zoomFactor,
+            });
+            canvas.add(img);
+            var ptrn = imageManager.getPattern("donald");
+            outsideDoor.set({fill: ptrn});
         });
 
         // add all of the elements to the canvas
@@ -375,7 +385,12 @@
         languageMgr.addSetTextCallback(Menu.setTextCallback.bind(Menu));
     }
 
-    
+    function LoadImages () {
+        imageManager = new YDYW_imageLoader();
+        imageManager.init();
+        imageManager.addImage({url:"js/assets/img/profiles/KB.jpg", id:"krishna"});
+        imageManager.addPattern({url:"js/assets/img/profiles/people1.jpg", id:"kid"});
+    }
 
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
