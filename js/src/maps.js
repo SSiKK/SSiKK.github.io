@@ -27,8 +27,8 @@ var YDYW_Maps = SVG_Imitator.extend({
 		// Draw map 
 
 		var that = this;
-		var leftRef = this.left + 377;
-		var topRef = this.top + 800;
+		var leftRef = this.left + 377 ;
+		var topRef = this.top + 800 ;
 
 		var path = "js/assets/maps/";
 		var ext = ".PNG"

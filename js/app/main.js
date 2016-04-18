@@ -42,7 +42,7 @@
 
     placeElementsOnDoor();
     // Draw the Message Box
-    //DrawMessageBox();
+    DrawMessageBox();
 
     // Draw the Camera view and associated controls
     //DrawCameraView();
@@ -78,15 +78,15 @@
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
-    var welcome = new YDYW_Welcome();
-    welcome.init(canvas);
-    welcome.set({
-        top: doorTop,
-        left: insideDoorLeft,
-        width: doorWidth,
-        height: doorHeight,
-        languageMgr: languageMgr
-    })
+    // var welcome = new YDYW_Welcome();
+    // welcome.init(canvas);
+    // welcome.set({
+    //     top: doorTop,
+    //     left: insideDoorLeft,
+    //     width: doorWidth,
+    //     height: doorHeight,
+    //     languageMgr: languageMgr
+    // })
 
     
     SetupMenu();
