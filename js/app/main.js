@@ -418,9 +418,6 @@
         languageMgr.addSetTextCallback(Menu.setTextCallback.bind(Menu));
     }
 
-    
-
->>>>>>> 587850be42086c2c389a5cf86bc11c66c7395c53
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
     function zoomAll(SCALE_FACTOR) {
