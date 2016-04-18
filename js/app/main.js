@@ -103,7 +103,7 @@
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
-    var welcomeView = initWelcome(canvas);
+    // var welcomeView = initWelcome(canvas);
 
 
     SetupMenu();
