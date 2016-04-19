@@ -157,7 +157,6 @@ var YDYW_Message = SVG_Imitator.extend({
             .on("mouse:down", function() {
                 that.cancelButton.clicked = 0;
                 that.cancelButton.item(1).setText('Cancel')
-
             })
 
         this.cancelButton = new fabric.Group([

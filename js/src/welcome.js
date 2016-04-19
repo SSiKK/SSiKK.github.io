@@ -390,7 +390,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
                 return "ಕನ್ನಡ";
                 break;
             case 7:
-            case 19:
+            case 10:
             case 20:
             case 23:
                 return "Español";

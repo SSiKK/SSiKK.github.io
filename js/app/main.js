@@ -886,7 +886,7 @@
         welcome.init(canvas);
         welcome.set({
             top: doorTop,
-            left: doorWidth,
+            left: insideDoorLeft,
             width: doorWidth,
             height: doorHeight,
             languageMgr: languageMgr,
