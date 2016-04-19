@@ -53,7 +53,7 @@ var YDYW_Message = SVG_Imitator.extend({
         this.subCanvasHTML = document.getElementsByClassName('canvas-container')[1];
         this.subCanvasHTML.style.position = "absolute"
         this.subCanvasHTML.style.top = (this.topRef + 200) + "px"
-        this.subCanvasHTML.style.left = document.getElementsByClassName('container')[1] ? "500px" : '300px'
+        this.subCanvasHTML.style.left = document.getElementsByClassName('container')[1] ? "310px" : '500px'
     },
 
     display: function() {
