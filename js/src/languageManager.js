@@ -42,6 +42,8 @@ var YDYW_languageManager = Class.extend({
 				chimes: "Chimes",
 				childSafety: "Child Safety",
 				keys: "Keys",
+				insideDoor: "Inside Door",
+				outsideDoor: "Outside Door",
 
 				// welcome
 	    		hiName: "Hello, Name!",
@@ -74,7 +76,8 @@ var YDYW_languageManager = Class.extend({
 				chimes: "ಘಂಟಾಮೇಳ",
 				childSafety: "ಮಕ್ಕಳ ಸುರಕ್ಷತೆ",
 				keys: "ಕೀಲಿಗಳು",
-
+				insideDoor: "ಒಳಗೆ ಬಾಗಿಲು",
+				outsideDoor: "ಹೊರಗೆ ಬಾಗಿಲು",
 				// welcome
 	    		hiName: "ಹಲೋ, ಹೆಸರು!",
 	    		hasPhoneInstruct: "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಚಿತ್ರ\nಬದಲಾಯಿಸಲು ಬಯಸುತ್ತೀರಿ,\nಕ್ಯಾಮರಾ ಸ್ಪರ್ಶಕ್ಕೆ\nಅಥವಾ ಫೋಟೋ ಆಯ್ಕೆ",
@@ -108,6 +111,8 @@ var YDYW_languageManager = Class.extend({
 				chimes: "झंकार",
 				childSafety: "बच्चों की सुरक्षा",
 				keys: "चांबियाँ",
+				insideDoor: "अंदर दरवाजा",
+				outsideDoor: "बाहर दरवाजे",
 
 				// welcome
 				hiName: "हैलो, नाम!",
@@ -141,6 +146,8 @@ var YDYW_languageManager = Class.extend({
 				chimes: "campaneo",
 				childSafety: "seguridad infantil",
 				keys: "Llaves",
+				insideDoor: "Interior",
+				outsideDoor: "fuera",
 
 				// welcome
 	    		hiName: "Hola, Nombre!",
@@ -169,6 +176,8 @@ var YDYW_languageManager = Class.extend({
 				chimes: "Chime",
 				childSafety: "Bambino sicuro",
 				keys: "Chiavi",
+				insideDoor: "Dentro",
+				outsideDoor: "Fuori",
 
 				// welcome
 	    		hiName: "Ciao, nome!",
