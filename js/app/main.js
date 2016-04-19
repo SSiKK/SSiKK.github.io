@@ -55,7 +55,10 @@
     //
     placeElementsOnDoor();
     // Draw the Message Box
-    DrawMessageBox();
+    //DrawMessageBox();
+
+    //Draw message on the outside door
+    //DrawMessageBoxOutside();
 
     // Draw the Camera view and associated controls
     //DrawCameraView();
@@ -207,6 +210,19 @@
             top: doorTop // 25
         });
     }
+
+  function DrawMessageBoxOutside(){
+
+        messageOut = new YDYW_SendIn_Message();
+        messageOut.init(canvas);
+        messageOut.set({
+            width: doorWidth,
+            height: doorHeight,
+            left: insideDoorLeft, // * 1.25, //300,
+            top: doorTop // 25
+        });
+    }
+
 
     function DrawWeatherLayout(){
         weatherView = new YDYW_Weather();
