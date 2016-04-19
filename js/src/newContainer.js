@@ -94,6 +94,7 @@ var YDYW_Container = SVG_Imitator.extend({
                     rowTop = rowTop + buttonHeight;
                 }
                 else {
+
                     button.set({
                         top: rowTop + buttonHeight,
                         left: rowLeft + (indexh + 1)*buttonHeight,
@@ -107,6 +108,9 @@ var YDYW_Container = SVG_Imitator.extend({
                         icon2: this.buttonDataList[index].icon2 || null,
                         visible: this.visible
                     });
+                    if(this.buttonDataList[index].type === "img"){
+                        console.log("Creating image buttons and type is " + button.type);
+                    }
                     this.buttonList.push(button);
                     //button.hide();
                 }

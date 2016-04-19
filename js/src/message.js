@@ -10,7 +10,7 @@ var YDYW_Message = SVG_Imitator.extend({
         this.subCanvasHTML = null;
         this.subCanvas = null;
 
-        // Relative position to the SendTo button. 
+        // Relative position to the SendTo button.
         this.leftRef = this.left + 150;
         this.topRef = this.top + 450;
 
@@ -127,19 +127,19 @@ var YDYW_Message = SVG_Imitator.extend({
             ], {
                 visible: true,
                 left: this.leftRef - 8,  //TODO
-                top: this.topRef + 2, 
+                top: this.topRef + 2,
                 clicked: 0
             })
             .on('selected', function() {
 
-                // Give an option to select General or specific user. 
+                // Give an option to select General or specific user.
 
                 // Start of User profiles
                 //var leftOffset = 0;
                 for (var i = 0 ; i < 4 ; i++)
                 {
                     that.addProfiles(i);
-                }    
+                }
 
                 //End of General User
 
@@ -221,7 +221,7 @@ var YDYW_Message = SVG_Imitator.extend({
         imgFile = path + "p" + i + ext;
                     var offset = i*200;
                     fabric.Image.fromURL( imgFile, function(img) {
-                        
+
                             that.profileBox = img.set({
                             left: that.leftRef + 233 + offset,
                             top: that.topRef + 775,
@@ -246,14 +246,14 @@ var YDYW_Message = SVG_Imitator.extend({
                             that.profileBox.setVisible(false);
                             that.generalUserButton.setVisible(false);
                         })
-                        
+
                         that.canvas.add(that.profileBox);
                     });
                         console.log ("Profile 1 has been drawn!", that);
 
-                    // End of user profiles. 
+                    // End of user profiles.
 
-                    //General User button. 
+                    //General User button.
                     that.generalUserButton = new fabric.Group([
                         new fabric.Rect({
                             originX: 'center',
@@ -280,10 +280,10 @@ var YDYW_Message = SVG_Imitator.extend({
                     ], {
                         visible: true,
                         left: this.leftRef + 300,  //TODO
-                        top: this.topRef + 880 , 
+                        top: this.topRef + 880 ,
                         clicked: 0
                     })
-                    
+
                     that.canvas.add(that.generalUserButton);
     },
 

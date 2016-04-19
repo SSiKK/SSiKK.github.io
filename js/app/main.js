@@ -20,18 +20,19 @@
     var doorTop = 0;
     var doorWidth = 555;
     var doorHeight = localHeight;
-
     var countTaps = 0;
-
-    //Special helper class to preload images that will be used later in the app
-    var imageManager ;
-    LoadImages();
 
     // Door elements
     var messageIn;
     var lock;
     var doorBell;
     var menuButton;
+
+
+    var handRect;
+    var authReqMsg;
+    var mobileRect;
+
     var defaultValuesForFabricObjects = {
         originX: 'center',
         originY: 'center',
@@ -52,24 +53,39 @@
 
     // Draw the Basic In/Outside doors,
     DrawDoors();
-    //
-    placeElementsOnDoor();
+
     // Draw the Message Box
+
     //DrawMessageBox();
 
     //Draw message on the outside door
     //DrawMessageBoxOutside();
 
+    // DrawMessageBox();
+
+
     // Draw the Camera view and associated controls
-    //DrawCameraView();
+    var cameraView = initCamera(canvas);
+
+    // Draw the Camera view and associated controls
+    var mirrorView = initMirror(canvas);
+
+    // Draw emergencyView
+    // var emergencyView = initEmergency(canvas);
+
+    //Maps Layout
+    var mapView = initMap(canvas);
+
 
     //Weather layout
     var weatherView, WeatherContainer;
     DrawWeatherLayout();
 
 
-    //Maps Layout
-    //DrawMaps();
+
+
+    //Weather layout
+    DrawWeatherLayout();
 
     //Draw Emergency mode
     //DrawEmergency();
@@ -85,13 +101,20 @@
     //Adding a few users to show
     //AddUsers();
 
+    // Initialize the ImageManager
+    var imageManager = initImageLoader();
+
+    DevControlFunctionality();
+    placeElementsOnDoor();
+    cameraView.onShowCallback(HideHandAndPhone);
+
     var doorLogManager = new YDYW_DoorLog();
     doorLogManager.init(canvas, imageManager);
     var doorLogButton = new YDYW_Button();
     doorLogButton.init(canvas);
-    
+
     SetupDoorLogSystem();
-    
+
 
     var languageMgr = new YDYW_languageManager();
     languageMgr.init();
@@ -106,24 +129,13 @@
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
-
-
-    //var welcome = new YDYW_Button();
-    //welcome.init(canvas);
-    //welcome.set({
-    //    top: doorTop  + doorHeight/2.0 - 50,
-    //    left: outsideDoorLeft + 40,
-    //    type: "tab",
-    //    text : "outside door",
-    //    visible: false,
-    //    fill: '#c8878e',
-    //    zoomFactor: zoomFactor
-    //});
+    var welcomeView = initWelcome(canvas);
 
 
     SetupMenu();
     languageMgr.setLanguage("English");
-    DevControlFunctionality();
+
+    
     // draw everything at the appropriate scale for this canvas
 
     zoomAll(zoomFactor);
@@ -178,6 +190,7 @@
         outsideDoor.lockMovementX = outsideDoor.lockMovementY = true;
 
         outsideDoor.on('selected', function(options) {
+            // lock.toggleLockedStatusAndShow();
         });
 
 
@@ -187,16 +200,6 @@
         canvas.add(outsideDoor);
     }
 
-    function DrawCameraView() {
-        var cameraView = new YDYW_Camera();
-            cameraView.init(canvas)
-            cameraView.set({
-                width: localWidth * .30,
-                height: localHeight * 0.25,
-                left: localWidth * 0.25,
-                top: localHeight * .3 // 250
-            });
-    }
 
     // Instantiate the message class to set the 4 parameters from SVG_Imitator
     function DrawMessageBox(){
@@ -239,7 +242,7 @@
         WeatherContainer.set({
             top: doorTop + 10 ,
             left: insideDoorLeft + 10,
-            height: 190.0,
+            height: 150.0,
             width: doorWidth - 20,
             fill: "transparent",
             stroke: "black",
@@ -259,6 +262,7 @@
         soundMgr.addSound({src:'js/assets/sound/harp.wav', img:'js/assets/img/icons/harp.png', id: "harmonica"});
         soundMgr.addSound({src:'js/assets/sound/trumpet.wav', img:'js/assets/img/icons/trumpet.ico', id: "trumpet"});
     }
+
 
     function getTime (offset) {
         if(!offset) {
@@ -304,6 +308,7 @@
     }
 
 
+
     function placeElementsOnDoor() {
         // Doorknob stuff
         lock = new YDYW_LockManager();
@@ -332,6 +337,36 @@
             }
         });
         lock.toggleLockedStatusAndShow();
+
+        var leaveMsgMsg1 = new fabric.Text("We are not in right now!",defaultValuesForFabricObjects);
+        leaveMsgMsg1.set({
+            fontSize: 12 * zoomFactor,
+            width: doorWidth/2.5,
+            height: doorHeight/18.0,
+            fill: "rgba(0,0,0,1.0)",
+            top: doorTop + doorHeight/2.0 - doorHeight/6.0,
+            left: outsideDoorLeft + doorWidth/2.0,
+            visible: false,
+            selectable:true,
+            id: "authReqMsg"
+        });
+        canvas.add(leaveMsgMsg1);
+
+        var leaveMsgMsg2 = new fabric.Text("Touch anywhere \nto leave a message",defaultValuesForFabricObjects);
+        leaveMsgMsg2.set({
+            fontSize: 10 * zoomFactor,
+            width: doorWidth/2.5,
+            height: doorHeight/18.0,
+            fill: "rgba(0,0,0,1.0)",
+            top: doorTop + doorHeight/2.0 - doorHeight/12.0,
+            left: outsideDoorLeft + doorWidth/2.0,
+            visible: false,
+            selectable:true,
+            textAlign: 'center',
+            id: "authReqMsg"
+        });
+        canvas.add(leaveMsgMsg2);
+
         doorBell = new YDYW_Button();
         doorBell.init(canvas);
         doorBell.set({
@@ -351,7 +386,15 @@
 
                 doorLogManager.addEntries([{url:"js/assets/img/profiles/people" + val + ".jpg", time:getTime()}]);
                 doorLogManager.heightIncrement = 20;
-
+                HideHandAndPhone();
+                window.setTimeout(function(){
+                    leaveMsgMsg1.set({visible:true});
+                    leaveMsgMsg2.set({visible:true});
+                }, 5000);
+                window.setTimeout(function(){
+                    leaveMsgMsg1.set({visible:false});
+                    leaveMsgMsg2.set({visible:false});
+                }, 10000);
             }
         });
 
@@ -368,6 +411,7 @@
             icon: "js/assets/svg/circle.svg", //icon asset path
             cb: function(){
                 if(menuButton.selected === true){
+
                     //welcome.hide();
                     WeatherContainer.hide();
                     weatherView.hide();
@@ -375,11 +419,13 @@
                     soundCheckBox.hide();
                     languageCheckBox.hide();
                     doorLogManager.hide();
+                    //wallpaperView.hide();
                     menuButton.selected = false;
                 }else{
                    // welcome.show();
                     WeatherContainer.show();
                     weatherView.show();
+                    //wallpaperView.show();
                     Menu.show();
                     menuButton.selected = true;
                 }
@@ -415,6 +461,25 @@
         soundCheckBox.hide();
 
 
+        //wallpaperView.set({
+        //    top: menuPosAndSize.top,
+        //    left: menuPosAndSize.left,
+        //    height : menuPosAndSize.height,
+        //    width : menuPosAndSize.width,
+        //    zoomFactor: zoomFactor,
+        //    RowIconNumber : [1,1],
+        //    buttonDataList: [
+        //        {
+        //            type: "img",
+        //            icon: "js/assets/img/icons/orange_circle.png" //icon asset path
+        //        },
+        //        {
+        //                type: "img",
+        //                icon: "js/assets/img/icons/orange_circle.png" //icon asset path
+        //        }
+        //        ],
+        //        visible: false
+        //    });
 
 
         languageCheckBox.addEntries(languageMgr.getLanguages());
@@ -485,36 +550,36 @@
                     {
                         icon: 'js/assets/svg/childsafe.svg',
                         icon2: 'js/assets/svg/childunsafe.svg',
-                        text: "Child Safety"
+                        text: "childSafety"
                     },
                     {
                         icon: 'js/assets/svg/key.svg',
-                        text: "Keys"
+                        text: "keys"
                     },
                     {
                         icon: 'js/assets/svg/housesecure.svg',
                         icon2: 'js/assets/svg/houseunsecure.svg',
                         text: "  Home Alarm"
                     },
-                    //[
-                    //    {
-                    //        text: 'inside door'
-                    //    },
-                    //    {
-                    //        text: 'outside door'
-                    //    }
-                    //],
                     {
                         icon: 'js/assets/svg/users.svg',
                         text: "Users"
                     },
                     {
                         icon: 'js/assets/svg/camera.svg',
-                        text: "Camera"
+                        text: "Camera",
+                        cb: function() {
+                            cameraView.show();
+                            Menu.hide()
+                        }
                     },
                     {
                         icon: 'js/assets/svg/mirror.svg',
-                        text: "Mirror"
+                        text: "Mirror",
+                        cb: function() {
+                            mirrorView.show();
+                            Menu.hide();
+                        }
                     },
                     {
                         icon: 'js/assets/svg/notes.svg',
@@ -522,7 +587,11 @@
                     },
                     {
                         icon: 'js/assets/svg/maps.svg',
-                        text: "Maps"
+                        text: "Maps",
+                        cb: function() {
+                            mapView.show();
+                            Menu.hide();
+                        }
                     },
                     {
                         type: "icon", // label/icon/tab
@@ -536,15 +605,24 @@
                     },
                     {
                         icon: 'js/assets/svg/help.svg',
-                        text: "Tutorial"
+                        text: "Tutorial",
+                        cb: function() {
+                            welcomeView.show();
+                            Menu.hide();
+                        }
                     },
                     {
                         icon: 'js/assets/svg/alert.svg',
                         text: "Emergency"
                     },
                     {
+                        type: "icon",
                         icon: 'js/assets/svg/paint.svg',
-                        text: "Theme"
+                        text: "Theme",
+                        cb:function(){
+                            //wallpaperView.show();
+                            //Menu.hide();
+                        }
                     }],
             zoomFactor: zoomFactor
         });
@@ -562,7 +640,7 @@
     function DevControlFunctionality () {
         imageManager.addPattern({url:"js/assets/img/icons/hand.png", id:"hand"});
         imageManager.addPattern({url:"js/assets/img/icons/mobile.png", id:"mobile"});
-        var handRect = new fabric.Rect(defaultValuesForFabricObjects);
+        handRect = new fabric.Rect(defaultValuesForFabricObjects);
         handRect.set({
             width: doorWidth/5.0,
             height: doorHeight/9.0,
@@ -575,7 +653,7 @@
         });
         canvas.add(handRect);
 
-        var mobileRect = new fabric.Rect(defaultValuesForFabricObjects);
+        mobileRect = new fabric.Rect(defaultValuesForFabricObjects);
         mobileRect.set({
             width: doorWidth/5.0,
             height: doorHeight/9.0,
@@ -587,14 +665,14 @@
             id: "handScannerImg"
         });
         canvas.add(mobileRect);
-        var authReqMsg = new fabric.Text("To unlock, place hand or tap phone",defaultValuesForFabricObjects);
+        authReqMsg = new fabric.Text("To unlock, place hand or tap phone",defaultValuesForFabricObjects);
         authReqMsg.set({
             fontSize: 9 * zoomFactor,
             width: doorWidth/2.5,
             height: doorHeight/18.0,
-            fill: "rgba(230,230,230,1.0)",
-            top: doorTop + doorHeight/2.0 + doorHeight/18.0,
-            left: outsideDoorLeft - doorWidth/9.0 + 150,
+            fill: "rgba(0,0,0,1.0)",
+            top: doorTop + doorHeight/2.0 + doorHeight/12.0,
+            left: outsideDoorLeft - doorWidth/8.0 + 150,
             visible: false,
             selectable:true,
             id: "authReqMsg",
@@ -604,26 +682,49 @@
 
         var approachIn = document.getElementById("doorApproachInside");
         approachIn.addEventListener("click", function(){
-            
+
         });
+        var approachOutFlag = false;
         var approachOut = document.getElementById("doorApproachOutside");
         approachOut.addEventListener("click", function(){
-            console.log("Somebody at the door!");
-            handRect.set({fill:imageManager.getPattern("hand", handRect.width, handRect.height, 5), visible:true});
-            mobileRect.set({fill:imageManager.getPattern("mobile", mobileRect.width, mobileRect.height, 5), visible:true});
-            authReqMsg.set({visible:true});
+            ShowHandAndPhone();
+            cameraView.show();
+            approachOutFlag = true;
         });
 
+        //cameraView.show();
         var authSuccess = document.getElementById("authenticationSuccess");
         authSuccess.addEventListener("click", function(){
-            console.log("Somebody at the door!");
-            handRect.set({visible:false});
-            mobileRect.set({visible:false});
-            authReqMsg.set({visible:false});
-            lock.toggleLockedStatusAndShow();
+            if (approachOutFlag === true) {
+                HideHandAndPhone();
+                lock.toggleLockedStatusAndShow();
+                cameraView.hide();
+            }
+            approachOutFlag = false;
+        });
+
+        var moveAwayOut = document.getElementById("moveAwayOut");
+        moveAwayOut.addEventListener("click", function(){
+            if (approachOutFlag === true) {
+                //console.log("Somebody at the door!");
+                HideHandAndPhone();
+                cameraView.hide();
+            }
+            approachOutFlag = false;
         });
     }
 
+    function ShowHandAndPhone() {
+        handRect.set({fill:imageManager.getPattern("hand", handRect.width, handRect.height, 5), visible:true});
+        mobileRect.set({fill:imageManager.getPattern("mobile", mobileRect.width, mobileRect.height, 5), visible:true});
+        authReqMsg.set({visible:true});
+    }
+
+    function HideHandAndPhone() {
+        handRect.set({visible:false});
+        mobileRect.set({visible:false});
+        authReqMsg.set({visible:false});
+    }
     function AddUsers() {
         //passCode: 1234, handPrint:'js/assets/img/icons/hand.png'
         userManager.addUser({name:"Kyle", img:'js/assets/img/icons/p3.jpg'});
@@ -661,6 +762,81 @@
             {url:"js/assets/img/profiles/people4.jpg", time:getTime(1)}]);
 
     }
+
+
+    function initMirror(canvas) {
+        var mirror = new YDYW_Mirror();
+            mirror.init(canvas)
+            mirror.set({
+                width: localWidth * .30,
+                height: localHeight * 0.25,
+                left: localWidth * 0.25,
+                top: localHeight * .3 // 250
+            })
+        return mirror
+    }
+
+
+    function initCamera(canvas){
+        var camera = new YDYW_Camera();
+            camera.init(canvas)
+            camera.set({
+                width: localWidth * .30,
+                height: localHeight * 0.25,
+                left: localWidth * 0.25,
+                top: localHeight * .3  // 250
+            })
+        return camera
+    }
+
+    function initMap(canvas){
+        var map = new YDYW_Maps();
+        map.init(canvas);
+        map.set({
+            left: localWidth*0.25,
+            top: localHeight*0.5, // 250
+            width: localWidth*0.30,
+            height: localHeight*0.25
+        });
+        return map
+    }
+
+    function initImageLoader() {
+        var imgLoader = new YDYW_imageLoader();
+        imgLoader.init();
+        imgLoader.addImage({url:"js/assets/img/profiles/KB.jpg", id:"krishna"});
+        imgLoader.addPattern({url:"js/assets/img/profiles/people1.jpg", id:"kid"});
+        return imgLoader;
+    }
+
+    function initEmergency (canvas){
+        var emergency = new YDYW_Emergency();
+        emergency.init(canvas);
+        emergency.set({
+            //left: doorWidth - doorWidth/2 + 22,
+            //top: localHeight - localHeight/2 , // 250
+            left: doorWidth + 110,
+            top: localHeight + 110, // 250
+            width: doorWidth*2 + 130,
+            height: localHeight*2 + 220
+        });
+        return emergency;
+    }
+
+    function initWelcome(canvas) {
+        var welcome = new YDYW_Welcome();
+        welcome.init(canvas);
+        welcome.set({
+            top: doorTop,
+            left: insideDoorLeft,
+            width: doorWidth,
+            height: doorHeight,
+            languageMgr: languageMgr,
+            mirror: mirrorView
+        })
+        return welcome
+    }
+
 
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
