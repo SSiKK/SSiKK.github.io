@@ -27,6 +27,12 @@
     var lock;
     var doorBell;
     var menuButton;
+
+
+    var handRect;
+    var authReqMsg;
+    var mobileRect;
+
     var defaultValuesForFabricObjects = {
         originX: 'center',
         originY: 'center',
@@ -51,10 +57,18 @@
     insideDoor = doors.inside;
     outsideDoor = doors.outside;
 
-    placeElementsOnDoor();
     // Draw the Message Box
 
+    //DrawMessageBox();
+
+    //Draw message on the outside door
+    //DrawMessageBoxOutside();
+
     // DrawMessageBox();
+
+
+    var languageMgr = new YDYW_languageManager();
+    languageMgr.init();
 
 
     // Draw the Camera view and associated controls
@@ -62,9 +76,6 @@
 
     // Draw the Camera view and associated controls
     //var mirrorView = initMirror(canvas);
-
-    // Draw emergencyView
-    // var emergencyView = initEmergency(canvas);
 
     //Maps Layout
     var mapView = initMap(canvas);
@@ -80,9 +91,8 @@
     //Weather layout
     DrawWeatherLayout();
 
-    //Draw Emergency mode
-    //DrawEmergency();
-
+    // Draw emergencyView
+    var emergencyView = initEmergency(canvas);
     //DrawThreeTapMode
 
     var soundMgr = new YDYW_soundManager();
@@ -97,16 +107,16 @@
     // Initialize the ImageManager
     var imageManager = initImageLoader();
 
+    DevControlFunctionality();
+    placeElementsOnDoor();
+    cameraView.onShowCallback(HideHandAndPhone);
+
     var doorLogManager = new YDYW_DoorLog();
     doorLogManager.init(canvas, imageManager);
     var doorLogButton = new YDYW_Button();
     doorLogButton.init(canvas);
 
     SetupDoorLogSystem();
-
-
-    var languageMgr = new YDYW_languageManager();
-    languageMgr.init();
 
     var soundCheckBox = new YDYW_CheckBox();
     soundCheckBox.init(canvas);
@@ -173,12 +183,15 @@
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
+
+    // Draw Welcome
     var welcomeView = initWelcome(canvas);
 
 
     SetupMenu();
     languageMgr.setLanguage("English");
-    DevControlFunctionality();
+
+
     // draw everything at the appropriate scale for this canvas
 
     zoomAll(zoomFactor);
@@ -213,6 +226,15 @@
             if(countTaps === 3){
                 console.log('3 taps bitches');
                 DrawEmergency();
+                console.log('3 taps bitches')
+                emergencyView.show();
+                // Hide EVERY THING
+                cameraView.hide();
+                mirrorView.hide();
+                mapView.hide();
+                weatherView.hide();
+                Menu.hide();
+                welcomeView.hide();
                 countTaps=0;
             }
             canvas.deactivateAll();
@@ -257,6 +279,19 @@
             top: doorTop // 25
         });
     }
+
+  function DrawMessageBoxOutside(){
+
+        messageOut = new YDYW_SendIn_Message();
+        messageOut.init(canvas);
+        messageOut.set({
+            width: doorWidth,
+            height: doorHeight,
+            left: insideDoorLeft, // * 1.25, //300,
+            top: doorTop // 25
+        });
+    }
+
 
     function DrawWeatherLayout(){
         weatherView = new YDYW_Weather();
@@ -325,18 +360,18 @@
         });
     }
 
-    function DrawEmergency (){
-        var emergencyView = new YDYW_Emergency();
-        emergencyView.init(canvas);
-        emergencyView.set({
-            //left: doorWidth - doorWidth/2 + 22,
-            //top: localHeight - localHeight/2 , // 250
-            left: doorWidth + 110,
-            top: localHeight + 110, // 250
-            width: doorWidth*2 + 130,
-            height: localHeight*2 + 220
-        });
-    }
+    // function DrawEmergency (){
+    //     var emergencyView = new YDYW_Emergency();
+    //     emergencyView.init(canvas);
+    //     emergencyView.set({
+    //         //left: doorWidth - doorWidth/2 + 22,
+    //         //top: localHeight - localHeight/2 , // 250
+    //         left: doorWidth + 110,
+    //         top: localHeight + 110, // 250
+    //         width: doorWidth*2 + 130,
+    //         height: localHeight*2 + 220
+    //     });
+    // }
 
 
 
@@ -417,7 +452,7 @@
 
                 doorLogManager.addEntries([{url:"js/assets/img/profiles/people" + val + ".jpg", time:getTime()}]);
                 doorLogManager.heightIncrement = 20;
-
+                HideHandAndPhone();
                 window.setTimeout(function(){
                     leaveMsgMsg1.set({visible:true});
                     leaveMsgMsg2.set({visible:true});
@@ -573,11 +608,11 @@
                     {
                         icon: 'js/assets/svg/childsafe.svg',
                         icon2: 'js/assets/svg/childunsafe.svg',
-                        text: "Child Safety"
+                        text: "childSafety"
                     },
                     {
                         icon: 'js/assets/svg/key.svg',
-                        text: "Keys"
+                        text: "keys"
                     },
                     {
                         icon: 'js/assets/svg/housesecure.svg',
@@ -636,7 +671,11 @@
                     },
                     {
                         icon: 'js/assets/svg/alert.svg',
-                        text: "Emergency"
+                        text: "Emergency",
+                        cb: function() {
+                            emergencyView.show();
+                            Menu.hide();
+                        }
                     },
                     {
                         type: "icon",
@@ -663,7 +702,7 @@
     function DevControlFunctionality () {
         imageManager.addPattern({url:"js/assets/img/icons/hand.png", id:"hand"});
         imageManager.addPattern({url:"js/assets/img/icons/mobile.png", id:"mobile"});
-        var handRect = new fabric.Rect(defaultValuesForFabricObjects);
+        handRect = new fabric.Rect(defaultValuesForFabricObjects);
         handRect.set({
             width: doorWidth/5.0,
             height: doorHeight/9.0,
@@ -676,7 +715,7 @@
         });
         canvas.add(handRect);
 
-        var mobileRect = new fabric.Rect(defaultValuesForFabricObjects);
+        mobileRect = new fabric.Rect(defaultValuesForFabricObjects);
         mobileRect.set({
             width: doorWidth/5.0,
             height: doorHeight/9.0,
@@ -688,7 +727,7 @@
             id: "handScannerImg"
         });
         canvas.add(mobileRect);
-        var authReqMsg = new fabric.Text("To unlock, place hand or tap phone",defaultValuesForFabricObjects);
+        authReqMsg = new fabric.Text("To unlock, place hand or tap phone",defaultValuesForFabricObjects);
         authReqMsg.set({
             fontSize: 9 * zoomFactor,
             width: doorWidth/2.5,
@@ -710,26 +749,44 @@
         var approachOutFlag = false;
         var approachOut = document.getElementById("doorApproachOutside");
         approachOut.addEventListener("click", function(){
-            console.log("Somebody at the door!");
-            handRect.set({fill:imageManager.getPattern("hand", handRect.width, handRect.height, 5), visible:true});
-            mobileRect.set({fill:imageManager.getPattern("mobile", mobileRect.width, mobileRect.height, 5), visible:true});
-            authReqMsg.set({visible:true});
+            ShowHandAndPhone();
+            cameraView.show();
             approachOutFlag = true;
         });
 
+        //cameraView.show();
         var authSuccess = document.getElementById("authenticationSuccess");
         authSuccess.addEventListener("click", function(){
             if (approachOutFlag === true) {
-                console.log("Somebody at the door!");
-                handRect.set({visible:false});
-                mobileRect.set({visible:false});
-                authReqMsg.set({visible:false});
+                HideHandAndPhone();
                 lock.toggleLockedStatusAndShow();
+                cameraView.hide();
+            }
+            approachOutFlag = false;
+        });
+
+        var moveAwayOut = document.getElementById("moveAwayOut");
+        moveAwayOut.addEventListener("click", function(){
+            if (approachOutFlag === true) {
+                //console.log("Somebody at the door!");
+                HideHandAndPhone();
+                cameraView.hide();
             }
             approachOutFlag = false;
         });
     }
 
+    function ShowHandAndPhone() {
+        handRect.set({fill:imageManager.getPattern("hand", handRect.width, handRect.height, 5), visible:true});
+        mobileRect.set({fill:imageManager.getPattern("mobile", mobileRect.width, mobileRect.height, 5), visible:true});
+        authReqMsg.set({visible:true});
+    }
+
+    function HideHandAndPhone() {
+        handRect.set({visible:false});
+        mobileRect.set({visible:false});
+        authReqMsg.set({visible:false});
+    }
     function AddUsers() {
         //passCode: 1234, handPrint:'js/assets/img/icons/hand.png'
         userManager.addUser({name:"Kyle", img:'js/assets/img/icons/p3.jpg'});
@@ -818,12 +875,11 @@
         var emergency = new YDYW_Emergency();
         emergency.init(canvas);
         emergency.set({
-            //left: doorWidth - doorWidth/2 + 22,
-            //top: localHeight - localHeight/2 , // 250
-            left: doorWidth + 110,
-            top: localHeight + 110, // 250
-            width: doorWidth*2 + 130,
-            height: localHeight*2 + 220
+            top: doorTop,
+            left: insideDoorLeft,
+            width: doorWidth,
+            height: doorHeight,
+            languageMgr: languageMgr
         });
         return emergency;
     }
@@ -833,7 +889,7 @@
         welcome.init(canvas);
         welcome.set({
             top: doorTop,
-            left: insideDoorLeft,
+            left: doorWidth,
             width: doorWidth,
             height: doorHeight,
             languageMgr: languageMgr,

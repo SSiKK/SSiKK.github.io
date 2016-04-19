@@ -17,27 +17,35 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div id='canvasDiv' class='col-md-10'>
+        <div id='canvasDiv' class='col-md-6'>
             <canvas id="c" width="2714" height="2200" style="border:2px solid black;"></canvas>
             <canvas id="subC" width="770" height="352" style="border:2px solid black; display:none; position:absolute"></canvas>
         </div>
-
-        <div id='sidebar' class='col-md-2'>
-            <form display="block" style="border:2px solid black; text-align: center;">
-                <br>
-                <br>
-                <button type="button" id="doorApproachInside">Approach door inside</button>
-                <br>
-                <br>
-                <button type="button" id="doorApproachOutside">Approach door outside</button>
-                <br>
-                <br>
-                <button type="button" id="authenticationSuccess">Authentication Success</button>
-                <br>
-                <br>
-            </form>
+        <div id='sidebar' class='col-md-4' style="border:2px solid black;">
+            <br>
+            <br>
+            <button type="button" id="doorApproachInside">Approach door inside</button>
+            <br>
+            <br>
+            <button type="button" id="doorApproachOutside">Approach door outside</button>
+            <br>
+            <br>
+            <button type="button" id="authenticationSuccess">Authentication Success</button>
+            <br>
+            <br>
+            <button type="button" id="moveAwayIn">Move away from door (in)</button>
+            <br>
+            <br>
+            <button type="button" id="moveAwayOut">Move away from door (out)</button>
+            <br>
+            <br>
         </div>
-
+        
+      </div>
+      <div class="row">
+        <div id='sidebar2' class='col-md-8'>
+        </div>
+         <div class='col-md-4'>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
       </div>
     </div>
     <script type="text/javascript" src="js/lib/fabric.min.js"></script>
@@ -55,6 +63,8 @@
     <script type="text/javascript" src="js/src/button.js"></script>
     <script type="text/javascript" src="js/src/maps.js"></script>
     <script type="text/javascript" src="js/src/emergency.js"></script>
+    <script type="text/javascript" src="js/src/sendInMessage.js"></script>
+
     <script type="text/javascript" src="js/src/mirror.js"></script>
 
     <script type="text/javascript" src="js/src/welcome.js"></script>
@@ -67,7 +77,7 @@
 
     <!-- Main entrypoint of our application -->
     <script type="text/javascript" src="js/app/main.js"></script>
-    <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+   
 
 
 </body>
