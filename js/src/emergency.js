@@ -13,13 +13,21 @@ var YDYW_Emergency = SVG_Imitator.extend({
         this.alert = null;
         this.mark = null;
 
+        this.fireText = null;
+        this.policeText = null;
+
+        this.languageEntries
         // Canvas on which the object is created.
         this.canvas = null;
+
+        this.languageMgr = null;
+        this.languageEntries = {}
 
         //Feature specific status flags
         this.on = false;
         if (canvas !== undefined && canvas !== null) {
             this.attachToCanvas(canvas);
+            this.buildLanguageEntries();
         }
     },
     attachToCanvas: function(canvas) {
@@ -29,6 +37,9 @@ var YDYW_Emergency = SVG_Imitator.extend({
     draw: function() {
 
         var that = this;
+
+        this.languageMgr.addSetTextCallback(this.setTextCallback.bind(this));
+
         // Draw a Rect and have all the UI elements in it.
         this.emergencyScreen = new fabric.Rect({
             left: that.left,
@@ -42,6 +53,22 @@ var YDYW_Emergency = SVG_Imitator.extend({
             lockMovementX: true,
             lockMovementY: true
         })
+
+
+        this.emergencyScreen = new fabric.Rect({
+            left: that.left,
+            top: that.top,
+            width: that.width,
+            height: that.height,
+            fill: 'white', //'#ff9999',
+            selectable: false,
+            hasControls: false,
+            hasBorders: false,
+            lockMovementX: true,
+            lockMovementY: true
+        })
+
+
         console.log(that.left, that);
 
         var images = [ "fire", "police", "alert","mark"].map(function(el, i) {
@@ -69,16 +96,24 @@ var YDYW_Emergency = SVG_Imitator.extend({
             })
         })
 
+
+
+
         Promise.all(images).then(function(results) {
 
             that.fire = results[0].set({
                 "top": 1200, "left": 500,
                 'fill': 'orange'
+            }).on('selected', function(){
+                that.callFireExt();
             });
+
 
             that.police = results[1].set({
                 "top": 1200, "left": 900,
                 'fill': 'blue'
+            }).on('selected', function(){
+                that.callPolice();
             })
 
             that.alert = results[2].set({
@@ -88,7 +123,7 @@ var YDYW_Emergency = SVG_Imitator.extend({
             })
 
             that.mark = results[3].set({
-                "top": 1100, 'left': 1200,
+                "top": 900, 'left': 1200,
                 'scaleX': 0.2, 'scaleY': 0.2,
                 'fill': "#8ec887"
             })
@@ -112,10 +147,38 @@ var YDYW_Emergency = SVG_Imitator.extend({
     },
 
     callFireExt: function() {
+        var that = this;
+
+        this.fireText = this.languageEntries['callFire'].set({
+            'fontSize': 80,
+            'top': that.top + 500,
+            'left': that.left + 700
+        })
+        this.canvas.add( this.fireText );
+
+        setTimeout(function(){
+            console.log("goodbye fire!");
+            that.canvas.remove( that.fireText );
+        }, 4000);
+
+
 
     },
 
     callPolice: function() {
+        var that = this;
+
+        this.policeText = this.languageEntries['callPolice'].set({
+            'fontSize': 80,
+            'top': that.top + 500,
+            'left': that.left + 700
+        })
+        this.canvas.add( this.policeText );
+
+        setTimeout(function(){
+            console.log("goodbye police!");
+            that.canvas.remove( that.policeText );
+        }, 4000);
 
     },
 
@@ -133,8 +196,34 @@ var YDYW_Emergency = SVG_Imitator.extend({
         this.police.setVisible(true)
         this.alert.setVisible(true)
         this.mark.setVisible(true)
-    }
+    },
 
+    buildLanguageEntries: function(){
+        var common = {
+            originY: 'center',
+            originX: 'center',
+            left: this.left * 4,
+            fontFamily: 'Helvetica',
+            fontSize: 35
+        }
+
+        this.languageEntries = {
+            callFire: new fabric.Text("Calling Fire Department", common),
+            callPolice:  new fabric.Text("Calling Police Department", common)
+        }
+
+    },
+
+    //dict contains all text that are being used in the entire app
+    setTextCallback: function(dict) {
+        for (var key in this.languageEntries) {
+            console.log(key, dict[key]);
+            this.languageEntries[key].set({
+                text: dict[key]
+            })
+
+        }
+    },
 
 
 });

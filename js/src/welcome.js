@@ -7,7 +7,6 @@ var YDYW_Welcome = SVG_Imitator.extend({
         this.height = null;
 
         this.languageMgr = null;
-        this.languageKeys = []; // Array containing keys to phrases that need to be translated
         this.languageEntries = {}; // Matching array containing tranlated phrases
         //create an array of images
         this.hipImagesArr = [];

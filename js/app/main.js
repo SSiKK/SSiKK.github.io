@@ -59,14 +59,15 @@
     // DrawMessageBox();
 
 
+    var languageMgr = new YDYW_languageManager();
+    languageMgr.init();
+
+
     // Draw the Camera view and associated controls
     var cameraView = initCamera(canvas);
 
     // Draw the Camera view and associated controls
     var mirrorView = initMirror(canvas);
-
-    // Draw emergencyView
-    var emergencyView = initEmergency(canvas);
 
     //Maps Layout
     var mapView = initMap(canvas);
@@ -82,8 +83,8 @@
     //Weather layout
     DrawWeatherLayout();
 
-    //DrawEmergency mode
-
+    // Draw emergencyView
+    var emergencyView = initEmergency(canvas);
     //DrawThreeTapMode
 
     var soundMgr = new YDYW_soundManager();
@@ -109,10 +110,6 @@
 
     SetupDoorLogSystem();
 
-
-    var languageMgr = new YDYW_languageManager();
-    languageMgr.init();
-
     var soundCheckBox = new YDYW_CheckBox();
     soundCheckBox.init(canvas);
     var languageCheckBox = new YDYW_CheckBox();
@@ -123,13 +120,15 @@
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
+
+    // Draw Welcome
     var welcomeView = initWelcome(canvas);
 
 
     SetupMenu();
     languageMgr.setLanguage("English");
 
-    
+
     // draw everything at the appropriate scale for this canvas
 
     zoomAll(zoomFactor);
@@ -164,6 +163,13 @@
             if(countTaps === 3){
                 console.log('3 taps bitches')
                 emergencyView.show();
+                // Hide EVERY THING
+                cameraView.hide();
+                mirrorView.hide();
+                mapView.hide();
+                weatherView.hide();
+                Menu.hide();
+                welcomeView.hide();
                 countTaps=0;
             }
             canvas.deactivateAll();
@@ -801,7 +807,8 @@
             top: doorTop,
             left: insideDoorLeft,
             width: doorWidth,
-            height: doorHeight
+            height: doorHeight,
+            languageMgr: languageMgr
         });
         return emergency;
     }
