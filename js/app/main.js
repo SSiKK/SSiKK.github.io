@@ -63,7 +63,7 @@
 
     var messagesInside = initMessages(canvas);
     var messageOut = initMessageBoxOutside(canvas)
-    messageOut.show();
+    // messageOut.show();
 
     var languageMgr = new YDYW_languageManager();
     languageMgr.init();

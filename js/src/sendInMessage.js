@@ -122,7 +122,7 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
                 lockMovementX: true,
                 lockMovementY: true
             }),
-            new fabric.Text('Note to', {
+            new fabric.Text('Send', {
                 originY: 'center',
                 originX: 'center',
                 left: this.left * 4,
