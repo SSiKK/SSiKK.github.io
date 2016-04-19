@@ -56,7 +56,7 @@
 
     // Draw the Message Box
 
-    //DrawMessageBox();
+    DrawMessageBox();
 
     //Draw message on the outside door
     //DrawMessageBoxOutside();
