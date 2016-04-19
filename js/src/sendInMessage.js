@@ -6,11 +6,11 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
         this.height = null;
         this.width = null;
 
-        this.subCanvasOn = true;
-        this.subCanvasHTML = null;
-        this.subCanvas = null;
+        this.subBanvasOn = true;
+        this.subBanvasHTML = null;
+        this.subBanvas = null;
 
-        // Relative position to the SendTo button. 
+        // Relative position to the SendTo button.
         this.leftRef = this.left + 850;
         this.topRef = this.top + 450;
 
@@ -26,7 +26,7 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
 
         if (canvas !== undefined && canvas !== null) {
             this.attachToCanvas(canvas);
-            this.configureSubCanvas();
+            this.configureSubBanvas();
         }
     },
 
@@ -34,23 +34,22 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
         this.canvas = canvas;
     },
 
-    configureSubCanvas: function() {
-    // var subC = document.createElement('canvas')
-    //     subC.id = 'subC';
-    //     subC.width = canvas.height * 0.35 + "";
-    //     subC.height = canvas.height * 0.15 +"";
-    //     subC.style.border = "2px solid black"
+    configureSubBanvas: function() {
+    // var subB = document.createElement('canvas')
+    //     subB.id = 'subB';
+    //     subB.width = canvas.height * 0.35 + "";
+    //     subB.height = canvas.height * 0.15 +"";
+    //     subB.style.border = "2px solid black"
 
-    	subC = document.getElementById('subC')
-    	subC.style.display = 'block';
-        console.log(subC);
+    	subB = document.getElementById('subB')
+    	subB.style.display = 'block';
+        console.log(subB);
 
-        window.subCanvas = this.subCanvas = new fabric.Canvas('subC', { backgroundColor: "#DDDDDD", isDrawingMode: true });
-        this.subCanvasHTML = document.getElementsByClassName('canvas-container')[1];
-        this.subCanvasHTML.style.position = "absolute"
-        // this.subCanvasHTML.style.display = "none"
-        this.subCanvasHTML.style.top = (this.topRef + 250) + "px"
-        this.subCanvasHTML.style.left = document.getElementsByClassName('container')[1]? "566px" : '600px'
+        window.subBanvas = this.subBanvas = new fabric.Canvas('subB', { backgroundColor: "#DDDDDD", isDrawingMode: true });
+        this.subBanvasHTML = document.getElementsByClassName('canvas-container')[1];
+        this.subBanvasHTML.style.position = "absolute"
+        this.subBanvasHTML.style.top = (this.topRef + 250) + "px"
+        this.subBanvasHTML.style.left = document.getElementsByClassName('container')[2]? "566px" : '600px'
     },
 
     display: function() {
@@ -59,20 +58,20 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
         console.log(this.cancelButton, this.sendButton);
 
         for (var i = 0; i < 2; i++) {
-            this.cancelButton.item(i).visible = !this.subCanvasOn;
-            this.sendButton.item(i).visible = !this.subCanvasOn;
+            this.cancelButton.item(i).visible = !this.subBanvasOn;
+            this.sendButton.item(i).visible = !this.subBanvasOn;
         }
 
-        if (this.subCanvasOn) {
+        if (this.subBanvasOn) {
 			fabric.util.animate({
-	            startValue: that.subCanvas.height,
+	            startValue: that.subBanvas.height,
 	            endValue: 0,
 	            duration: 1000,
 	            onChange: function(value) {
-	                that.subCanvas.setHeight(value)
+	                that.subBanvas.setHeight(value)
 	            },
 	            onComplete: function() {
-	            	that.subCanvasHTML.style.display = "none"
+	            	that.subBanvasHTML.style.display = "none"
 	            	that.cancelButton.item(1).setText('Cancel')
 	            }
 	        })
@@ -82,15 +81,15 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
                 endValue: that.height*.35,
                 duration: 1000,
                 onChange: function(value) {
-                    that.subCanvas.setHeight(value)
+                    that.subBanvas.setHeight(value)
                 },
                 onComplete: function() {
-                	that.subCanvasHTML.style.display = "block"
+                	that.subBanvasHTML.style.display = "block"
                 }
             })
         }
 
-        this.subCanvasOn = !this.subCanvasOn;
+        this.subBanvasOn = !this.subBanvasOn;
         this.canvas.deactivateAll();
         this.canvas.renderAll();
     },
@@ -98,7 +97,7 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
 
     // This function should draw the box and any message that has been written inside
     draw: function() {
-        // The trick behind subclass reference!
+        // The trick behind subBlass reference!
         var that = this;
 
         this.sendButton = new fabric.Group([
@@ -127,24 +126,24 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
             ], {
                 visible: true,
                 left: this.leftRef - 8,  //TODO
-                top: this.topRef + 2, 
+                top: this.topRef + 2,
                 clicked: 0
             })
             .on('selected', function() {
 
-                // Give an option to select General or specific user. 
+                // Give an option to select General or specific user.
 
                 // Start of User profiles
                 //var leftOffset = 0;
                 //for (var i = 0 ; i < 4 ; i++)
                 //{
                    // that.addProfiles(i);
-                //}    
+                //}
 
                 //End of General User
 
                 console.log('USER IS KRBA!!! Change this!!');
-                localStorage['ssikk'] = JSON.stringify(that.subCanvas);
+                localStorage['ssikk'] = JSON.stringify(that.subBanvas);
                 that.cancelButton.item(1).setText('Cancel');
                 that.cancelButton.clicked = 0;
 
@@ -154,7 +153,7 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
             });
 
 
-        this.subCanvas
+        this.subBanvas
             .on("mouse:down", function() {
                 that.cancelButton.clicked = 0;
                 that.cancelButton.item(1).setText('Cancel')
@@ -197,7 +196,7 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
                     //HERE
 
                 }
-                that.subCanvas.clear();
+                that.subBanvas.clear();
                 that.canvas.deactivateAll();
                 that.canvas.renderAll();
             });
@@ -212,6 +211,11 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
         this.canvas.add(this.sendButton);
         this.canvas.add(this.cancelButton);
 
+        var absCoords = this.getPosition(this.sendButton)
+        this.subBanvasHTML.style.top = (absCoords.top ) + "px"  // - this.subBanvasHTML.height/2
+        this.subBanvasHTML.style.left = (absCoords.left ) + "px"  // - this.subBanvasHTML.width/2
+
+
         console.log("being drawn!", this.sendButton);
 
     },
@@ -220,11 +224,11 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
         var that = this;
         var path = "js/assets/img/profiles/";
         var ext = ".jpg";
-                
+
         imgFile = path + "p" + i + ext;
                     var offset = i*200;
                     fabric.Image.fromURL( imgFile, function(img) {
-                        
+
                             that.profileBox = img.set({
                             left: that.leftRef + 233 + offset,
                             top: that.topRef + 775,
@@ -239,14 +243,14 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
                             lockMovementX: true,
                             lockMovementY: true
                         })
-                        
+
                         that.canvas.add(that.profileBox);
                     });
                         console.log ("Profile 1 has been drawn!", that);
 
-                    // End of user profiles. 
+                    // End of user profiles.
 
-                    //General User button. 
+                    //General User button.
                     that.generalUserButton = new fabric.Group([
                         new fabric.Rect({
                             originX: 'center',
@@ -273,10 +277,10 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
                     ], {
                         visible: true,
                         left: this.leftRef + 300,  //TODO
-                        top: this.topRef + 880 , 
+                        top: this.topRef + 880 ,
                         clicked: 0
                     })
-                    
+
                     that.canvas.add(that.generalUserButton);
     },
 
@@ -288,7 +292,12 @@ var YDYW_SendIn_Message = SVG_Imitator.extend({
 
     cancelMessage: function() {
         //
+    },
+
+    getPosition: function(obj) {
+        return {
+            left: obj.left + this.canvas._offset.left,
+            top: obj.top + this.canvas._offset.top
+        }
     }
-
-
 });
