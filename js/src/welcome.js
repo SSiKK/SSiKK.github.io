@@ -7,7 +7,6 @@ var YDYW_Welcome = SVG_Imitator.extend({
         this.height = null;
 
         this.languageMgr = null;
-        this.languageKeys = []; // Array containing keys to phrases that need to be translated
         this.languageEntries = {}; // Matching array containing tranlated phrases
         //create an array of images
         this.hipImagesArr = [];
@@ -110,6 +109,20 @@ var YDYW_Welcome = SVG_Imitator.extend({
                     tex.movingLeft = !!Math.round(Math.random())
                     tex.movingUp = !!Math.round(Math.random())
                 }
+
+                if (tex.left > that.left + that.width)
+                    tex.movingLeft = true;
+                else if (tex.left < that.left + 50)
+                    tex.movingLeft = false;
+
+
+                if (tex.top < that.height)
+                    // console.log('too high!' + tex.text)
+                    tex.movingUp = true;
+                else (tex.top > 200)
+                    // console.log('too low!' + tex.text)
+                    tex.movingUp = false;
+
             })
             that.canvas.renderAll();
         }
@@ -154,16 +167,15 @@ var YDYW_Welcome = SVG_Imitator.extend({
                         top: that.top + 500 + (y * 250),
                         left: that.left + 200 + (x * 250)
                     })
-                    // console.log(i, flag.positionID, that.getLangCode(flag.positionID), flag.code);
                     flag.on('selected', function() {
-                        console.log('flag selected!', that.getLangCode(i));
+                        console.log('flag selected!', i, that.getLangCode(i));
                         that.languageMgr.setLanguage(that.getLangCode(i));
 
                         results.forEach(function(lang) {
                             that.canvas.remove(lang);
                         })
 
-                        that.newUserImageCapture();
+                        // that.newUserImageCapture();
 
                     })
                     that.canvas.add(flag);
@@ -252,7 +264,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
                 var index = imagesArray.length - 1;
 
 
-                window.hip = that.hipImagesArr = new fabric.Group(imagesArray, {
+                that.hipImagesArr = new fabric.Group(imagesArray, {
                     visible: true,
                     left: that.left + 815,
                     top: that.top + 550,
@@ -378,7 +390,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
                 return "ಕನ್ನಡ";
                 break;
             case 7:
-            case 19:
+            case 10:
             case 20:
             case 23:
                 return "Español";

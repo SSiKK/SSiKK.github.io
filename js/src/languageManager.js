@@ -61,7 +61,11 @@ var YDYW_languageManager = Class.extend({
 	    		handInstruct: "Place your hand in the\n     space provided",
 	    		greenHand: "Great! Now you can user your\nhand-print to unlock your door!",
 	    		sweet: "SWEET",
-	    		aFewMore: "A couple more things\nand you are all set"
+	    		aFewMore: "A couple more things\nand you are all set",
+
+	            callFire: "Calling Fire Department",
+	            callPolice:  "Calling Police Department"
+
 			},
 
 			"ಕನ್ನಡ": {
@@ -99,7 +103,13 @@ var YDYW_languageManager = Class.extend({
 	    		handInstruct: "ಜಾಗದಲ್ಲಿ ನಿಮ್ಮ ಕೈ ಇರಿಸಿ",
 	    		greenHand: "ಗ್ರೇಟ್! ಈಗ ನೀವು ಬಳಕೆದಾರ\nನಿಮ್ಮ ಬಾಗಿಲು ಅನ್ಲಾಕ್\nನಿಮ್ಮ ಕೈ ಮುದ್ರಿಸಬಹುದು!",
 	    		sweet: "ಸಿಹಿ",
-	    		aFewMore: "ಒಂದೆರಡು ಹೆಚ್ಚು\nವಿಷಯಗಳನ್ನು ಮತ್ತು\nನೀವು ಎಲ್ಲಾ ಸೆಟ್ ಇವೆ"
+	    		aFewMore: "ಒಂದೆರಡು ಹೆಚ್ಚು\nವಿಷಯಗಳನ್ನು ಮತ್ತು\nನೀವು ಎಲ್ಲಾ ಸೆಟ್ ಇವೆ",
+
+	            callFire: "ಫೈರ್ ಡಿಪಾರ್ಟ್ಮೆಂಟ್ ಕರೆ",
+	            callPolice:  "ಪೊಲೀಸ್ ಇಲಾಖೆ ಕರೆ"
+
+
+
 
 			},
 			"हिंदी": {
@@ -137,7 +147,12 @@ var YDYW_languageManager = Class.extend({
 				handInstruct: "प्रदान की अंतरिक्ष में अपने हाथ की जगह",
 				greenHand: "वाह! अब आप उपयोगकर्ता अपने हाथ-प्रिंट अपने दरवाजे अनलॉक करने के लिए कर सकते हैं!",
 				sweet: "मिठाई",
-				aFewMore: "कुछ और बातें और तुम सब सेट कर रहे हैं"
+				aFewMore: "कुछ और बातें और तुम सब सेट कर रहे हैं",
+
+	            callFire: "फायर विभाग कॉलिंग",
+	            callPolice:  "पुलिस विभाग कॉलिंग"
+
+
 
 			},
 			"Español": {
@@ -175,7 +190,12 @@ var YDYW_languageManager = Class.extend({
 	    		handInstruct: "Ponga su mano en el espacio proporcionado",
 	    		greenHand: "Great! Ahora puedes usuario de su mano de impresión para desbloquear la puerta!",
 	    		sweet: "SUAVE",
-	    		aFewMore: "Un par de cosas más y que está todo listo"
+	    		aFewMore: "Un par de cosas más y que está todo listo",
+
+	            callFire: "Llamando al Departamento de Bomberos",
+	            callPolice:  "Llamando al Departamento de Policía"
+
+
 
 			},
 			"Italiano": {
@@ -208,7 +228,12 @@ var YDYW_languageManager = Class.extend({
 	    		handInstruct: "Mettere la mano nell'apposito spazio",
 	    		greenHand: "Grande! Ora è possibile all'utente la mano-stampa per sbloccare la porta!",
 	    		sweet: "Bravo",
-	    		aFewMore: "Un paio di cose e voi siete tutti insieme"
+	    		aFewMore: "Un paio di cose e voi siete tutti insieme",
+
+	            callFire: "Chiamare Vigili del Fuoco",
+	            callPolice:  "Chiamata Dipartimento di Polizia"
+
+
 
 			}
 		};
