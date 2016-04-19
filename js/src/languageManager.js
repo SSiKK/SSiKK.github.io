@@ -42,16 +42,16 @@ var YDYW_languageManager = Class.extend({
 				chimes: "Chimes",
 				childSafety: "Child Safety",
 				keys: "Keys",
+				homeAlarm: "Home Alarm",
 				insideDoor: "Inside Door",
 				outsideDoor: "Outside Door",
-
-				homeAlarm: "",
 				users: "Users",
 				camera: "Camera",
 				mirror: "Mirror",
 				notes: "Notes",
 				maps: "Maps",
 				theme: "Theme",
+				emergency: "Emergency",
 				tutorial: "Tutorial",
 				log: "Door Log",
 
