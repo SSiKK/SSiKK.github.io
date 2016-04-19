@@ -59,10 +59,11 @@
 
     // Draw the Message Box
 
-    //DrawMessageBox();
+
+    // DrawMessageBox();
 
     //Draw message on the outside door
-    //DrawMessageBoxOutside();
+    // DrawMessageBoxOutside();
 
     // DrawMessageBox();
 
@@ -75,7 +76,8 @@
     var cameraView = initCamera(canvas);
 
     // Draw the Camera view and associated controls
-    //var mirrorView = initMirror(canvas);
+    var mirrorView = initMirror(canvas);
+    // window.mirror = mirrorView;
 
     //Maps Layout
     var mapView = initMap(canvas);
@@ -224,8 +226,6 @@
             countTaps++;
             console.log("Tap Count is " + countTaps);
             if(countTaps === 3){
-                console.log('3 taps bitches');
-                DrawEmergency();
                 console.log('3 taps bitches')
                 emergencyView.show();
                 // Hide EVERY THING
@@ -618,15 +618,15 @@
                     {
                         icon: 'js/assets/svg/housesecure.svg',
                         icon2: 'js/assets/svg/houseunsecure.svg',
-                        text: "  Home Alarm"
+                        text: "homeAlarm"
                     },
                     {
                         icon: 'js/assets/svg/users.svg',
-                        text: "Users"
+                        text: "users"
                     },
                     {
                         icon: 'js/assets/svg/camera.svg',
-                        text: "Camera",
+                        text: "camera",
                         cb: function() {
                             cameraView.show();
                             Menu.hide()
@@ -634,7 +634,7 @@
                     },
                     {
                         icon: 'js/assets/svg/mirror.svg',
-                        text: "Mirror",
+                        text: "mirror",
                         cb: function() {
                             mirrorView.show();
                             Menu.hide();
@@ -642,11 +642,11 @@
                     },
                     {
                         icon: 'js/assets/svg/notes.svg',
-                        text: "Notes"
+                        text: "notes"
                     },
                     {
                         icon: 'js/assets/svg/maps.svg',
-                        text: "Maps",
+                        text: "maps",
                         cb: function() {
                             mapView.show();
                             Menu.hide();
@@ -660,11 +660,11 @@
                             Menu.hide();
                         },
                         icon: 'js/assets/svg/doorlog.svg',
-                        text: "Door Log"
+                        text: "log"
                     },
                     {
                         icon: 'js/assets/svg/help.svg',
-                        text: "Tutorial",
+                        text: "tutorial",
                         cb: function() {
                             welcomeView.show();
                             Menu.hide();
@@ -672,7 +672,7 @@
                     },
                     {
                         icon: 'js/assets/svg/alert.svg',
-                        text: "Emergency",
+                        text: "emergency",
                         cb: function() {
                             emergencyView.show();
                             Menu.hide();
@@ -681,7 +681,7 @@
                     {
                         type: "icon",
                         icon: 'js/assets/svg/paint.svg',
-                        text: "Theme",
+                        text: "theme",
                         cb:function(){
                             wallpaperView.show();
                             Menu.hide();
@@ -890,7 +890,7 @@
         welcome.init(canvas);
         welcome.set({
             top: doorTop,
-            left: doorWidth,
+            left: insideDoorLeft,
             width: doorWidth,
             height: doorHeight,
             languageMgr: languageMgr,

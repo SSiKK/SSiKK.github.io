@@ -45,6 +45,17 @@ var YDYW_languageManager = Class.extend({
 				insideDoor: "Inside Door",
 				outsideDoor: "Outside Door",
 
+				homeAlarm: "",
+				users: "Users",
+				camera: "Camera",
+				mirror: "Mirror",
+				notes: "Notes",
+				maps: "Maps",
+				theme: "Theme",
+				tutorial: "Tutorial",
+				log: "Door Log",
+
+
 				// welcome
 	    		hiName: "Hello, Name!",
 	    		hasPhoneInstruct: "If you would like to\nchange your profile\npicture, touch the\ncamera or choose a\nphoto",
@@ -78,6 +89,19 @@ var YDYW_languageManager = Class.extend({
 				keys: "ಕೀಲಿಗಳು",
 				insideDoor: "ಒಳಗೆ ಬಾಗಿಲು",
 				outsideDoor: "ಹೊರಗೆ ಬಾಗಿಲು",
+
+				homeAlarm: "ಮನೆ ಅಲಾರ್ಮ್",
+				users: "ಬಳಕೆದಾರರು",
+				camera: "ಕ್ಯಾಮೆರಾ",
+				mirror: "ಕನ್ನಡಿ",
+				notes: "ಕ್ಯೆಪತ್ರ",
+				maps: "ನಕ್ಷೆಗಳು",
+				theme: "ವಿಷಯ",
+				emergency: "ತುರ್ತುಸ್ಥಿತಿ",
+				tutorial: "ಟ್ಯುಟೋರಿಯಲ್",
+				log: "ದಾಖಲೆ",
+
+
 				// welcome
 	    		hiName: "ಹಲೋ, ಹೆಸರು!",
 	    		hasPhoneInstruct: "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಚಿತ್ರ\nಬದಲಾಯಿಸಲು ಬಯಸುತ್ತೀರಿ,\nಕ್ಯಾಮರಾ ಸ್ಪರ್ಶಕ್ಕೆ\nಅಥವಾ ಫೋಟೋ ಆಯ್ಕೆ",
@@ -113,6 +137,16 @@ var YDYW_languageManager = Class.extend({
 				keys: "चांबियाँ",
 				insideDoor: "अंदर दरवाजा",
 				outsideDoor: "बाहर दरवाजे",
+				homeAlarm: "घर अलार्म",
+				users: "उपयोगकर्ताओं",
+				camera: "कैमरा",
+				mirror: "आईना",
+				notes: "टिप्पणियाँ",
+				maps: "नक्शे",
+				theme: "विषय",
+				emergency: "आपातकालीन",
+				tutorial: "ट्यूटोरियल",
+				log: "अभिलेख",
 
 				// welcome
 				hiName: "हैलो, नाम!",
@@ -148,6 +182,16 @@ var YDYW_languageManager = Class.extend({
 				keys: "Llaves",
 				insideDoor: "Interior",
 				outsideDoor: "fuera",
+				homeAlarm: "Alarma hogar",
+				users: "Usuarios",
+				camera: "Cámara",
+				mirror: "Espejo",
+				notes: "La nota",
+				maps: "Mapas",
+				theme: "Tema",
+				emergency: "Emergencia",
+				tutorial: "Tutorial",
+				log: "La log",
 
 				// welcome
 	    		hiName: "Hola, Nombre!",
@@ -178,6 +222,17 @@ var YDYW_languageManager = Class.extend({
 				keys: "Chiavi",
 				insideDoor: "Dentro",
 				outsideDoor: "Fuori",
+
+				homeAlarm: "Casa di allarme",
+				users: "Utenti",
+				camera: "La telecamera",
+				mirror: "Specchio",
+				notes: "Note",
+				maps: "Mappe",
+				theme: "Tema",
+				emergency: "Emergenza",
+				tutorial: "Lezione",
+				log: "il record",
 
 				// welcome
 	    		hiName: "Ciao, nome!",
