@@ -101,7 +101,7 @@
 
     DevControlFunctionality();
     placeElementsOnDoor();
-
+    cameraView.onShowCallback(HideHandAndPhone);
 
     var doorLogManager = new YDYW_DoorLog();
     doorLogManager.init(canvas, imageManager);

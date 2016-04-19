@@ -305,10 +305,13 @@ var YDYW_Camera = SVG_Imitator.extend({
 
             // simple helper function
             var selfViewCB = function(options) {
-                if (that.showsub)
+                if (that.showsub){
                     this.set('fill', 'white');
-                else
+                }
+                else{
                     this.set('fill', 'green');
+                    that.showCallback();
+                }
                 that.subView.bringToFront();
                 that.subView.visible = !that.showsub;
                 that.outsideView.visible = !that.showsub;
@@ -571,5 +574,9 @@ var YDYW_Camera = SVG_Imitator.extend({
         this.collapseButton.setVisible(false);
         this.expandButton.setVisible(false);
         this.closeButton.setVisible(false);
+    },
+
+    onShowCallback: function(cb){
+        this.showCallback = cb;
     }
 });
