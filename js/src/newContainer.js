@@ -50,7 +50,7 @@ var YDYW_Container = SVG_Imitator.extend({
         var index = 0,indexh = 0,indexv = 0, len = this.buttonList.length;
 
         var n = this.RowIconNumber.length;
-        console.log("The number of rows are " + n);
+        //console.log("The number of rows are " + n);
         //Setting up individual button size.
         var buttonHeight = this.height/(n + 1);
         var buttonRadius = buttonHeight/2;
@@ -60,11 +60,11 @@ var YDYW_Container = SVG_Imitator.extend({
         //iterate through the rows
         for (indexv = 0; indexv <n; ++indexv) {
 
-            console.log("Creating the row number " + indexv + " which has number of icons " + this.RowIconNumber[indexv]);
+            //.log("Creating the row number " + indexv + " which has number of icons " + this.RowIconNumber[indexv]);
 
             for(indexh = 0;indexh < this.RowIconNumber[indexv]; ++indexh) {
 
-                console.log("Creating button " + index);
+                //console.log("Creating button " + index);
 
                 var button = new YDYW_Button();
                 button.init(this.canvas);
@@ -108,9 +108,6 @@ var YDYW_Container = SVG_Imitator.extend({
                         icon2: this.buttonDataList[index].icon2 || null,
                         visible: this.visible
                     });
-                    if(this.buttonDataList[index].type === "img"){
-                        console.log("Creating image buttons and type is " + button.type);
-                    }
                     this.buttonList.push(button);
                     //button.hide();
                 }
@@ -121,7 +118,7 @@ var YDYW_Container = SVG_Imitator.extend({
             //    stroke: 'red'
             //}));
             rowTop = rowTop + buttonHeight;
-            console.log("Completed creating button " + indexv);
+            //console.log("Completed creating button " + indexv);
 
         }
 
@@ -130,7 +127,7 @@ var YDYW_Container = SVG_Imitator.extend({
     },
 
     hide: function(){
-        console.log("HIDING THINGS");
+        //("HIDING THINGS");
         this.board.set({visible:false});
         for(var index = 0; index < this.buttonList.length; index++)
             this.buttonList[index].hide();

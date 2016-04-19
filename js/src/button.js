@@ -349,8 +349,6 @@ var YDYW_Button = SVG_Imitator.extend({
 			var rectHeight = this.height || this.textSize + 5;
 
 			//label.set({textAlign: 'center'});
-
-
 			shapeObject = new fabric.Rect({
 				originX: 'center',
 				originY: 'center',
@@ -382,19 +380,22 @@ var YDYW_Button = SVG_Imitator.extend({
 
 			this.button.on('mousedown', function(e) {
 				console.log("the object is selected");
+
+
+
 				if(this.selected != true){
 
 					this.selected = true;
 					//console.log(fillColor, colorLuminance(fillColor, 0.15));
 					shapeObject.setFill(colorLuminance(fillColor, 0.15));
-
+					//this.cb();
 
 				}
-				else if(this.selected === true){
+				else if(this.selected === true) {
 
 					this.selected = false;
 					shapeObject.setFill(fillColor);
-
+					//this.cb();
 				}
 
 				canvas.renderAll();
