@@ -76,6 +76,7 @@
 
     // Draw the Camera view and associated controls
     var mirrorView = initMirror(canvas);
+    // window.mirror = mirrorView;
 
     //Maps Layout
     var mapView = initMap(canvas);
