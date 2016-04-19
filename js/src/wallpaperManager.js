@@ -8,7 +8,6 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
         this.height =  0;
         this.fill = "#dddddd";
         this.stroke = "#dddddd";
-        this.buttonDataList =  [];
         this.RowHeadings =  [];
         this.RowIconNumber =  [];
         this.controlAndOffsetList = [];
@@ -18,6 +17,13 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
         this.buttonList = [];
         this.visible = false;
         this.showing = false;
+        this.outsideDoorObject = null;
+        this.insideDoorObject = null;
+
+        this.outsideDoorTab = null;
+        this.insideDoorTab = null;
+
+        this.wallpaperList = [];
         //this.visible = true;
         if (canvas!==undefined && canvas!== null) {
             this.attachToCanvas(canvas);
@@ -27,14 +33,18 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
     attachToCanvas: function(canvas) {
         this.canvas = canvas;
     },
+    attachToDoors: function( inside , outside) {
+      this.insideDoorObject = inside;
+      this.outsideDoorObject = outside;
+    },
 
     draw: function () {
 
         this.board = new fabric.Rect({
             left: this.left,
             top: this.top,
-            fill: this.fill,
-            stroke: this.stroke,
+            fill: "#ddddd",
+            stroke: "#dddddd",
             rx : 10,
             ry : 10,
             width: this.width,
@@ -45,6 +55,7 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
         this.board.hasControls = this.board.hasBorders = false;
         this.board.lockMovementX = this.board.lockMovementY = true;
 
+        this.canvas.add(this.board);
 
         var index = 0,indexh = 0,indexv = 0, len = this.buttonList.length;
 
@@ -52,44 +63,118 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
         console.log("The number of rows are " + n);
         //Setting up individual button size.
         var buttonHeight = this.height/(n + 1);
+        var buttonWidth = this.width/(this.RowIconNumber[0] + 1);
         var buttonRadius = buttonHeight/2;
 
         var rowTop = this.top, rowLeft = this.left;
+        rowLeft = rowLeft - buttonWidth/3;
 
-        //iterate through the rows
+
+        outsideDoorTab = new YDYW_Button();
+        outsideDoorTab.init(this.canvas);
+        outsideDoorTab.set({
+            left: rowLeft + 40,
+            top: rowTop + 20,
+            width: this.width/2 - 20,
+            type: "tab",
+            fill: "#ddddd",// label/icon/tab
+            //text: "Menu", // displays the text inside the button
+            zoomFactor: this.zoomFactor,
+            textSize: 15,
+            text: "Outside door"
+        });
+        this.outsideDoorTab = outsideDoorTab;
+
+        insideDoorTab = new YDYW_Button();
+        insideDoorTab.init(this.canvas);
+        insideDoorTab.set({
+            left: rowLeft + 40 + this.width/2 - 20 ,
+            top: rowTop + 20,
+            width: this.width/2 - 20,
+            type: "tab",
+            fill: "#dddddd",// label/icon/tab
+            //text: "Menu", // displays the text inside the button
+            zoomFactor: this.zoomFactor,
+            textSize: 15,
+            text: "Inside door"// textSize
+        });
+        this.insideDoorTab = insideDoorTab;
+
+        //insideDoorTab.onClick();
+
         for (indexv = 0; indexv <n; ++indexv) {
-
-            console.log("Creating the row number " + indexv + " which has number of icons " + this.RowIconNumber[indexv]);
-
             for(indexh = 0;indexh < this.RowIconNumber[indexv]; ++indexh) {
 
+                console.log("Adding buttons");
+                var button = new fabric.Rect({
+                    top: rowTop + buttonHeight,
+                    left: rowLeft + (indexh + 1)*(buttonWidth),
+                    height : buttonRadius,
+                    width : buttonRadius,
+                    fill : this.wallpaperList[index].fill,
+                    stroke : this.wallpaperList[index].fill,
+                    id : this.wallpaperList[index].key,
+                    rx : 5,
+                    ry : 5
+                });
 
-                //canvas.add(new fabric.Line([ rowLeft + buttonHeight, rowTop, rowLeft + (2* indexh + 1)*buttonHeight,  rowTop], {
-                //
-                //    stroke: 'red'
-                //}));
+                button.hasControls = button.hasBorders = false;
+                button.lockMovementX = button.lockMovementY = true;
+
+                this.canvas.add(button);
+                this.buttonList.push(button);
+
+                //var id = button.id;
+                button.on("mousedown", function(){
+                    //if(insideDoorTab.selected == true){
+                    var id = this.canvas.getActiveObject().id;
+                    console.log("printing out " ,this.insideDoorTab.selected, this.outsideDoorTab.selected );
+
+                    if(this.insideDoorTab.selected === true) {
+                        this.insideDoorObject.set({fill: id});
+                    }
+                    if(this.outsideDoorTab.selected === true){
+                        this.outsideDoorObject.set({fill: id});
+                    }
+                }.bind(this));
+
+                this.canvas.renderAll();
+
+                index++;
             }
             rowTop = rowTop + buttonHeight;
             console.log("Completed creating button " + indexv);
 
         }
 
-        this.canvas.add(this.board);
+
+        canvas.renderAll();
         return this;
 
     },
 
     hide: function(){
-        console.log("HIDING THINGS");
+
         this.board.set({visible:false});
+        this.insideDoorTab.hide();
+        this.outsideDoorTab.hide();
         for(var index = 0; index < this.buttonList.length; index++)
-            this.buttonList[index].hide();
+            this.buttonList[index].set({
+                visible:false
+            });
+        //canvas.renderAll();
         this.showing = false;
     },
     show: function(){
         this.board.set({visible:true});
+        this.insideDoorTab.show();
+        this.outsideDoorTab.show();
+
         for(var index = 0; index < this.buttonList.length; index++)
-            this.buttonList[index].show();
+            this.buttonList[index].set({
+                visible:true
+            });
+        //canvas.renderAll();
         this.showing = true;
     },
     setTextCallback: function(dict){

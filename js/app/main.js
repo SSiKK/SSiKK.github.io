@@ -52,16 +52,24 @@
     canvas.backgroundColor = "#DDDDDD"; // light grey
 
     // Draw the Basic In/Outside doors,
-    DrawDoors();
+    var insideDoor, outsideDoor;
+    var doors = DrawDoors();
+    insideDoor = doors.inside;
+    outsideDoor = doors.outside;
 
     // Draw the Message Box
 
-    DrawMessageBox();
-
-    //Draw message on the outside door
-    //DrawMessageBoxOutside();
 
     // DrawMessageBox();
+
+    //Draw message on the outside door
+    // DrawMessageBoxOutside();
+
+    // DrawMessageBox();
+
+
+    var languageMgr = new YDYW_languageManager();
+    languageMgr.init();
 
 
     // Draw the Camera view and associated controls
@@ -69,9 +77,7 @@
 
     // Draw the Camera view and associated controls
     var mirrorView = initMirror(canvas);
-
-    // Draw emergencyView
-    // var emergencyView = initEmergency(canvas);
+    // window.mirror = mirrorView;
 
     //Maps Layout
     var mapView = initMap(canvas);
@@ -87,9 +93,8 @@
     //Weather layout
     DrawWeatherLayout();
 
-    //Draw Emergency mode
-    //DrawEmergency();
-
+    // Draw emergencyView
+    var emergencyView = initEmergency(canvas);
     //DrawThreeTapMode
 
     var soundMgr = new YDYW_soundManager();
@@ -115,27 +120,80 @@
 
     SetupDoorLogSystem();
 
-
-    var languageMgr = new YDYW_languageManager();
-    languageMgr.init();
-
     var soundCheckBox = new YDYW_CheckBox();
     soundCheckBox.init(canvas);
     var languageCheckBox = new YDYW_CheckBox();
     languageCheckBox.init(canvas);
+
     var wallpaperView = new YDYW_wallpaperManager();
     wallpaperView.init(canvas);
 
+    var wallpaperDatabase = [
+        {
+            //id: 1,
+            key: "grey",
+            fill: "grey"
+        },
+        {
+            //id: 2,
+            key: "red",
+            fill: "red"
+
+        },
+        {
+           //id: 3,
+            key: "orange",
+            fill: "orange"
+
+        },
+        {
+            key: "Teal",
+            fill: "Teal"
+
+        },
+        {
+            key: "Wheat",
+            fill: "Wheat"
+
+        },
+        {
+            key: "grey",
+            fill: "grey"
+
+        },
+        {
+            key: "grey",
+            fill: "grey"
+
+        },
+        {
+            key: "grey",
+            fill: "grey"
+
+        },
+        {
+            key: "grey",
+            fill: "grey"
+
+        }, {
+            key: "grey",
+            fill: "grey"
+
+        }
+
+    ];
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
+
+    // Draw Welcome
     var welcomeView = initWelcome(canvas);
 
 
     SetupMenu();
     languageMgr.setLanguage("English");
 
-    
+
     // draw everything at the appropriate scale for this canvas
 
     zoomAll(zoomFactor);
@@ -147,7 +205,7 @@
 
     function DrawDoors() {
         // need 36 wide instead of 40 as now
-        var insideDoor = new fabric.Rect({
+        insideDoor = new fabric.Rect({
             left: insideDoorLeft,
             top: doorTop,
             fill: 'grey',
@@ -169,14 +227,21 @@
             console.log("Tap Count is " + countTaps);
             if(countTaps === 3){
                 console.log('3 taps bitches')
-                DrawEmergency();
+                emergencyView.show();
+                // Hide EVERY THING
+                cameraView.hide();
+                mirrorView.hide();
+                mapView.hide();
+                weatherView.hide();
+                Menu.hide();
+                welcomeView.hide();
                 countTaps=0;
             }
             canvas.deactivateAll();
             canvas.renderAll();
         });
 
-        var outsideDoor = new fabric.Rect({
+        outsideDoor = new fabric.Rect({
             left: outsideDoorLeft,
             top: doorTop,
             fill: 'grey',
@@ -198,6 +263,7 @@
 
         canvas.add(insideDoor);
         canvas.add(outsideDoor);
+        return {inside: insideDoor, outside: outsideDoor };
     }
 
 
@@ -294,18 +360,18 @@
         });
     }
 
-    function DrawEmergency (){
-        var emergencyView = new YDYW_Emergency();
-        emergencyView.init(canvas);
-        emergencyView.set({
-            //left: doorWidth - doorWidth/2 + 22,
-            //top: localHeight - localHeight/2 , // 250
-            left: doorWidth + 110,
-            top: localHeight + 110, // 250
-            width: doorWidth*2 + 130,
-            height: localHeight*2 + 220
-        });
-    }
+    // function DrawEmergency (){
+    //     var emergencyView = new YDYW_Emergency();
+    //     emergencyView.init(canvas);
+    //     emergencyView.set({
+    //         //left: doorWidth - doorWidth/2 + 22,
+    //         //top: localHeight - localHeight/2 , // 250
+    //         left: doorWidth + 110,
+    //         top: localHeight + 110, // 250
+    //         width: doorWidth*2 + 130,
+    //         height: localHeight*2 + 220
+    //     });
+    // }
 
 
 
@@ -411,7 +477,6 @@
             icon: "js/assets/svg/circle.svg", //icon asset path
             cb: function(){
                 if(menuButton.selected === true){
-
                     //welcome.hide();
                     WeatherContainer.hide();
                     weatherView.hide();
@@ -419,13 +484,13 @@
                     soundCheckBox.hide();
                     languageCheckBox.hide();
                     doorLogManager.hide();
-                    //wallpaperView.hide();
+                    wallpaperView.hide();
+                    mapView.hide();
                     menuButton.selected = false;
                 }else{
                    // welcome.show();
                     WeatherContainer.show();
                     weatherView.show();
-                    //wallpaperView.show();
                     Menu.show();
                     menuButton.selected = true;
                 }
@@ -460,26 +525,19 @@
         });
         soundCheckBox.hide();
 
+        wallpaperView.attachToDoors(insideDoor, outsideDoor);
 
-        //wallpaperView.set({
-        //    top: menuPosAndSize.top,
-        //    left: menuPosAndSize.left,
-        //    height : menuPosAndSize.height,
-        //    width : menuPosAndSize.width,
-        //    zoomFactor: zoomFactor,
-        //    RowIconNumber : [1,1],
-        //    buttonDataList: [
-        //        {
-        //            type: "img",
-        //            icon: "js/assets/img/icons/orange_circle.png" //icon asset path
-        //        },
-        //        {
-        //                type: "img",
-        //                icon: "js/assets/img/icons/orange_circle.png" //icon asset path
-        //        }
-        //        ],
-        //        visible: false
-        //    });
+        wallpaperView.set({
+            top: menuPosAndSize.top,
+            left: menuPosAndSize.left,
+            height : menuPosAndSize.height,
+            width : menuPosAndSize.width,
+            zoomFactor: zoomFactor,
+            wallpaperList : wallpaperDatabase,
+            RowIconNumber : [5,5]
+        });
+
+        wallpaperView.hide();
 
 
         languageCheckBox.addEntries(languageMgr.getLanguages());
@@ -613,15 +671,19 @@
                     },
                     {
                         icon: 'js/assets/svg/alert.svg',
-                        text: "Emergency"
+                        text: "Emergency",
+                        cb: function() {
+                            emergencyView.show();
+                            Menu.hide();
+                        }
                     },
                     {
                         type: "icon",
                         icon: 'js/assets/svg/paint.svg',
                         text: "Theme",
                         cb:function(){
-                            //wallpaperView.show();
-                            //Menu.hide();
+                            wallpaperView.show();
+                            Menu.hide();
                         }
                     }],
             zoomFactor: zoomFactor
@@ -813,12 +875,11 @@
         var emergency = new YDYW_Emergency();
         emergency.init(canvas);
         emergency.set({
-            //left: doorWidth - doorWidth/2 + 22,
-            //top: localHeight - localHeight/2 , // 250
-            left: doorWidth + 110,
-            top: localHeight + 110, // 250
-            width: doorWidth*2 + 130,
-            height: localHeight*2 + 220
+            top: doorTop,
+            left: insideDoorLeft,
+            width: doorWidth,
+            height: doorHeight,
+            languageMgr: languageMgr
         });
         return emergency;
     }
@@ -832,7 +893,7 @@
             width: doorWidth,
             height: doorHeight,
             languageMgr: languageMgr,
-            mirror: mirrorView
+            //mirror: mirrorView
         })
         return welcome
     }
