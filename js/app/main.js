@@ -532,11 +532,11 @@
                     {
                         icon: 'js/assets/svg/childsafe.svg',
                         icon2: 'js/assets/svg/childunsafe.svg',
-                        text: "Child Safety"
+                        text: "childSafety"
                     },
                     {
                         icon: 'js/assets/svg/key.svg',
-                        text: "Keys"
+                        text: "keys"
                     },
                     {
                         icon: 'js/assets/svg/housesecure.svg',

@@ -40,6 +40,8 @@ var YDYW_languageManager = Class.extend({
 				harmonica: "Harmonica",
 				trumpet: "Trumpet",
 				chimes: "Chimes",
+				childSafety: "Child Safety",
+				keys: "Keys",
 
 				// welcome
 	    		hiName: "Hello, Name!",
@@ -66,6 +68,8 @@ var YDYW_languageManager = Class.extend({
 				harmonica:"ಹಾರ್ಮೋನಿಕಾ",
 				trumpet: "ಕಹಳೆ",
 				chimes: "ಘಂಟಾಮೇಳ",
+				childSafety: "ಮಕ್ಕಳ ಸುರಕ್ಷತೆ",
+				keys: "ಕೀಲಿಗಳು",
 
 				// welcome
 	    		hiName: "ಹಲೋ, ಹೆಸರು!",
@@ -92,6 +96,8 @@ var YDYW_languageManager = Class.extend({
 				harmonica: "अकार्डियन",
 				trumpet: "तुरही",
 				chimes: "झंकार",
+				childSafety: "बच्चों की सुरक्षा",
+				keys: "चांबियाँ",
 
 				// welcome
 				hiName: "हैलो, नाम!",
@@ -118,6 +124,8 @@ var YDYW_languageManager = Class.extend({
 				harmonica: "harmónica",
 				trumpet: "trompeta",
 				chimes: "campaneo",
+				childSafety: "seguridad infantil",
+				keys: "Llaves",
 
 				// welcome
 	    		hiName: "Hola, Nombre!",
@@ -139,6 +147,8 @@ var YDYW_languageManager = Class.extend({
 				harmonica: "armonica a bocca",
 				trumpet: "tromba",
 				chimes: "Chime",
+				childSafety: "Bambino sicuro",
+				keys: "Chiavi",
 
 				// welcome
 	    		hiName: "Ciao, nome!",
