@@ -483,6 +483,7 @@
                     languageCheckBox.hide();
                     doorLogManager.hide();
                     wallpaperView.hide();
+                    mapView.hide();
                     menuButton.selected = false;
                 }else{
                    // welcome.show();
