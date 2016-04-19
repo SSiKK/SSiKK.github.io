@@ -64,7 +64,7 @@
     //Draw message on the outside door
     // DrawMessageBoxOutside();
 
-    // DrawMessageBox();
+    var messagesInside = initMessages(canvas);
 
 
     var languageMgr = new YDYW_languageManager();
@@ -267,7 +267,7 @@
 
 
     // Instantiate the message class to set the 4 parameters from SVG_Imitator
-    function DrawMessageBox(){
+    function initMessages(canvas){
 
         messageIn = new YDYW_Message();
         messageIn.init(canvas);
@@ -277,6 +277,7 @@
             left: insideDoorLeft, // * 1.25, //300,
             top: doorTop // 25
         });
+        return messageIn;
     }
 
   function DrawMessageBoxOutside(){
@@ -640,7 +641,11 @@
                     },
                     {
                         icon: 'js/assets/svg/notes.svg',
-                        text: "Notes"
+                        text: "Notes",
+                        cb: function() {
+                            messagesInside.show();
+                            Menu.hide();
+                        }
                     },
                     {
                         icon: 'js/assets/svg/maps.svg',
