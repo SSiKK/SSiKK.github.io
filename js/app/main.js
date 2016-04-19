@@ -59,7 +59,7 @@
 
     // Draw the Message Box
 
-    DrawMessageBox();
+    // DrawMessageBox();
 
     //Draw message on the outside door
     // DrawMessageBoxOutside();
@@ -75,7 +75,7 @@
     var cameraView = initCamera(canvas);
 
     // Draw the Camera view and associated controls
-    //var mirrorView = initMirror(canvas);
+    var mirrorView = initMirror(canvas);
 
     //Maps Layout
     var mapView = initMap(canvas);
@@ -224,8 +224,6 @@
             countTaps++;
             console.log("Tap Count is " + countTaps);
             if(countTaps === 3){
-                console.log('3 taps bitches');
-                DrawEmergency();
                 console.log('3 taps bitches')
                 emergencyView.show();
                 // Hide EVERY THING

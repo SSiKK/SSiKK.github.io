@@ -175,7 +175,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
                             that.canvas.remove(lang);
                         })
 
-                        that.newUserImageCapture();
+                        // that.newUserImageCapture();
 
                     })
                     that.canvas.add(flag);
@@ -264,7 +264,7 @@ var YDYW_Welcome = SVG_Imitator.extend({
                 var index = imagesArray.length - 1;
 
 
-                window.hip = that.hipImagesArr = new fabric.Group(imagesArray, {
+                that.hipImagesArr = new fabric.Group(imagesArray, {
                     visible: true,
                     left: that.left + 815,
                     top: that.top + 550,
