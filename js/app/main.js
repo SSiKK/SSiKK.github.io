@@ -606,9 +606,12 @@
                         }
                     },
                     {
-                        icon: 'js/assets/svg/childsafe.svg',
-                        icon2: 'js/assets/svg/childunsafe.svg',
-                        text: "childSafety"
+                        icon: 'js/assets/svg/camera.svg',
+                        text: "camera",
+                        cb: function() {
+                            cameraView.show();
+                            Menu.hide()
+                        }
                     },
                     {
                         icon: 'js/assets/svg/key.svg',
@@ -623,14 +626,7 @@
                         icon: 'js/assets/svg/users.svg',
                         text: "users"
                     },
-                    {
-                        icon: 'js/assets/svg/camera.svg',
-                        text: "camera",
-                        cb: function() {
-                            cameraView.show();
-                            Menu.hide()
-                        }
-                    },
+                    
                     {
                         icon: 'js/assets/svg/mirror.svg',
                         text: "mirror",
@@ -644,12 +640,17 @@
                         text: "notes"
                     },
                     {
-                        icon: 'js/assets/svg/maps.svg',
-                        text: "maps",
+                        icon: 'js/assets/svg/help.svg',
+                        text: "tutorial",
                         cb: function() {
-                            mapView.show();
+                            welcomeView.show();
                             Menu.hide();
                         }
+                    },
+                    {
+                        icon: 'js/assets/svg/childsafe.svg',
+                        icon2: 'js/assets/svg/childunsafe.svg',
+                        text: "childSafety"
                     },
                     {
                         type: "icon", // label/icon/tab
@@ -662,13 +663,14 @@
                         text: "log"
                     },
                     {
-                        icon: 'js/assets/svg/help.svg',
-                        text: "tutorial",
+                        icon: 'js/assets/svg/maps.svg',
+                        text: "maps",
                         cb: function() {
-                            welcomeView.show();
+                            mapView.show();
                             Menu.hide();
                         }
                     },
+                    
                     {
                         icon: 'js/assets/svg/alert.svg',
                         text: "emergency",
