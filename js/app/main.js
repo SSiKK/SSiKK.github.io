@@ -23,7 +23,6 @@
     var countTaps = 0;
 
     // Door elements
-    var messageIn;
     var lock;
     var doorBell;
     var menuButton;
@@ -59,14 +58,12 @@
 
     // Draw the Message Box
 
-
-    // DrawMessageBox();
-
     //Draw message on the outside door
     // DrawMessageBoxOutside();
 
-    // DrawMessageBox();
-
+    var messagesInside = initMessages(canvas);
+    var messageOut = initMessageBoxOutside(canvas)
+    // messageOut.show();
 
     var languageMgr = new YDYW_languageManager();
     languageMgr.init();
@@ -86,8 +83,6 @@
     //Weather layout
     var weatherView, WeatherContainer;
     DrawWeatherLayout();
-
-
 
 
     //Weather layout
@@ -127,6 +122,10 @@
 
     var wallpaperView = new YDYW_wallpaperManager();
     wallpaperView.init(canvas);
+
+
+
+    // initialize the image wallpaper patterns.
 
     var wallpaperDatabase = [
         {
@@ -268,9 +267,9 @@
 
 
     // Instantiate the message class to set the 4 parameters from SVG_Imitator
-    function DrawMessageBox(){
+    function initMessages(canvas){
 
-        messageIn = new YDYW_Message();
+        var messageIn = new YDYW_Message();
         messageIn.init(canvas);
         messageIn.set({
             width: doorWidth,
@@ -278,18 +277,20 @@
             left: insideDoorLeft, // * 1.25, //300,
             top: doorTop // 25
         });
+        return messageIn;
     }
 
-  function DrawMessageBoxOutside(){
+  function initMessageBoxOutside(canvas){
 
-        messageOut = new YDYW_SendIn_Message();
-        messageOut.init(canvas);
-        messageOut.set({
+        var messOut = new YDYW_SendIn_Message();
+        messOut.init(canvas);
+        messOut.set({
             width: doorWidth,
             height: doorHeight,
             left: insideDoorLeft, // * 1.25, //300,
             top: doorTop // 25
         });
+        return messOut;
     }
 
 
@@ -431,6 +432,12 @@
             textAlign: 'center',
             id: "authReqMsg"
         });
+        leaveMsgMsg2.on("selected", function() {
+            messageOut.show();
+        });
+        leaveMsgMsg1.on("selected", function() {
+            messageOut.show();
+        });
         canvas.add(leaveMsgMsg2);
 
         doorBell = new YDYW_Button();
@@ -460,7 +467,7 @@
                 window.setTimeout(function(){
                     leaveMsgMsg1.set({visible:false});
                     leaveMsgMsg2.set({visible:false});
-                }, 10000);
+                }, 15000);
             }
         });
 
@@ -534,6 +541,7 @@
             width : menuPosAndSize.width,
             zoomFactor: zoomFactor,
             wallpaperList : wallpaperDatabase,
+            languageManager : languageMgr,
             RowIconNumber : [5,5]
         });
 
@@ -606,9 +614,12 @@
                         }
                     },
                     {
-                        icon: 'js/assets/svg/childsafe.svg',
-                        icon2: 'js/assets/svg/childunsafe.svg',
-                        text: "childSafety"
+                        icon: 'js/assets/svg/camera.svg',
+                        text: "camera",
+                        cb: function() {
+                            cameraView.show();
+                            Menu.hide()
+                        }
                     },
                     {
                         icon: 'js/assets/svg/key.svg',
@@ -623,14 +634,7 @@
                         icon: 'js/assets/svg/users.svg',
                         text: "users"
                     },
-                    {
-                        icon: 'js/assets/svg/camera.svg',
-                        text: "camera",
-                        cb: function() {
-                            cameraView.show();
-                            Menu.hide()
-                        }
-                    },
+
                     {
                         icon: 'js/assets/svg/mirror.svg',
                         text: "mirror",
@@ -641,15 +645,24 @@
                     },
                     {
                         icon: 'js/assets/svg/notes.svg',
-                        text: "notes"
-                    },
-                    {
-                        icon: 'js/assets/svg/maps.svg',
-                        text: "maps",
+                        text: "Notes",
                         cb: function() {
-                            mapView.show();
+                            messagesInside.show();
                             Menu.hide();
                         }
+                    },
+                    {
+                        icon: 'js/assets/svg/help.svg',
+                        text: "tutorial",
+                        cb: function() {
+                            welcomeView.show();
+                            Menu.hide();
+                        }
+                    },
+                    {
+                        icon: 'js/assets/svg/childsafe.svg',
+                        icon2: 'js/assets/svg/childunsafe.svg',
+                        text: "childSafety"
                     },
                     {
                         type: "icon", // label/icon/tab
@@ -662,13 +675,14 @@
                         text: "log"
                     },
                     {
-                        icon: 'js/assets/svg/help.svg',
-                        text: "tutorial",
+                        icon: 'js/assets/svg/maps.svg',
+                        text: "maps",
                         cb: function() {
-                            welcomeView.show();
+                            mapView.show();
                             Menu.hide();
                         }
                     },
+
                     {
                         icon: 'js/assets/svg/alert.svg',
                         text: "emergency",

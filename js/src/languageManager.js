@@ -42,15 +42,19 @@ var YDYW_languageManager = Class.extend({
 				chimes: "Chimes",
 				childSafety: "Child Safety",
 				keys: "Keys",
-				homeAlarm: "",
+				homeAlarm: "Home Alarm",
+				insideDoor: "Inside Door",
+				outsideDoor: "Outside Door",
 				users: "Users",
 				camera: "Camera",
 				mirror: "Mirror",
 				notes: "Notes",
 				maps: "Maps",
 				theme: "Theme",
+				emergency: "Emergency",
 				tutorial: "Tutorial",
 				log: "Door Log",
+
 
 				// welcome
 	    		hiName: "Hello, Name!",
@@ -83,6 +87,9 @@ var YDYW_languageManager = Class.extend({
 				chimes: "ಘಂಟಾಮೇಳ",
 				childSafety: "ಮಕ್ಕಳ ಸುರಕ್ಷತೆ",
 				keys: "ಕೀಲಿಗಳು",
+				insideDoor: "ಒಳಗೆ ಬಾಗಿಲು",
+				outsideDoor: "ಹೊರಗೆ ಬಾಗಿಲು",
+
 				homeAlarm: "ಮನೆ ಅಲಾರ್ಮ್",
 				users: "ಬಳಕೆದಾರರು",
 				camera: "ಕ್ಯಾಮೆರಾ",
@@ -93,6 +100,7 @@ var YDYW_languageManager = Class.extend({
 				emergency: "ತುರ್ತುಸ್ಥಿತಿ",
 				tutorial: "ಟ್ಯುಟೋರಿಯಲ್",
 				log: "ದಾಖಲೆ",
+
 
 				// welcome
 	    		hiName: "ಹಲೋ, ಹೆಸರು!",
@@ -127,6 +135,8 @@ var YDYW_languageManager = Class.extend({
 				chimes: "झंकार",
 				childSafety: "बच्चों की सुरक्षा",
 				keys: "चांबियाँ",
+				insideDoor: "अंदर दरवाजा",
+				outsideDoor: "बाहर दरवाजे",
 				homeAlarm: "घर अलार्म",
 				users: "उपयोगकर्ताओं",
 				camera: "कैमरा",
@@ -170,6 +180,8 @@ var YDYW_languageManager = Class.extend({
 				chimes: "campaneo",
 				childSafety: "seguridad infantil",
 				keys: "Llaves",
+				insideDoor: "Interior",
+				outsideDoor: "fuera",
 				homeAlarm: "Alarma hogar",
 				users: "Usuarios",
 				camera: "Cámara",
@@ -208,6 +220,9 @@ var YDYW_languageManager = Class.extend({
 				chimes: "Chime",
 				childSafety: "Bambino sicuro",
 				keys: "Chiavi",
+				insideDoor: "Dentro",
+				outsideDoor: "Fuori",
+
 				homeAlarm: "Casa di allarme",
 				users: "Utenti",
 				camera: "La telecamera",

@@ -10,6 +10,7 @@ var YDYW_Message = SVG_Imitator.extend({
         this.subCanvasHTML = null;
         this.subCanvas = null;
 
+        this.firstTime = true;
         // Relative position to the SendTo button.
         this.leftRef = this.left + 150;
         this.topRef = this.top + 450;
@@ -22,7 +23,7 @@ var YDYW_Message = SVG_Imitator.extend({
 
         //Initially drawing mode is off
         this.isMessageBoxSelected = false;
-
+        this.profileBox = [];
 
         if (canvas !== undefined && canvas !== null) {
             this.attachToCanvas(canvas);
@@ -52,7 +53,7 @@ var YDYW_Message = SVG_Imitator.extend({
         this.subCanvasHTML = document.getElementsByClassName('canvas-container')[1];
         this.subCanvasHTML.style.position = "absolute"
         this.subCanvasHTML.style.top = (this.topRef + 200) + "px"
-        this.subCanvasHTML.style.left = document.getElementsByClassName('container')[1] ? "500px" : '300px'
+        this.subCanvasHTML.style.left = document.getElementsByClassName('container')[1] ? "310px" : '500px'
     },
 
     display: function() {
@@ -76,6 +77,9 @@ var YDYW_Message = SVG_Imitator.extend({
                 onComplete: function() {
                     that.subCanvasHTML.style.display = "none"
                     that.cancelButton.item(1).setText('Cancel')
+                    for (var i = 0; i < that.profileBox.length; i++) {
+                        that.profileBox[i].setVisible(false);
+                    }
                 }
             })
         } else {
@@ -191,8 +195,9 @@ var YDYW_Message = SVG_Imitator.extend({
                 if (this.clicked === 1)
                     this.item(1).setText('Close?')
                 if (this.clicked > 1) {
-                    that.display();
-                    //HERE
+                    that.hide();
+                    // that.display();
+
 
                 }
                 that.subCanvas.clear();
@@ -208,6 +213,8 @@ var YDYW_Message = SVG_Imitator.extend({
         this.canvas.add(this.sendButton);
         this.canvas.add(this.cancelButton);
 
+        if (this.firstTime)
+            that.hide();
         console.log("being drawn!", this.sendButton);
 
     },
@@ -221,7 +228,7 @@ var YDYW_Message = SVG_Imitator.extend({
         var offset = i * 200;
         fabric.Image.fromURL(imgFile, function(img) {
 
-            that.profileBox = img.set({
+            that.profileBox[i] = img.set({
                 left: that.leftRef + 233 + offset,
                 top: that.topRef + 775,
                 scaleX: 0.2,
@@ -241,59 +248,41 @@ var YDYW_Message = SVG_Imitator.extend({
                 that.cancelButton.item(1).setText('Cancel');
                 that.cancelButton.clicked = 0;
 
-                that.display();
-                that.profileBox.setVisible(false);
-                that.generalUserButton.setVisible(false);
-            })
+                that.hide();
+        })
 
-            that.canvas.add(that.profileBox);
+            that.canvas.add(that.profileBox[i]);
         });
         console.log("Profile 1 has been drawn!", that);
 
         // End of user profiles.
+    },
 
-        //General User button.
-        that.generalUserButton = new fabric.Group([
-            new fabric.Rect({
-                originX: 'center',
-                originY: 'center',
-                left: this.left * 4,
-                // top: this.top,
-                width: this.width * 0.8,
-                height: this.height * .1,
-                fill: '##DDDDDD',
-                selectable: true,
-                hasControls: false,
-                hasBorders: false,
-                lockMovementX: true,
-                lockMovementY: true
-            }),
-            new fabric.Text('General', {
-                originY: 'center',
-                originX: 'center',
-                left: this.left * 4,
-                // top: this.top,
-                fontFamily: 'Helvetica',
-                fontSize: 50
-            })
-        ], {
-            visible: true,
-            left: this.leftRef + 300, //TODO
-            top: this.topRef + 880,
-            clicked: 0
-        })
+    show: function() {
+        var that = this;
+        for (var i = 0; i < that.profileBox.length; i++) {
+            that.profileBox[i].setVisible(false);
+            that.profileBox[i].setVisible(false);
+        }
+        that.subCanvasHTML.style.display = "block"
+        that.cancelButton.setVisible(true);
+        that.sendButton.setVisible(true);
 
-        that.canvas.add(that.generalUserButton);
+        that.cancelButton.item(1).setText('Cancel')
     },
 
 
-    sendMessage: function() {
-        // Sends the message on the inside of the door
+    hide: function() {
+        var that = this;
+        for (var i = 0; i < that.profileBox.length; i++) {
+            that.profileBox[i].setVisible(false);
+            that.profileBox[i].setVisible(false);
+        }
+        that.subCanvasHTML.style.display = "none"
+        that.cancelButton.setVisible(false);
+        that.sendButton.setVisible(false);
 
-    },
-
-    cancelMessage: function() {
-        //
+        that.cancelButton.item(1).setText('Cancel')
     }
 
 
