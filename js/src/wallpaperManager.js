@@ -23,6 +23,8 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
         this.outsideDoorTab = null;
         this.insideDoorTab = null;
 
+        this.languageManager =  null;
+
         this.wallpaperList = [];
         //this.visible = true;
         if (canvas!==undefined && canvas!== null) {
@@ -81,9 +83,10 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
             //text: "Menu", // displays the text inside the button
             zoomFactor: this.zoomFactor,
             textSize: 15,
-            text: "Outside door"
+            text: "outsideDoor"
         });
         this.outsideDoorTab = outsideDoorTab;
+        this.languageManager.addSetTextCallback(this.outsideDoorTab.setTextCallback.bind(this.outsideDoorTab));
 
         insideDoorTab = new YDYW_Button();
         insideDoorTab.init(this.canvas);
@@ -96,9 +99,10 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
             //text: "Menu", // displays the text inside the button
             zoomFactor: this.zoomFactor,
             textSize: 15,
-            text: "Inside door"// textSize
+            text: "insideDoor"// textSize
         });
         this.insideDoorTab = insideDoorTab;
+        this.languageManager.addSetTextCallback(this.insideDoorTab.setTextCallback.bind(this.insideDoorTab));
 
         //insideDoorTab.onClick();
 
