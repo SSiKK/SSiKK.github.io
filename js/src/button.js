@@ -379,17 +379,10 @@ var YDYW_Button = SVG_Imitator.extend({
 
 
 			this.button.on('mousedown', function(e) {
-				console.log("the object is selected");
-
-
 
 				if(this.selected != true){
-
 					this.selected = true;
-					//console.log(fillColor, colorLuminance(fillColor, 0.15));
 					shapeObject.setFill(colorLuminance(fillColor, 0.15));
-					//this.cb();
-
 				}
 				else if(this.selected === true) {
 
@@ -401,7 +394,7 @@ var YDYW_Button = SVG_Imitator.extend({
 				canvas.renderAll();
 				//console.log ("hover event!", this);
 
-			});
+			}.bind(this));
 
 		}
 

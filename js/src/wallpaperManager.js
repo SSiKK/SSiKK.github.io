@@ -100,8 +100,7 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
         });
         this.insideDoorTab = insideDoorTab;
 
-
-        //canvas.add(outsideDoor);
+        //insideDoorTab.onClick();
 
         for (indexv = 0; indexv <n; ++indexv) {
             for(indexh = 0;indexh < this.RowIconNumber[indexv]; ++indexh) {
@@ -129,8 +128,14 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
                 button.on("mousedown", function(){
                     //if(insideDoorTab.selected == true){
                     var id = this.canvas.getActiveObject().id;
-                    console.log("printing out the id ", id );
-                    this.insideDoorObject.set({fill: id});
+                    console.log("printing out " ,this.insideDoorTab.selected, this.outsideDoorTab.selected );
+
+                    if(this.insideDoorTab.selected === true) {
+                        this.insideDoorObject.set({fill: id});
+                    }
+                    if(this.outsideDoorTab.selected === true){
+                        this.outsideDoorObject.set({fill: id});
+                    }
                 }.bind(this));
 
                 this.canvas.renderAll();
