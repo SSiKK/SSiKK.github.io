@@ -61,7 +61,7 @@
     var mirrorView = initMirror(canvas);
 
     // Draw emergencyView
-    // var emergencyView = initEmergency(canvas);
+    var emergencyView = initEmergency(canvas);
 
     //Maps Layout
     var mapView = initMap(canvas);
@@ -77,8 +77,7 @@
     //Weather layout
     DrawWeatherLayout();
 
-    //Draw Emergency mode
-    //DrawEmergency();
+    //DrawEmergency mode
 
     //DrawThreeTapMode
 
@@ -154,7 +153,7 @@
             console.log("Tap Count is " + countTaps);
             if(countTaps === 3){
                 console.log('3 taps bitches')
-                DrawEmergency();
+                emergencyView.show();
                 countTaps=0;
             }
             canvas.deactivateAll();
@@ -266,18 +265,18 @@
         });
     }
 
-    function DrawEmergency (){
-        var emergencyView = new YDYW_Emergency();
-        emergencyView.init(canvas);
-        emergencyView.set({
-            //left: doorWidth - doorWidth/2 + 22,
-            //top: localHeight - localHeight/2 , // 250
-            left: doorWidth + 110,
-            top: localHeight + 110, // 250
-            width: doorWidth*2 + 130,
-            height: localHeight*2 + 220
-        });
-    }
+    // function DrawEmergency (){
+    //     var emergencyView = new YDYW_Emergency();
+    //     emergencyView.init(canvas);
+    //     emergencyView.set({
+    //         //left: doorWidth - doorWidth/2 + 22,
+    //         //top: localHeight - localHeight/2 , // 250
+    //         left: doorWidth + 110,
+    //         top: localHeight + 110, // 250
+    //         width: doorWidth*2 + 130,
+    //         height: localHeight*2 + 220
+    //     });
+    // }
 
 
 
@@ -585,7 +584,11 @@
                     },
                     {
                         icon: 'js/assets/svg/alert.svg',
-                        text: "Emergency"
+                        text: "Emergency",
+                        cb: function() {
+                            emergencyView.show();
+                            Menu.hide();
+                        }
                     },
                     {
                         type: "icon",
@@ -767,12 +770,10 @@
         var emergency = new YDYW_Emergency();
         emergency.init(canvas);
         emergency.set({
-            //left: doorWidth - doorWidth/2 + 22,
-            //top: localHeight - localHeight/2 , // 250
-            left: doorWidth + 110,
-            top: localHeight + 110, // 250
-            width: doorWidth*2 + 130,
-            height: localHeight*2 + 220
+            top: doorTop,
+            left: insideDoorLeft,
+            width: doorWidth,
+            height: doorHeight
         });
         return emergency;
     }
@@ -782,7 +783,7 @@
         welcome.init(canvas);
         welcome.set({
             top: doorTop,
-            left: insideDoorLeft,
+            left: doorWidth,
             width: doorWidth,
             height: doorHeight,
             languageMgr: languageMgr,

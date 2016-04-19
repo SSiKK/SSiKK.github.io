@@ -1,87 +1,165 @@
 var YDYW_Emergency = SVG_Imitator.extend({
-	init: function (canvas) { // Initialize 
-		//Attributes
-		this.left = null;
-		this.top = null;
-		this.width = null;
-		this.height = null;
+    init: function(canvas) { // Initialize
+        //Attributes
+        this.left = null;
+        this.top = null;
+        this.width = null;
+        this.height = null;
+        this.firstTime = true;
+        this.emergencyScreen = null;
 
-		this.leftRef = this.left;
-		this.topRef = this.top;
+        this.fire = null;
+        this.police = null;
+        this.alert = null;
+        this.mark = null;
+        // this.leftRef = this.left;
+        // this.topRef = this.top;
 
-		// Canvas on which the object is created.
-		this.canvas = null;
+        // Canvas on which the object is created.
+        this.canvas = null;
 
-		//Feature specific status flags
-		this.on = false;
-		if (canvas!==undefined && canvas!== null) {
-			this.attachToCanvas(canvas);
-		}
-	},
-	attachToCanvas: function(canvas) {
-		this.canvas = canvas;
-	},
-	
-	draw: function () {
+        //Feature specific status flags
+        this.on = false;
+        if (canvas !== undefined && canvas !== null) {
+            this.attachToCanvas(canvas);
+        }
+    },
+    attachToCanvas: function(canvas) {
+        this.canvas = canvas;
+    },
 
-		var that = this;
-		// Draw a Rect and have all the UI elements in it. 
-		this.emergencyScreen = new fabric.Rect({
-            angle: 0, 
-            left: this.leftRef, 
-            top: this.topRef,
-            width: this.width,
-            height: this.height,
-            originX: 'center',
-            originY: 'center',
-            fill: '#ff9999',
-            selectable: true,
+    draw: function() {
+
+        var that = this;
+        // Draw a Rect and have all the UI elements in it.
+        this.emergencyScreen = new fabric.Rect({
+            left: that.left,
+            top: that.top,
+            width: that.width,
+            height: that.height,
+            fill: 'white', //'#ff9999',
+            selectable: false,
             hasControls: false,
             hasBorders: false,
             lockMovementX: true,
             lockMovementY: true
         })
 
-		// fabric.loadSVGFromURL('js/assets/svg/alert.svg', function(obj, opt) {
-  //          	that.fireButton = fabric.util.groupSVGElements(obj, {
-  //                   width: opt.width,
-  //                   height: opt.height,
-  //                   svgUid: opt.svgUid,
-  //                   toBeParsed: opt.toBeParsed,
-  //                   left: that.leftRef + 700, 
-  //                   top: that.topRef + 800, 
-  //                   originX: 'center',
-  //                   originY: 'center',
-  //                   scaleX: 0.3,
-  //                   scaleY: 0.3,
-  //                   fill: 'white',
-  //                   hasControls: false,
-  //                   hasBorders: false,
-  //                   lockMovementX: true,
-  //                   lockMovementY: true,
-  //                   visible: true
-  //               }))
-		// 	that.canvas.add(that.fireButton);
-  //       })
+        console.log(that.left, that);
 
+        var images = [ "fire", "police", "alert","mark"].map(function(el, i) {
+            return new Promise(function(resolve, reject) {
+                fabric.loadSVGFromURL('js/assets/svg/' + el + '.svg', function(obj, opt) {
+                    resolve(fabric.util.groupSVGElements(obj, {
+                        width: opt.width,
+                        height: opt.height,
+                        svgUid: opt.svgUid,
+                        toBeParsed: opt.toBeParsed,
+                        left: that.left + 700,
+                        top: that.top + 800,
+                        originX: 'center',
+                        originY: 'center',
+                        scaleX: 0.5,
+                        scaleY: 0.5,
+                        fill: 'white',
+                        hasControls: false,
+                        hasBorders: false,
+                        lockMovementX: true,
+                        lockMovementY: true,
+                        visible: true
+                    }))
+                })
+            })
+        })
 
-        this.canvas.add(this.emergencyScreen);
-        this.canvas.deactivateAll();
-        this.canvas.renderAll(); 
+        Promise.all(images).then(function(results) {
 
-	},
+            that.fire = results[0].set({
+                "top": 1200, "left": 500,
+                'fill': 'orange'
+            });
 
-	emergencyModeOn : function(){
+            that.police = results[1].set({
+                "top": 1200, "left": 900,
+                'fill': 'blue'
+            })
 
-	},
+            that.alert = results[2].set({
+                "top": 600,
+                'scaleX': 2.0, 'scaleY': 2.0,
+                'fill': 'rgb(200,0,0)'
+            })
 
-	callFireExt : function(){
+            that.mark = results[3].set({
+                "top": 1100, 'left': 1200,
+                'scaleX': 0.2, 'scaleY': 0.2,
+                'fill': "#8ec887"
+            })
+            .on('selected',function(){
+                that.hide();
+            })
 
-	},
+            that.canvas.add(that.fire);
+            that.canvas.add(that.police);
+            that.canvas.add(that.alert);
+            that.canvas.add(that.mark);
 
-	callPolice : function(){
+            if (that.firstTime)
+                that.hide();
 
-	}
+        })
+        that.canvas.add(that.emergencyScreen);
+        that.canvas.deactivateAll();
+        that.canvas.renderAll();
+
+        // fabric.loadSVGFromURL('js/assets/svg/alert.svg', function(obj, opt) {
+        //            that.fireButton = fabric.util.groupSVGElements(obj, {
+        //                   width: opt.width,
+        //                   height: opt.height,
+        //                   svgUid: opt.svgUid,
+        //                   toBeParsed: opt.toBeParsed,
+        //                   left: that.left + 700,
+        //                   top: that.topRef + 800,
+        //                   originX: 'center',
+        //                   originY: 'center',
+        //                   scaleX: 0.3,
+        //                   scaleY: 0.3,
+        //                   fill: 'white',
+        //                   hasControls: false,
+        //                   hasBorders: false,
+        //                   lockMovementX: true,
+        //                   lockMovementY: true,
+        //                   visible: true
+        //               }))
+        //  that.canvas.add(that.fireButton);
+        //       })
+
+    },
+
+    callFireExt: function() {
+
+    },
+
+    callPolice: function() {
+
+    },
+
+    hide: function() {
+        this.emergencyScreen.setVisible(false);
+        this.fire.setVisible(false);
+        this.police.setVisible(false);
+        this.alert.setVisible(false);
+        this.mark.setVisible(false);
+    },
+
+    show: function() {
+        this.emergencyScreen.setVisible(true);
+        this.fire.setVisible(true)
+        this.police.setVisible(true)
+        this.alert.setVisible(true)
+        this.mark.setVisible(true)
+    }
+
 
 
 });
