@@ -541,15 +541,15 @@
                     {
                         icon: 'js/assets/svg/housesecure.svg',
                         icon2: 'js/assets/svg/houseunsecure.svg',
-                        text: "  Home Alarm"
+                        text: "homeAlarm"
                     },
                     {
                         icon: 'js/assets/svg/users.svg',
-                        text: "Users"
+                        text: "users"
                     },
                     {
                         icon: 'js/assets/svg/camera.svg',
-                        text: "Camera",
+                        text: "camera",
                         cb: function() {
                             cameraView.show();
                             Menu.hide()
@@ -557,7 +557,7 @@
                     },
                     {
                         icon: 'js/assets/svg/mirror.svg',
-                        text: "Mirror",
+                        text: "mirror",
                         cb: function() {
                             mirrorView.show();
                             Menu.hide();
@@ -565,11 +565,11 @@
                     },
                     {
                         icon: 'js/assets/svg/notes.svg',
-                        text: "Notes"
+                        text: "notes"
                     },
                     {
                         icon: 'js/assets/svg/maps.svg',
-                        text: "Maps",
+                        text: "maps",
                         cb: function() {
                             mapView.show();
                             Menu.hide();
@@ -583,11 +583,11 @@
                             Menu.hide();
                         },
                         icon: 'js/assets/svg/doorlog.svg',
-                        text: "Door Log"
+                        text: "log"
                     },
                     {
                         icon: 'js/assets/svg/help.svg',
-                        text: "Tutorial",
+                        text: "tutorial",
                         cb: function() {
                             welcomeView.show();
                             Menu.hide();
@@ -595,12 +595,12 @@
                     },
                     {
                         icon: 'js/assets/svg/alert.svg',
-                        text: "Emergency"
+                        text: "emergency"
                     },
                     {
                         type: "icon",
                         icon: 'js/assets/svg/paint.svg',
-                        text: "Theme",
+                        text: "theme",
                         cb:function(){
                             //wallpaperView.show();
                             //Menu.hide();
