@@ -534,6 +534,7 @@
             width : menuPosAndSize.width,
             zoomFactor: zoomFactor,
             wallpaperList : wallpaperDatabase,
+            languageManager : languageMgr,
             RowIconNumber : [5,5]
         });
 
