@@ -123,6 +123,10 @@
     var wallpaperView = new YDYW_wallpaperManager();
     wallpaperView.init(canvas);
 
+
+
+    // initialize the image wallpaper patterns.
+
     var wallpaperDatabase = [
         {
             //id: 1,
