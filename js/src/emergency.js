@@ -12,8 +12,6 @@ var YDYW_Emergency = SVG_Imitator.extend({
         this.police = null;
         this.alert = null;
         this.mark = null;
-        // this.leftRef = this.left;
-        // this.topRef = this.top;
 
         // Canvas on which the object is created.
         this.canvas = null;
@@ -44,7 +42,6 @@ var YDYW_Emergency = SVG_Imitator.extend({
             lockMovementX: true,
             lockMovementY: true
         })
-
         console.log(that.left, that);
 
         var images = [ "fire", "police", "alert","mark"].map(function(el, i) {
@@ -109,31 +106,9 @@ var YDYW_Emergency = SVG_Imitator.extend({
 
         })
         that.canvas.add(that.emergencyScreen);
+        that.emergencyScreen.bringToFront();
         that.canvas.deactivateAll();
         that.canvas.renderAll();
-
-        // fabric.loadSVGFromURL('js/assets/svg/alert.svg', function(obj, opt) {
-        //            that.fireButton = fabric.util.groupSVGElements(obj, {
-        //                   width: opt.width,
-        //                   height: opt.height,
-        //                   svgUid: opt.svgUid,
-        //                   toBeParsed: opt.toBeParsed,
-        //                   left: that.left + 700,
-        //                   top: that.topRef + 800,
-        //                   originX: 'center',
-        //                   originY: 'center',
-        //                   scaleX: 0.3,
-        //                   scaleY: 0.3,
-        //                   fill: 'white',
-        //                   hasControls: false,
-        //                   hasBorders: false,
-        //                   lockMovementX: true,
-        //                   lockMovementY: true,
-        //                   visible: true
-        //               }))
-        //  that.canvas.add(that.fireButton);
-        //       })
-
     },
 
     callFireExt: function() {
