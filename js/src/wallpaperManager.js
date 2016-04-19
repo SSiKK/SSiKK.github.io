@@ -15,8 +15,8 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
         this.zoomFactor = null;
         this.canvas = null;
         this.buttonList = [];
-        this.visible = true;
-        this.showing = true;
+        this.visible = false;
+        this.showing = false;
         this.outsideDoorObject = null;
         this.insideDoorObject = null;
 

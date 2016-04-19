@@ -475,7 +475,6 @@
             icon: "js/assets/svg/circle.svg", //icon asset path
             cb: function(){
                 if(menuButton.selected === true){
-
                     //welcome.hide();
                     WeatherContainer.hide();
                     weatherView.hide();
@@ -489,7 +488,6 @@
                    // welcome.show();
                     WeatherContainer.show();
                     weatherView.show();
-                    wallpaperView.show();
                     Menu.show();
                     menuButton.selected = true;
                 }
@@ -537,6 +535,7 @@
         });
 
         wallpaperView.hide();
+
 
         languageCheckBox.addEntries(languageMgr.getLanguages());
         languageCheckBox.onSelect(function(id) {
