@@ -123,6 +123,10 @@
     var wallpaperView = new YDYW_wallpaperManager();
     wallpaperView.init(canvas);
 
+
+
+    // initialize the image wallpaper patterns.
+
     var wallpaperDatabase = [
         {
             //id: 1,
@@ -428,6 +432,12 @@
             textAlign: 'center',
             id: "authReqMsg"
         });
+        leaveMsgMsg2.on("selected", function() {
+            messageOut.show();
+        });
+        leaveMsgMsg1.on("selected", function() {
+            messageOut.show();
+        });
         canvas.add(leaveMsgMsg2);
 
         doorBell = new YDYW_Button();
@@ -457,7 +467,7 @@
                 window.setTimeout(function(){
                     leaveMsgMsg1.set({visible:false});
                     leaveMsgMsg2.set({visible:false});
-                }, 10000);
+                }, 15000);
             }
         });
 
