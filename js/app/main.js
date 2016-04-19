@@ -27,6 +27,12 @@
     var lock;
     var doorBell;
     var menuButton;
+
+
+    var handRect;
+    var authReqMsg;
+    var mobileRect;
+
     var defaultValuesForFabricObjects = {
         originX: 'center',
         originY: 'center',
@@ -48,7 +54,6 @@
     // Draw the Basic In/Outside doors,
     DrawDoors();
 
-    placeElementsOnDoor();
     // Draw the Message Box
 
     // DrawMessageBox();
@@ -94,6 +99,10 @@
     // Initialize the ImageManager
     var imageManager = initImageLoader();
 
+    DevControlFunctionality();
+    placeElementsOnDoor();
+
+
     var doorLogManager = new YDYW_DoorLog();
     doorLogManager.init(canvas, imageManager);
     var doorLogButton = new YDYW_Button();
@@ -120,7 +129,8 @@
 
     SetupMenu();
     languageMgr.setLanguage("English");
-    DevControlFunctionality();
+
+    
     // draw everything at the appropriate scale for this canvas
 
     zoomAll(zoomFactor);
@@ -358,7 +368,7 @@
 
                 doorLogManager.addEntries([{url:"js/assets/img/profiles/people" + val + ".jpg", time:getTime()}]);
                 doorLogManager.heightIncrement = 20;
-
+                HideHandAndPhone();
                 window.setTimeout(function(){
                     leaveMsgMsg1.set({visible:true});
                     leaveMsgMsg2.set({visible:true});
@@ -612,7 +622,7 @@
     function DevControlFunctionality () {
         imageManager.addPattern({url:"js/assets/img/icons/hand.png", id:"hand"});
         imageManager.addPattern({url:"js/assets/img/icons/mobile.png", id:"mobile"});
-        var handRect = new fabric.Rect(defaultValuesForFabricObjects);
+        handRect = new fabric.Rect(defaultValuesForFabricObjects);
         handRect.set({
             width: doorWidth/5.0,
             height: doorHeight/9.0,
@@ -625,7 +635,7 @@
         });
         canvas.add(handRect);
 
-        var mobileRect = new fabric.Rect(defaultValuesForFabricObjects);
+        mobileRect = new fabric.Rect(defaultValuesForFabricObjects);
         mobileRect.set({
             width: doorWidth/5.0,
             height: doorHeight/9.0,
@@ -637,7 +647,7 @@
             id: "handScannerImg"
         });
         canvas.add(mobileRect);
-        var authReqMsg = new fabric.Text("To unlock, place hand or tap phone",defaultValuesForFabricObjects);
+        authReqMsg = new fabric.Text("To unlock, place hand or tap phone",defaultValuesForFabricObjects);
         authReqMsg.set({
             fontSize: 9 * zoomFactor,
             width: doorWidth/2.5,
@@ -659,26 +669,44 @@
         var approachOutFlag = false;
         var approachOut = document.getElementById("doorApproachOutside");
         approachOut.addEventListener("click", function(){
-            console.log("Somebody at the door!");
-            handRect.set({fill:imageManager.getPattern("hand", handRect.width, handRect.height, 5), visible:true});
-            mobileRect.set({fill:imageManager.getPattern("mobile", mobileRect.width, mobileRect.height, 5), visible:true});
-            authReqMsg.set({visible:true});
+            ShowHandAndPhone();
+            cameraView.show();
             approachOutFlag = true;
         });
 
+        //cameraView.show();
         var authSuccess = document.getElementById("authenticationSuccess");
         authSuccess.addEventListener("click", function(){
             if (approachOutFlag === true) {
-                console.log("Somebody at the door!");
-                handRect.set({visible:false});
-                mobileRect.set({visible:false});
-                authReqMsg.set({visible:false});
+                HideHandAndPhone();
                 lock.toggleLockedStatusAndShow();
+                cameraView.hide();
+            }
+            approachOutFlag = false;
+        });
+
+        var moveAwayOut = document.getElementById("moveAwayOut");
+        moveAwayOut.addEventListener("click", function(){
+            if (approachOutFlag === true) {
+                //console.log("Somebody at the door!");
+                HideHandAndPhone();
+                cameraView.hide();
             }
             approachOutFlag = false;
         });
     }
 
+    function ShowHandAndPhone() {
+        handRect.set({fill:imageManager.getPattern("hand", handRect.width, handRect.height, 5), visible:true});
+        mobileRect.set({fill:imageManager.getPattern("mobile", mobileRect.width, mobileRect.height, 5), visible:true});
+        authReqMsg.set({visible:true});
+    }
+
+    function HideHandAndPhone() {
+        handRect.set({visible:false});
+        mobileRect.set({visible:false});
+        authReqMsg.set({visible:false});
+    }
     function AddUsers() {
         //passCode: 1234, handPrint:'js/assets/img/icons/hand.png'
         userManager.addUser({name:"Kyle", img:'js/assets/img/icons/p3.jpg'});
