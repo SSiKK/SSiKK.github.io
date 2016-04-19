@@ -23,7 +23,6 @@
     var countTaps = 0;
 
     // Door elements
-    var messageIn;
     var lock;
     var doorBell;
     var menuButton;
@@ -63,7 +62,8 @@
     // DrawMessageBoxOutside();
 
     var messagesInside = initMessages(canvas);
-
+    var messageOut = initMessageBoxOutside(canvas)
+    messageOut.show();
 
     var languageMgr = new YDYW_languageManager();
     languageMgr.init();
@@ -265,7 +265,7 @@
     // Instantiate the message class to set the 4 parameters from SVG_Imitator
     function initMessages(canvas){
 
-        messageIn = new YDYW_Message();
+        var messageIn = new YDYW_Message();
         messageIn.init(canvas);
         messageIn.set({
             width: doorWidth,
@@ -276,16 +276,17 @@
         return messageIn;
     }
 
-  function DrawMessageBoxOutside(){
+  function initMessageBoxOutside(canvas){
 
-        messageOut = new YDYW_SendIn_Message();
-        messageOut.init(canvas);
-        messageOut.set({
+        var messOut = new YDYW_SendIn_Message();
+        messOut.init(canvas);
+        messOut.set({
             width: doorWidth,
             height: doorHeight,
             left: insideDoorLeft, // * 1.25, //300,
             top: doorTop // 25
         });
+        return messOut;
     }
 
 
@@ -623,7 +624,7 @@
                         icon: 'js/assets/svg/users.svg',
                         text: "users"
                     },
-                    
+
                     {
                         icon: 'js/assets/svg/mirror.svg',
                         text: "mirror",
@@ -671,7 +672,7 @@
                             Menu.hide();
                         }
                     },
-                    
+
                     {
                         icon: 'js/assets/svg/alert.svg',
                         text: "emergency",
