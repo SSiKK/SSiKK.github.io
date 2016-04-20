@@ -1,7 +1,7 @@
 var YDYW_userManager = Class.extend({
 	init: function (data) {
 		this.users = {};
-		
+		this.imageLoader = data.imageLoader;
 
 	},
 	addUser: function (data) {
@@ -13,6 +13,8 @@ var YDYW_userManager = Class.extend({
 			passCode: data.passCode || '1234',
 			handPrint: data.handPrint || 'js/assets/img/icons/hand.png'
 		};
+		this.imageLoader.addPattern({url:user.img, id:user.id + "face"});
+		this.imageLoader.addPattern({url:user.handPrint, id:user.id + "hand"});
 		this.users[user.id] = user;
 		return user.id;
 	},
@@ -26,6 +28,10 @@ var YDYW_userManager = Class.extend({
 		}
 	},
 	lookUpUser: function (id) {
+		if (this.users.hasOwnProperty(id)===true) {
+			this.users[id].fillImgFace = this.imageLoader.getPattern(id + "face");
+			this.users[id].fillImgHand = this.imageLoader.getPattern(id + "hand");
+		}
 		return this.users[id];
 	},
 	

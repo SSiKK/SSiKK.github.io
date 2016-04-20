@@ -20,7 +20,7 @@ var YDYW_imageLoader = Class.extend({
 		return this.images[id] || this.images["donald"];
 	},
 
-	getPattern: function (id, width, height, padding) {
+	getPattern: function (id, width, height, padding,repeat) {
 		var pattern;
 		if (!padding) padding = 1;
 		var img = this.patterns[id] || this.patterns["donald"];
@@ -37,7 +37,7 @@ var YDYW_imageLoader = Class.extend({
 		        });
 		        return patternSourceCanvas.getElement();
 	      	},
-	      	repeat: 'no-repeat'
+	      	repeat: repeat || 'no-repeat'
 	    });
 
 		

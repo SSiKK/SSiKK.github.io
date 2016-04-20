@@ -96,13 +96,15 @@
     soundMgr.init();
     AddSounds();
 
-    //var userManager = new YDYW_userManager();
-    //userManager.init();
-    //Adding a few users to show
-    //AddUsers();
-
-    // Initialize the ImageManager
+     // Initialize the ImageManager
     var imageManager = initImageLoader();
+
+    var userManager = new YDYW_userManager();
+    userManager.init(imageManager);
+    //Adding a few users to show
+    AddUsers();
+
+   
 
     DevControlFunctionality();
     placeElementsOnDoor();
