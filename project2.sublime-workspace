@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"profile",
+				"profileBox"
+			],
+			[
+				"messageOut",
+				"messageOut"
+			],
+			[
+				"add",
+				"addProfiles"
+			],
+			[
+				"left",
+				"leftOffset"
+			],
+			[
+				"ge",
+				"generalUserButton"
+			],
+			[
+				"pro",
+				"profileBox"
+			],
+			[
 				"map",
 				"mapBoxCancel"
 			],
@@ -14,10 +38,6 @@
 			[
 				"to",
 				"toRef"
-			],
-			[
-				"left",
-				"leftRef"
 			],
 			[
 				"p",
@@ -492,26 +512,50 @@
 	"buffers":
 	[
 		{
-			"file": "js/app/main.js",
+			"file": "html/documentation.html",
 			"settings":
 			{
-				"buffer_size": 9242,
+				"buffer_size": 18806,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "project2.sublime-project",
+			"file": "dev.html",
 			"settings":
 			{
-				"buffer_size": 73,
-				"line_ending": "Unix"
+				"buffer_size": 3952,
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "js/src/maps.js",
+			"file": "js/app/main.js",
 			"settings":
 			{
-				"buffer_size": 2765,
+				"buffer_size": 29350,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/src/message.js",
+			"settings":
+			{
+				"buffer_size": 9158,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/src/sendInMessage.js",
+			"settings":
+			{
+				"buffer_size": 9947,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "html/app.html",
+			"settings":
+			{
+				"buffer_size": 3874,
 				"line_ending": "Windows"
 			}
 		},
@@ -519,7 +563,23 @@
 			"file": "js/src/emergency.js",
 			"settings":
 			{
-				"buffer_size": 1143,
+				"buffer_size": 6328,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/src/welcome.js",
+			"settings":
+			{
+				"buffer_size": 14355,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/src/maps.js",
+			"settings":
+			{
+				"buffer_size": 3738,
 				"line_ending": "Windows"
 			}
 		}
@@ -557,10 +617,21 @@
 	"expanded_folders":
 	[
 		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/assets",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html/images",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/css",
 		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html"
 	],
 	"file_history":
 	[
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/assets/svg/alert.svg",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/maps.js",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html/app.html",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/css/style.css",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/dev.html",
+		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/project2.sublime-project",
 		"/C/Users/Shiwangi/Desktop/CS422/shiwangi27.github.io/index.html",
 		"/C/Users/Shiwangi/Documents/MATLAB/SodParticlesMultiple/mlp.py",
 		"/C/Users/Shiwangi/Documents/MATLAB/SodParticlesMultiple/convolutional_mlp.py",
@@ -583,7 +654,6 @@
 		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/weather.js",
 		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/camera.js",
 		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/index.html",
-		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/dev.html",
 		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html/documentation.html",
 		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/js/src/SVG_Imitator.js",
 		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/js/src/message.js",
@@ -596,7 +666,6 @@
 		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html/home.html",
 		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/Documentation.html",
 		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html/final.html",
-		"/C/Users/Shiwangi/Desktop/CS422/cs422/SSiKK.github.io/html/app.html",
 		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/js/src/container.js",
 		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/js/src/class.js",
 		"/C/Users/Shiwangi/Desktop/CS422/SSiKK.github.io/html/shiwangi.html",
@@ -684,15 +753,11 @@
 		"/C/Users/Shiwangi/Documents/Python/Springleaf_Marketing/clean.py",
 		"/C/Users/Shiwangi/Documents/Python/Springleaf_Marketing/analyzedata (1).py",
 		"/C/Users/Shiwangi/Documents/Python/filecopy.py",
-		"/C/Users/Shiwangi/Documents/Python/CS 412/nb.py",
-		"/C/Users/Shiwangi/Downloads/inputs.py",
-		"/C/Users/Shiwangi/Desktop/wordwrap.py",
-		"/C/Users/Shiwangi/Documents/MATLAB/ExampleData/generateCSV.py",
-		"/C/Users/Shiwangi/AppData/Local/Temp/7zO732.tmp/kmeansExample.py"
+		"/C/Users/Shiwangi/Documents/Python/CS 412/nb.py"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 52.0
 	},
 	"find_in_files":
 	{
@@ -706,6 +771,24 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			">\n",
+			"Message",
+			"configureSubCanvas",
+			"display",
+			"draweme",
+			"DrawCamera",
+			"camera",
+			"wallpaper",
+			"theme",
+			"cancel",
+			"display",
+			"canvas",
+			"inside",
+			"subC",
+			"sub",
+			"subcan",
+			"doorKn",
+			"insideDoor",
 			"DrawEmergency",
 			"insideDoor",
 			"inside",
@@ -811,24 +894,84 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "js/app/main.js",
+					"file": "html/documentation.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9242,
+						"buffer_size": 18806,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4735,
-								4735
+								6626,
+								6626
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2845.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "dev.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3952,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 864.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "js/app/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 29350,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1889,
+								1889
 							]
 						],
 						"settings":
@@ -838,84 +981,177 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2834.0,
+						"translation.y": 3294.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "project2.sublime-project",
+					"buffer": 3,
+					"file": "js/src/message.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 73,
+						"buffer_size": 9158,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								58,
-								58
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "js/src/maps.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2765,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								928,
-								928
+								8295,
+								8295
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 594.0,
+						"translation.y": 3381.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "js/src/emergency.js",
+					"buffer": 4,
+					"file": "js/src/sendInMessage.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1143,
+						"buffer_size": 9947,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								249,
-								249
+								408,
+								408
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "html/app.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3874,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								422,
+								422
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 108.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "js/src/emergency.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6328,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								950,
+								950
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "js/src/welcome.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14355,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3562,
+								3562
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1512.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "js/src/maps.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3738,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1297,
+								1297
 							]
 						],
 						"settings":
@@ -924,10 +1160,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": -0.0,
-						"translation.y": 0.0,
+						"translation.y": 594.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -981,6 +1217,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"dev",
+				"SSiKK.github.io\\dev.html"
+			]
 		],
 		"width": 0.0
 	},
