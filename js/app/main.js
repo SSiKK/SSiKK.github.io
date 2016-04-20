@@ -100,7 +100,7 @@
     var imageManager = initImageLoader();
 
     var userManager = new YDYW_userManager();
-    userManager.init(imageManager);
+    userManager.init({imageLoader:imageManager});
     //Adding a few users to show
     AddUsers();
 
@@ -584,7 +584,7 @@
             caption: "log"
         });
         doorLogManager.hide();
-
+        languageMgr.addSetTextCallback(doorLogManager.setTextCallback.bind(doorLogManager));
 
         Menu.set({
             top: menuPosAndSize.top,
@@ -647,7 +647,7 @@
                     },
                     {
                         icon: 'js/assets/svg/notes.svg',
-                        text: "Notes",
+                        text: "notes",
                         cb: function() {
                             messagesInside.show();
                             Menu.hide();
