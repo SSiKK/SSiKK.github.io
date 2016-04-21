@@ -24,7 +24,7 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
         this.insideDoorTab = null;
 
         this.languageManager =  null;
-
+        this.imgManager = null;
         this.wallpaperList = [];
         //this.visible = true;
         if (canvas!==undefined && canvas!== null) {
@@ -109,18 +109,69 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
         for (indexv = 0; indexv <n; ++indexv) {
             for(indexh = 0;indexh < this.RowIconNumber[indexv]; ++indexh) {
 
+                var button;
+                    
+                if( this.wallpaperList[index].type === "image"){
+
+                    var promises = [], imageurl = this.wallpaperList[index].fill;
+
+                    console.log (" image url is ", imageurl);
+
+                    var imagepromise = new Promise( function(resolve, reject){
+                          fabric.Image.fromURL(imageurl,function(img) {
+                                resolve(
+                                    img.set({
+                                        height: buttonRadius,
+                                        width: buttonRadius,
+                                        selectable: false,
+                                        hasBorders: false,
+                                        originX: 'center',
+                                        originY: 'center'
+                                    }));
+                            });
+                    });
+
+                    promises.push(imagepromise);
+                    var key =  this.wallpaperList[index].key;
+
+                    Promise.all(promises).then(function(results){
+                        console.log(results[0]);
+                        var img1 = results[0];
+
+
+
+                        button = new fabric.Rect({
+                            top: rowTop + buttonHeight,
+                            left: rowLeft + (indexh + 1)*(buttonWidth),
+                            height : buttonRadius,
+                            width : buttonRadius,
+                            fill : "white" || new fabric.Pattern({
+                                source: img1
+                            }),
+                            stroke : "white",
+                            id :key,
+                            rx : 5,
+                            ry : 5
+                        });
+                    });
+
+
+                }else {
+                      button = new fabric.Rect({
+                        top: rowTop + buttonHeight,
+                        left: rowLeft + (indexh + 1)*(buttonWidth),
+                        height : buttonRadius,
+                        width : buttonRadius,
+                        fill : this.wallpaperList[index].fill,
+                        stroke : this.wallpaperList[index].fill,
+                        id : this.wallpaperList[index].key,
+                        rx : 5,
+                        ry : 5
+                    });
+                }
+
+                //}
                 console.log("Adding buttons");
-                var button = new fabric.Rect({
-                    top: rowTop + buttonHeight,
-                    left: rowLeft + (indexh + 1)*(buttonWidth),
-                    height : buttonRadius,
-                    width : buttonRadius,
-                    fill : this.wallpaperList[index].fill,
-                    stroke : this.wallpaperList[index].fill,
-                    id : this.wallpaperList[index].key,
-                    rx : 5,
-                    ry : 5
-                });
 
                 button.hasControls = button.hasBorders = false;
                 button.lockMovementX = button.lockMovementY = true;

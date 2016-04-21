@@ -52,7 +52,7 @@ var YDYW_Emergency = SVG_Imitator.extend({
             hasBorders: false,
             lockMovementX: true,
             lockMovementY: true
-        })
+        });
 
 
         this.emergencyScreen = new fabric.Rect({

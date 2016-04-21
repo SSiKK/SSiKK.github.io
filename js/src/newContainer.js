@@ -17,6 +17,7 @@ var YDYW_Container = SVG_Imitator.extend({
         this.canvas = null;
         this.buttonList = [];
         this.showing = true;
+        this.strokeWidth = "3";
         //this.visible = true;
         if (canvas!==undefined && canvas!== null) {
             this.attachToCanvas(canvas);
@@ -36,6 +37,7 @@ var YDYW_Container = SVG_Imitator.extend({
             top: this.top,
             fill: this.fill,
             stroke: this.stroke,
+            strokeWidth: this.strokeWidth,
             rx : 10,
             ry : 10,
             width: this.width,
