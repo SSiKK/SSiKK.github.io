@@ -962,9 +962,7 @@
         ];
         wallpaperView.attachToDoors(insideDoor, outsideDoor);
 
-        var promises = [], imageurl = [
-            "js/assets/img/wallpaper1.jpg"
-        ];
+        var promises = [], imageurl = "js/assets/img/wallpaper1.jpg";
 
         //console.log (" image url is ", imageurl);
 
