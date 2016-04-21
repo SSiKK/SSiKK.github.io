@@ -11,6 +11,7 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
         this.RowHeadings =  [];
         this.RowIconNumber =  [];
         this.controlAndOffsetList = [];
+        this.button =  null;
         this.board = null;
         this.zoomFactor = null;
         this.canvas = null;
@@ -42,169 +43,340 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
 
     draw: function () {
 
-        this.board = new fabric.Rect({
-            left: this.left,
-            top: this.top,
-            fill: "#ddddd",
-            stroke: "#dddddd",
-            rx : 10,
-            ry : 10,
-            width: this.width,
-            height: this.height,
-            angle: 0,
-            visible: this.visible
-        });
-        this.board.hasControls = this.board.hasBorders = false;
-        this.board.lockMovementX = this.board.lockMovementY = true;
 
-        this.canvas.add(this.board);
+        var that = this;
 
-        var index = 0,indexh = 0,indexv = 0, len = this.buttonList.length;
+        var promises = [];
 
-        var n = this.RowIconNumber.length;
-        console.log("The number of rows are " + n);
-        //Setting up individual button size.
-        var buttonHeight = this.height/(n + 1);
-        var buttonWidth = this.width/(this.RowIconNumber[0] + 1);
-        var buttonRadius = buttonHeight/2;
-
-        var rowTop = this.top, rowLeft = this.left;
-        rowLeft = rowLeft - buttonWidth/3;
-
-
-        outsideDoorTab = new YDYW_Button();
-        outsideDoorTab.init(this.canvas);
-        outsideDoorTab.set({
-            left: rowLeft + 40,
-            top: rowTop + 20,
-            width: this.width/2 - 20,
-            type: "tab",
-            fill: "#ddddd",// label/icon/tab
-            //text: "Menu", // displays the text inside the button
-            zoomFactor: this.zoomFactor,
-            textSize: 15,
-            text: "outsideDoor"
-        });
-        this.outsideDoorTab = outsideDoorTab;
-        this.languageManager.addSetTextCallback(this.outsideDoorTab.setTextCallback.bind(this.outsideDoorTab));
-
-        insideDoorTab = new YDYW_Button();
-        insideDoorTab.init(this.canvas);
-        insideDoorTab.set({
-            left: rowLeft + 40 + this.width/2 - 20 ,
-            top: rowTop + 20,
-            width: this.width/2 - 20,
-            type: "tab",
-            fill: "#dddddd",// label/icon/tab
-            //text: "Menu", // displays the text inside the button
-            zoomFactor: this.zoomFactor,
-            textSize: 15,
-            text: "insideDoor"// textSize
-        });
-        this.insideDoorTab = insideDoorTab;
-        this.languageManager.addSetTextCallback(this.insideDoorTab.setTextCallback.bind(this.insideDoorTab));
-
-        //insideDoorTab.onClick();
-
-        for (indexv = 0; indexv <n; ++indexv) {
-            for(indexh = 0;indexh < this.RowIconNumber[indexv]; ++indexh) {
-
-                var button;
-                    
-                if( this.wallpaperList[index].type === "image"){
-
-                    var promises = [], imageurl = this.wallpaperList[index].fill;
-
-                    console.log (" image url is ", imageurl);
-
-                    var imagepromise = new Promise( function(resolve, reject){
-                          fabric.Image.fromURL(imageurl,function(img) {
-                                resolve(
-                                    img.set({
-                                        height: buttonRadius,
-                                        width: buttonRadius,
-                                        selectable: false,
-                                        hasBorders: false,
-                                        originX: 'center',
-                                        originY: 'center'
-                                    }));
-                            });
+        for(var i = 0; i< that.wallpaperList.length ; i++){
+            if(that.wallpaperList[i].type === "image"){
+                var imagepromise = new Promise( function(resolve, reject){
+                    fabric.Image.fromURL(that.wallpaperList[i].fill,function(img) {
+                        resolve(
+                            img.set({
+                                height: img.height,
+                                width: img.width,
+                                selectable: false,
+                                hasBorders: false,
+                                originX: 'center',
+                                originY: 'center'
+                            }));
                     });
+                });
 
-                    promises.push(imagepromise);
-                    var key =  this.wallpaperList[index].key;
+                promises.push(imagepromise);
 
-                    Promise.all(promises).then(function(results){
-                        console.log(results[0]);
-                        var img1 = results[0];
+            }
+
+        }
+
+        console.log("before promise this");
+        console.log(this);
+
+        var imageDatabase = [];
+
+        Promise.all(promises).then(function(results){
+
+            console.log("ONLY DO THINGS AFTER PROMISE RESOLVES");
+            var index = 0,indexh = 0,indexv = 0, len = this.buttonList.length;
+            var n = this.RowIconNumber.length;
+            console.log("The number of rows are " + n);
+            //Setting up individual button size.
+            var buttonHeight = this.height/(n + 1);
+            var buttonWidth = this.width/(this.RowIconNumber[0] + 1);
+            var buttonRadius = buttonHeight/2;
+
+            var rowTop = this.top, rowLeft = this.left;
+            rowLeft = rowLeft - buttonWidth/3;
+            console.log("rowTop , rowLeft,", this.top, rowLeft);
+            console.log(this);
+            console.log(this.canvas);
+
+            this.board = new fabric.Rect({
+                left: this.left,
+                top: this.top,
+                fill: "white",
+                stroke: "white",
+                rx : 10,
+                ry : 10,
+                width: this.width,
+                height: this.height,
+                angle: 0,
+                visible: this.visible,
+                id: 'board'
+            });
+            console.log(this.board);
+            this.board.hasControls = this.board.hasBorders = false;
+            this.board.lockMovementX = this.board.lockMovementY = true;
+
+            canvas.add(this.board);
+
+            console.log(canvas);
+            outsideDoorTab = new YDYW_Button();
+            outsideDoorTab.init(this.canvas);
+            outsideDoorTab.set({
+                left: rowLeft + 40,
+                top: rowTop + 20,
+                width: this.width/2 - 20,
+                type: "tab",
+                fill: "#ddddd",// label/icon/tab
+                //text: "Menu", // displays the text inside the button
+                zoomFactor: this.zoomFactor,
+                textSize: 15,
+                text: "outsideDoor"
+            });
+            this.outsideDoorTab = outsideDoorTab;
+            this.languageManager.addSetTextCallback(this.outsideDoorTab.setTextCallback.bind(this.outsideDoorTab));
+
+            insideDoorTab = new YDYW_Button();
+            insideDoorTab.init(this.canvas);
+            insideDoorTab.set({
+                left: rowLeft + 40 + this.width/2 - 20 ,
+                top: rowTop + 20,
+                width: this.width/2 - 20,
+                type: "tab",
+                fill: "#dddddd",// label/icon/tab
+                //text: "Menu", // displays the text inside the button
+                zoomFactor: this.zoomFactor,
+                textSize: 15,
+                text: "insideDoor"// textSize
+            });
+            this.insideDoorTab = insideDoorTab;
+            this.languageManager.addSetTextCallback(this.insideDoorTab.setTextCallback.bind(this.insideDoorTab));
+
+            rowLeft = this.left; rowTop = this.top;
+            rowLeft = rowLeft - buttonWidth/3;
+
+            console.log(this.canvas);
+            console.log(canvas);
+
+            var indexwall = 0;
+            for (indexv = 0; indexv <n; ++indexv) {
+                for(indexh = 0;indexh < this.RowIconNumber[indexv]; ++indexh) {
+
+                    if( this.wallpaperList[index].type === "image"){
+
+                        var key =  this.wallpaperList[index].key;
+                            console.log("Getting the image " + results[indexwall]);
+                            var img1 = results[indexwall];
+                            indexwall ++;
+
+                            this.button = new fabric.Rect({
+                                top: rowTop + buttonHeight,
+                                left: rowLeft + (indexh + 1)*(buttonWidth),
+                                height : buttonRadius,
+                                width : buttonRadius,
+                                stroke : "white",
+                                fill : "black",
+                                id : this.wallpaperList[index].key,
+                                rx : 5,
+                                ry : 5
+                            });
 
 
 
-                        button = new fabric.Rect({
+                            this.button.setPatternFill(new fabric.Pattern({
+                                source: img1._element,
+                                repeat: "no-repeat"
+                            }));
+
+                            imageDatabase.push(img1);
+
+                            console.log("Adding buttons");
+
+                            this.button.hasControls = this.button.hasBorders = false;
+                            this.button.lockMovementX = this.button.lockMovementY = true;
+                            console.log(this.buttonList);
+
+                            this.canvas.add(this.button);
+                            this.buttonList.push(this.button);
+
+
+                    }else{
+
+                        this.button = new fabric.Rect({
                             top: rowTop + buttonHeight,
                             left: rowLeft + (indexh + 1)*(buttonWidth),
                             height : buttonRadius,
                             width : buttonRadius,
-                            fill : "white" || new fabric.Pattern({
-                                source: img1
-                            }),
-                            stroke : "white",
-                            id :key,
+                            fill : this.wallpaperList[index].fill,
+                            stroke : this.wallpaperList[index].fill,
+                            id : this.wallpaperList[index].key,
                             rx : 5,
                             ry : 5
                         });
-                    });
+                        console.log("Adding buttons");
+
+                        this.button.hasControls = this.button.hasBorders = false;
+                        this.button.lockMovementX = this.button.lockMovementY = true;
+
+                        this.canvas.add(this.button);
+                        this.buttonList.push(this.button);
+
+                    }
+
+                    this.button.on("mousedown", function(evt){
+                        //if(insideDoorTab.selected == true){
+                        var id = this.canvas.getActiveObject().id;
+                        console.log("Printing the id of the touched object " + id);
+                        //console.log("printing out " ,this.insideDoorTab.selected, this.outsideDoorTab.selected );
+
+                        if(this.insideDoorTab.selected === true) {
+
+                            if(id === "wallpaper1"){
+                                console.log("selected!!" + imageDatabase[0] );
+
+                                new Promise(function(resolve, reject){
+                                    fabric.Image.fromURL("js/assets/img/wallpaper1.jpg",function(imageObj){
+                                        resolve(imageObj.set({
+                                            height: imageObj.height,
+                                            width: imageObj.width,
+                                            selectable: false,
+                                            hasBorders: false,
+                                            originX: 'center',
+                                            originY: 'center'
+                                        }))
+                                    });
+                                }).then(function(resulting){
+                                    this.insideDoorObject.setPatternFill(new fabric.Pattern({
+                                        source : resulting._element,
+                                        repeat: "no-repeat"
+                                    }));
+                                }.bind(this));
 
 
-                }else {
-                      button = new fabric.Rect({
-                        top: rowTop + buttonHeight,
-                        left: rowLeft + (indexh + 1)*(buttonWidth),
-                        height : buttonRadius,
-                        width : buttonRadius,
-                        fill : this.wallpaperList[index].fill,
-                        stroke : this.wallpaperList[index].fill,
-                        id : this.wallpaperList[index].key,
-                        rx : 5,
-                        ry : 5
-                    });
+                            }else if(id === "wallpaper2"){
+
+                                new Promise(function(resolve, reject){
+                                    fabric.Image.fromURL("js/assets/img/wallpaper2.jpg",function(imageObj){
+                                        resolve(imageObj.set({
+                                            height: imageObj.height,
+                                            width: imageObj.width,
+                                            selectable: false,
+                                            hasBorders: false,
+                                            originX: 'center',
+                                            originY: 'center'
+                                        }))
+                                    });
+                                }).then(function(resulting){
+                                    this.insideDoorObject.setPatternFill(new fabric.Pattern({
+                                        source : resulting._element,
+                                        repeat: "no-repeat"
+                                    }));
+                                }.bind(this));
+                            }else if(id === "wallpaper3"){
+
+                                new Promise(function(resolve, reject){
+                                    fabric.Image.fromURL("js/assets/img/wallpaper3.jpg",function(imageObj){
+                                        resolve(imageObj.set({
+                                            height: imageObj.height,
+                                            width: imageObj.width,
+                                            selectable: false,
+                                            hasBorders: false,
+                                            originX: 'center',
+                                            originY: 'center'
+                                        }))
+                                    });
+                                }).then(function(resulting){
+                                    this.insideDoorObject.setPatternFill(new fabric.Pattern({
+                                        source : resulting._element,
+                                        repeat: "no-repeat"
+                                    }));
+                                }.bind(this));
+                            }else{
+                                this.insideDoorObject.set({fill: id});
+                            }
+
+
+                            //this.insideDoorTab.set({selected : false});
+                            //console.log(this.insideDoorTab.selected);
+                            //this.insideDoorTab.shapeObject.setFill("#dddddd");
+                            //canvas.renderAll();
+                            //this.insideDoorTab.deselect();
+                            //this.canvas.renderAll();
+                        }
+                        if(this.outsideDoorTab.selected === true){
+
+                            if(id === "wallpaper1"){
+                                console.log("selected!!" + imageDatabase[0] );
+
+                                new Promise(function(resolve, reject){
+                                    fabric.Image.fromURL("js/assets/img/wallpaper1.jpg",function(imageObj){
+                                        resolve(imageObj.set({
+                                            height: imageObj.height,
+                                            width: imageObj.width,
+                                            selectable: false,
+                                            hasBorders: false,
+                                            originX: 'center',
+                                            originY: 'center'
+                                        }))
+                                    });
+                                }).then(function(resulting){
+                                    this.outsideDoorObject.setPatternFill(new fabric.Pattern({
+                                        source : resulting._element,
+                                        repeat: "no-repeat"
+                                    }));
+                                }.bind(this));
+
+
+                            }else if(id === "wallpaper2"){
+
+                                new Promise(function(resolve, reject){
+                                    fabric.Image.fromURL("js/assets/img/wallpaper2.jpg",function(imageObj){
+                                        resolve(imageObj.set({
+                                            height: imageObj.height,
+                                            width: imageObj.width,
+                                            selectable: false,
+                                            hasBorders: false,
+                                            originX: 'center',
+                                            originY: 'center'
+                                        }))
+                                    });
+                                }).then(function(resulting){
+                                    this.outsideDoorObject.setPatternFill(new fabric.Pattern({
+                                        source : resulting._element,
+                                        repeat: "no-repeat"
+                                    }));
+                                }.bind(this));
+                            }else if(id === "wallpaper3"){
+
+                                new Promise(function(resolve, reject){
+                                    fabric.Image.fromURL("js/assets/img/wallpaper3.jpg",function(imageObj){
+                                        resolve(imageObj.set({
+                                            height: imageObj.height,
+                                            width: imageObj.width,
+                                            selectable: false,
+                                            hasBorders: false,
+                                            originX: 'center',
+                                            originY: 'center'
+                                        }))
+                                    });
+                                }).then(function(resulting){
+                                    this.outsideDoorObject.setPatternFill(new fabric.Pattern({
+                                        source : resulting._element,
+                                        repeat: "no-repeat"
+                                    }));
+                                }.bind(this));
+                            }else{
+                                this.outsideDoorObject.set({fill: id});
+                            }
+                        }
+
+                    }.bind(this));
+                    index++;
                 }
+                rowTop = rowTop + buttonHeight;
+                console.log("Completed creating button " + indexv);
 
-                //}
-                console.log("Adding buttons");
-
-                button.hasControls = button.hasBorders = false;
-                button.lockMovementX = button.lockMovementY = true;
-
-                this.canvas.add(button);
-                this.buttonList.push(button);
-
-                //var id = button.id;
-                button.on("mousedown", function(){
-                    //if(insideDoorTab.selected == true){
-                    var id = this.canvas.getActiveObject().id;
-                    console.log("printing out " ,this.insideDoorTab.selected, this.outsideDoorTab.selected );
-
-                    if(this.insideDoorTab.selected === true) {
-                        this.insideDoorObject.set({fill: id});
-                    }
-                    if(this.outsideDoorTab.selected === true){
-                        this.outsideDoorObject.set({fill: id});
-                    }
-                }.bind(this));
-
-                this.canvas.renderAll();
-
-                index++;
             }
-            rowTop = rowTop + buttonHeight;
-            console.log("Completed creating button " + indexv);
+            this.hide();
+            this.showing = false;
+            canvas.renderAll();
+        }.bind(this));
 
-        }
 
 
-        canvas.renderAll();
-        return this;
+
 
     },
 

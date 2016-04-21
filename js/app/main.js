@@ -895,6 +895,8 @@
             height : 200,
             width : 300
         };
+
+        console.log("THIS IS WHERE IT SHOULD BE PLACED ", menuPosAndSize.top, menuPosAndSize.left);
         wallpaperView = new YDYW_wallpaperManager();
         wallpaperView.init(canvas);
 
@@ -928,18 +930,21 @@
 
             },
             {
-                key: "winter",
-                fill: "black"
+                key: "wallpaper1",
+                fill: "js/assets/img/wallpaper1.jpg",
+                type:"image"
 
             },
             {
-                key: "grey",
-                fill: "grey"
+                key: "wallpaper2",
+                fill: "js/assets/img/wallpaper2.jpg",
+                type:"image"
 
             },
             {
-                key: "grey",
-                fill: "grey"
+                key: "wallpaper3",
+                fill: "js/assets/img/wallpaper3.jpg",
+                type:"image"
 
             },
             {
@@ -956,17 +961,13 @@
         wallpaperView.attachToDoors(insideDoor, outsideDoor);
 
         var promises = [], imageurl = [
-            "js/assets/img/wallpaper2.jpg",
-            "js/assets/img/wallpaper.jpg",
-            "js/assets/img/wallpaper1.jpg",
-            "js/assets/img/wallpaper3.jpg"];
+            "js/assets/img/wallpaper1.jpg"
+        ];
 
         //console.log (" image url is ", imageurl);
 
-        for(var i=0;i<imageurl.length;i++){
-
-            var imagepromise1 = new Promise( function(resolve, reject){
-                fabric.Image.fromURL(imageurl[i],function(img) {
+        new Promise( function(resolve, reject){
+                fabric.Image.fromURL(imageurl,function(img) {
                     if(img){
                         console.log("THIS IS THE SCALE FACTOR", doorHeight/img.height);
                         resolve(
@@ -983,10 +984,25 @@
                     }
 
                 });
-            });
+            }).then(function(results){
 
-            promises.push(imagepromise1);
-        }
+            var img = results;
+
+            insideDoor.setPatternFill(new fabric.Pattern({
+                source : img._element,
+                repeat : "no-repeat"
+            }));
+
+            outsideDoor.setPatternFill(new fabric.Pattern({
+                source : img._element,
+                repeat : "no-repeat"
+            }));
+
+            this.canvas.renderAll();
+
+        });
+
+
 
 
 
@@ -1002,23 +1018,8 @@
             RowIconNumber : [5,5]
         });
 
-        wallpaperView.hide();
+       //wallpaperView.hide();
 
-
-        Promise.all(promises).then(function(results){
-
-            //console.log(results[0]);
-            var img = results[0];
-
-            insideDoor.setPatternFill(new fabric.Pattern({
-                source : img._element,
-                repeat : "no-repeat"
-            }));
-
-
-            this.canvas.renderAll();
-
-        });
 
 
     }

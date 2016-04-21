@@ -4,6 +4,8 @@ var YDYW_Button = SVG_Imitator.extend({
 		this.cx = null;
 		this.cy = null;
 		this.button = null;
+		this.tab = null;
+		this.shapeObject = null;
 		this.left = null;
 		this.top = null;
 		this.img = null;
@@ -350,7 +352,7 @@ var YDYW_Button = SVG_Imitator.extend({
 
 			label.set({fontSize: 12});
 
-			shapeObject = new fabric.Rect({
+			this.shapeObject = shapeObject = new fabric.Rect({
 				originX: 'center',
 				originY: 'center',
 				stroke: 'black',
@@ -386,7 +388,7 @@ var YDYW_Button = SVG_Imitator.extend({
 					shapeObject.setFill(colorLuminance(fillColor, 0.15));
 				}
 				else if(this.selected === true) {
-
+					console.log('deselect');
 					this.selected = false;
 					shapeObject.setFill(fillColor);
 					//this.cb();
@@ -406,6 +408,13 @@ var YDYW_Button = SVG_Imitator.extend({
 
 		this.button.on('mousedown', cb);
 
+	},
+	deselect: function(button){
+
+		console.log("Deselecting my tab");
+		this.shapeObject.setFill("#dddddd");
+		this.selected = false;
+		canvas.renderAll();
 	},
 
 	setTextCallback: function(dict){
