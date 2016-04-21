@@ -31,6 +31,7 @@
     var handRect;
     var authReqMsg;
     var mobileRect;
+    var logNumber;
 
     var defaultValuesForFabricObjects = {
         originX: 'center',
@@ -114,8 +115,9 @@
     doorLogManager.init(canvas, imageManager);
     var doorLogButton = new YDYW_Button();
     doorLogButton.init(canvas);
+    var doorLogManagerEntryPointMenu = true;
 
-    SetupDoorLogSystem();
+    //SetupDoorLogSystem();
 
     var soundCheckBox = new YDYW_CheckBox();
     soundCheckBox.init(canvas);
@@ -460,7 +462,7 @@
                 var val = 1 + Date.now() % 4;
 
                 doorLogManager.addEntries([{url:"js/assets/img/profiles/people" + val + ".jpg", time:getTime()}]);
-                doorLogManager.heightIncrement = 20;
+                doorLogManager.heightIncrement = 30;
                 HideHandAndPhone();
                 window.setTimeout(function(){
                     leaveMsgMsg1.set({visible:true});
@@ -470,6 +472,15 @@
                     leaveMsgMsg1.set({visible:false});
                     leaveMsgMsg2.set({visible:false});
                 }, 15000);
+                doorLogButton.show();
+                var newMsgs;
+                if (logNumber.text.length > 0) {
+                    newMsgs = (parseInt(logNumber.text, 10) + 1) + "";
+                } else {
+                    newMsgs = "1";
+                }
+                
+                logNumber.set({text:newMsgs,visible:true})
             }
         });
 
@@ -501,6 +512,11 @@
                     WeatherContainer.show();
                     weatherView.show();
                     Menu.show();
+                    soundCheckBox.hide();
+                    languageCheckBox.hide();
+                    doorLogManager.hide();
+                    wallpaperView.hide();
+                    mapView.hide();
                     menuButton.selected = true;
                 }
 
@@ -573,7 +589,10 @@
 
         doorLogManager.onSelect(function() {
             doorLogManager.hide();
-            Menu.show();
+            if (doorLogManagerEntryPointMenu === true) {
+                Menu.show();
+            }
+            
         });
         doorLogManager.set({
             top: menuPosAndSize.top,
@@ -586,6 +605,43 @@
         doorLogManager.hide();
         languageMgr.addSetTextCallback(doorLogManager.setTextCallback.bind(doorLogManager));
 
+        doorLogButton = new YDYW_Button();
+        doorLogButton.init(canvas);
+        doorLogButton.set({
+            left: menuPosAndSize.left - 100,
+            top: menuPosAndSize.top + menuPosAndSize.height/2.0,
+            type: "icon", // label/icon/tab
+            //text: "Menu", // displays the text inside the button
+            zoomFactor: zoomFactor,
+            textSize: 50, // textSize
+            radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
+            icon: 'js/assets/svg/doorlog.svg', //icon asset path
+            //text: 'log',
+            visible: false,
+            cb: function(){
+                doorLogManagerEntryPointMenu = false;
+                doorLogManager.set({zoomFactor:zoomFactor});
+                doorLogManager.show();
+                doorLogButton.hide();
+                logNumber.set({text:"0", visible:false});
+            }
+        });
+        //languageMgr.addSetTextCallback(doorLogButton.setTextCallback.bind(doorLogButton));
+
+        logNumber = new fabric.Text("0",defaultValuesForFabricObjects);
+        logNumber.set({
+            fontSize: 9 * zoomFactor,
+            width: doorWidth/2.5,
+            height: doorHeight/18.0,
+            fill: "rgba(0,0,0,1.0)",
+            left: menuPosAndSize.left - 80,
+            top: menuPosAndSize.top + menuPosAndSize.height/2.0 - 26,
+            visible: false,
+            selectable:true,
+            id: "logNumber",
+            originX: "left"
+        });
+        canvas.add(logNumber);
         Menu.set({
             top: menuPosAndSize.top,
             left: menuPosAndSize.left,
@@ -669,6 +725,7 @@
                     {
                         type: "icon", // label/icon/tab
                         cb:function() {
+                            doorLogManagerEntryPointMenu = true;
                             doorLogManager.set({zoomFactor:zoomFactor});
                             doorLogManager.show();
                             Menu.hide();
@@ -812,30 +869,7 @@
     }
 
     function SetupDoorLogSystem(){
-        /*doorLogButton = new YDYW_Button();
-        doorLogButton.init(canvas);
-        doorLogButton.set({
-            left: insideDoorLeft + 80,
-            top: doorTop  + doorHeight/2.0 - 70,
-            type: "icon", // label/icon/tab
-            //text: "Menu", // displays the text inside the button
-            zoomFactor: zoomFactor,
-            textSize: 50, // textSize
-            radius: 50, // define a radius if you are going to make an icon. you dont need to do this for the label
-            icon: "js/assets/svg/circle.svg", //icon asset path
-            cb: function(){
-                if(menuButton.selected === true){
-                    Menu.hide();
-                    soundCheckBox.hide();
-                    languageCheckBox.hide();
-                    menuButton.selected = false;
-                }else{
-                    Menu.show();
-                    menuButton.selected = true;
-                }
-
-            }
-        });*/
+        
         doorLogManager.addEntries([{url:"js/assets/img/profiles/people1.jpg", time:getTime()},
             {url:"js/assets/img/profiles/people4.jpg", time:getTime(1)}]);
 
