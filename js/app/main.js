@@ -43,7 +43,10 @@
     };
 
     window.canvas = this.__canvas = new fabric.Canvas('c');
-
+    window.canvas.on('mouse:over', function (e) {
+        //cutesy cursor
+        e.target.hoverCursor = 'pointer';
+    });
     var zoomFactor = canvas.height / localHeight;
 
 
@@ -122,67 +125,12 @@
     var languageCheckBox = new YDYW_CheckBox();
     languageCheckBox.init(canvas);
 
-    var wallpaperView = new YDYW_wallpaperManager();
-    wallpaperView.init(canvas);
-
-
+    var wallpaperView,wallpaperDatabase;
 
     // initialize the image wallpaper patterns.
+    //imageManager.addPattern({url:"js/assets/img/redwinterpattern.jpg", id:"winter"});
 
-    var wallpaperDatabase = [
-        {
-            //id: 1,
-            key: "grey",
-            fill: "grey"
-        },
-        {
-            //id: 2,
-            key: "red",
-            fill: "red"
 
-        },
-        {
-           //id: 3,
-            key: "orange",
-            fill: "orange"
-
-        },
-        {
-            key: "Teal",
-            fill: "Teal"
-
-        },
-        {
-            key: "Wheat",
-            fill: "Wheat"
-
-        },
-        {
-            key: "grey",
-            fill: "grey"
-
-        },
-        {
-            key: "grey",
-            fill: "grey"
-
-        },
-        {
-            key: "grey",
-            fill: "grey"
-
-        },
-        {
-            key: "grey",
-            fill: "grey"
-
-        }, {
-            key: "grey",
-            fill: "grey"
-
-        }
-
-    ];
     var Menu = new YDYW_Container();
     Menu.init(canvas);
 
@@ -304,7 +252,8 @@
             left: 320,
             height: 300.0,
             width: doorWidth,
-            visible: false
+            visible: false,
+            stroke : "white"
         });
         WeatherContainer = new YDYW_Container();
         WeatherContainer.init(canvas);
@@ -534,20 +483,6 @@
         });
         soundCheckBox.hide();
 
-        wallpaperView.attachToDoors(insideDoor, outsideDoor);
-
-        wallpaperView.set({
-            top: menuPosAndSize.top,
-            left: menuPosAndSize.left,
-            height : menuPosAndSize.height,
-            width : menuPosAndSize.width,
-            zoomFactor: zoomFactor,
-            wallpaperList : wallpaperDatabase,
-            languageManager : languageMgr,
-            RowIconNumber : [5,5]
-        });
-
-        wallpaperView.hide();
 
 
         languageCheckBox.addEntries(languageMgr.getLanguages());
@@ -706,6 +641,8 @@
         });
 
         languageMgr.addSetTextCallback(Menu.setTextCallback.bind(Menu));
+
+        DrawWallpaperManager();
     }
 
     function LoadImages () {
@@ -884,6 +821,7 @@
         imgLoader.init();
         imgLoader.addImage({url:"js/assets/img/profiles/KB.jpg", id:"krishna"});
         imgLoader.addPattern({url:"js/assets/img/profiles/people1.jpg", id:"kid"});
+        //imgLoader.addPattern({url:"js/assets/img/profiles"})
         return imgLoader;
     }
 
@@ -914,7 +852,142 @@
         return welcome
     }
 
+    function DrawWallpaperManager(){
 
+
+        var menuPosAndSize = {
+            top: (doorTop + doorHeight/2.0) - 100,
+            left: insideDoorLeft + doorWidth/2.0 - 150,
+            height : 200,
+            width : 300
+        };
+        wallpaperView = new YDYW_wallpaperManager();
+        wallpaperView.init(canvas);
+
+
+        wallpaperDatabase = [
+            {
+                //id: 1,
+                key: "grey",
+                fill: "grey"
+            },
+            {
+                //id: 2,
+                key: "red",
+                fill: "red"
+
+            },
+            {
+                //id: 3,
+                key: "orange",
+                fill: "orange"
+
+            },
+            {
+                key: "Teal",
+                fill: "Teal"
+
+            },
+            {
+                key: "Wheat",
+                fill: "Wheat"
+
+            },
+            {
+                key: "winter",
+                fill: "black"
+
+            },
+            {
+                key: "grey",
+                fill: "grey"
+
+            },
+            {
+                key: "grey",
+                fill: "grey"
+
+            },
+            {
+                key: "grey",
+                fill: "grey"
+
+            }, {
+                key: "grey",
+                fill: "grey"
+
+            }
+
+        ];
+        wallpaperView.attachToDoors(insideDoor, outsideDoor);
+
+        var promises = [], imageurl = [
+            "js/assets/img/wallpaper2.jpg",
+            "js/assets/img/wallpaper.jpg",
+            "js/assets/img/wallpaper1.jpg",
+            "js/assets/img/wallpaper3.jpg"];
+
+        //console.log (" image url is ", imageurl);
+
+        for(var i=0;i<imageurl.length;i++){
+
+            var imagepromise1 = new Promise( function(resolve, reject){
+                fabric.Image.fromURL(imageurl[i],function(img) {
+                    if(img){
+                        console.log("THIS IS THE SCALE FACTOR", doorHeight/img.height);
+                        resolve(
+                            img.set({
+                                height: img.height,
+                                width: img.width,
+                                selectable: false,
+                                hasBorders: false,
+                                originX: 'center',
+                                originY: 'center'
+                            }).scale(doorHeight/img.height));
+                    }else{
+                        reject(img);
+                    }
+
+                });
+            });
+
+            promises.push(imagepromise1);
+        }
+
+
+
+        wallpaperView.set({
+            top: menuPosAndSize.top,
+            left: menuPosAndSize.left,
+            height : menuPosAndSize.height,
+            width : menuPosAndSize.width,
+            zoomFactor: zoomFactor,
+            wallpaperList : wallpaperDatabase,
+            languageManager : languageMgr,
+            imgManager : imageManager,
+            RowIconNumber : [5,5]
+        });
+
+        wallpaperView.hide();
+
+
+        Promise.all(promises).then(function(results){
+
+            //console.log(results[0]);
+            var img = results[0];
+
+            insideDoor.setPatternFill(new fabric.Pattern({
+                source : img._element,
+                repeat : "no-repeat"
+            }));
+
+
+            this.canvas.renderAll();
+
+        });
+
+
+    }
     // code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
     // this code deals with scaling all the elements on the canvas
     function zoomAll(SCALE_FACTOR) {

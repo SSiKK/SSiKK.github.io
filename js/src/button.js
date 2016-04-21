@@ -346,9 +346,10 @@ var YDYW_Button = SVG_Imitator.extend({
 		else if(this.type === "tab"){
 
 			var rectWidth = this.width || label.width + 10;
-			var rectHeight = this.height || this.textSize + 5;
+			var rectHeight = this.height || this.textSize + 10;
 
-			//label.set({textAlign: 'center'});
+			label.set({fontSize: 12});
+
 			shapeObject = new fabric.Rect({
 				originX: 'center',
 				originY: 'center',
