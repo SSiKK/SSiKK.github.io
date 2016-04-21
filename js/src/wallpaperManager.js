@@ -283,6 +283,44 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
                                         repeat: "no-repeat"
                                     }));
                                 }.bind(this));
+                            }else if(id === "christmas"){
+
+                                new Promise(function(resolve, reject){
+                                    fabric.Image.fromURL("js/assets/img/christmas.jpg",function(imageObj){
+                                        resolve(imageObj.set({
+                                            height: imageObj.height,
+                                            width: imageObj.width,
+                                            selectable: false,
+                                            hasBorders: false,
+                                            originX: 'center',
+                                            originY: 'center'
+                                        }).scale(0.75,0.75))
+                                    });
+                                }).then(function(resulting){
+                                    this.insideDoorObject.setPatternFill(new fabric.Pattern({
+                                        source : resulting._element,
+                                        repeat: "no-repeat"
+                                    }));
+                                }.bind(this));
+                            }else if(id === "bb8"){
+
+                                new Promise(function(resolve, reject){
+                                    fabric.Image.fromURL("js/assets/img/bb8.jpg",function(imageObj){
+                                        resolve(imageObj.set({
+                                            height: imageObj.height,
+                                            width: imageObj.width,
+                                            selectable: false,
+                                            hasBorders: false,
+                                            originX: 'center',
+                                            originY: 'center'
+                                        }).scale(0.75,0.75))
+                                    });
+                                }).then(function(resulting){
+                                    this.insideDoorObject.setPatternFill(new fabric.Pattern({
+                                        source : resulting._element,
+                                        repeat: "no-repeat"
+                                    }));
+                                }.bind(this));
                             }else{
                                 this.insideDoorObject.set({fill: id});
                             }
@@ -342,6 +380,44 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
 
                                 new Promise(function(resolve, reject){
                                     fabric.Image.fromURL("js/assets/img/wallpaper3.jpg",function(imageObj){
+                                        resolve(imageObj.set({
+                                            height: imageObj.height,
+                                            width: imageObj.width,
+                                            selectable: false,
+                                            hasBorders: false,
+                                            originX: 'center',
+                                            originY: 'center'
+                                        }))
+                                    });
+                                }).then(function(resulting){
+                                    this.outsideDoorObject.setPatternFill(new fabric.Pattern({
+                                        source : resulting._element,
+                                        repeat: "no-repeat"
+                                    }));
+                                }.bind(this));
+                            }else if(id === "christmas"){
+
+                                new Promise(function(resolve, reject){
+                                    fabric.Image.fromURL("js/assets/img/christmas.jpg",function(imageObj){
+                                        resolve(imageObj.set({
+                                            height: imageObj.height,
+                                            width: imageObj.width,
+                                            selectable: false,
+                                            hasBorders: false,
+                                            originX: 'center',
+                                            originY: 'center'
+                                        }))
+                                    });
+                                }).then(function(resulting){
+                                    this.outsideDoorObject.setPatternFill(new fabric.Pattern({
+                                        source : resulting._element,
+                                        repeat: "no-repeat"
+                                    }));
+                                }.bind(this));
+                            }else if(id === "bb8"){
+
+                                new Promise(function(resolve, reject){
+                                    fabric.Image.fromURL("js/assets/img/bb8.jpg",function(imageObj){
                                         resolve(imageObj.set({
                                             height: imageObj.height,
                                             width: imageObj.width,

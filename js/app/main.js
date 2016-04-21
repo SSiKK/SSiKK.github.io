@@ -948,12 +948,14 @@
 
             },
             {
-                key: "grey",
-                fill: "grey"
+                key: "christmas",
+                fill: "js/assets/img/christmas.jpg",
+                type:"image"
 
             }, {
-                key: "grey",
-                fill: "grey"
+                key: "bb8",
+                fill: "js/assets/img/bb8.jpg",
+                type: "image"
 
             }
 
