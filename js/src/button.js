@@ -350,7 +350,7 @@ var YDYW_Button = SVG_Imitator.extend({
 			var rectWidth = this.width || label.width + 10;
 			var rectHeight = this.height || this.textSize + 10;
 
-			label.set({fontSize: 12});
+			label.set({fontSize: 18});
 
 			this.shapeObject = shapeObject = new fabric.Rect({
 				originX: 'center',

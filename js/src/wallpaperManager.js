@@ -114,31 +114,35 @@ var YDYW_wallpaperManager = SVG_Imitator.extend({
             console.log(canvas);
             outsideDoorTab = new YDYW_Button();
             outsideDoorTab.init(this.canvas);
+            
+
             outsideDoorTab.set({
-                left: rowLeft + 40,
+                left: rowLeft + 50,
                 top: rowTop + 20,
                 width: this.width/2 - 20,
                 type: "tab",
                 fill: "#ddddd",// label/icon/tab
                 //text: "Menu", // displays the text inside the button
                 zoomFactor: this.zoomFactor,
-                textSize: 15,
+                textSize: 25,
                 text: "outsideDoor"
             });
+
+            console.log("This is the left and top ", outsideDoorTab.left, outsideDoorTab.right);
             this.outsideDoorTab = outsideDoorTab;
             this.languageManager.addSetTextCallback(this.outsideDoorTab.setTextCallback.bind(this.outsideDoorTab));
 
             insideDoorTab = new YDYW_Button();
             insideDoorTab.init(this.canvas);
             insideDoorTab.set({
-                left: rowLeft + 40 + this.width/2 - 20 ,
+                left: rowLeft + 50 + this.width/2 - 20 ,
                 top: rowTop + 20,
                 width: this.width/2 - 20,
                 type: "tab",
                 fill: "#dddddd",// label/icon/tab
                 //text: "Menu", // displays the text inside the button
                 zoomFactor: this.zoomFactor,
-                textSize: 15,
+                textSize: 25,
                 text: "insideDoor"// textSize
             });
             this.insideDoorTab = insideDoorTab;

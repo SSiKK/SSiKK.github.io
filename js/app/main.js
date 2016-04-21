@@ -1009,10 +1009,10 @@
 
 
         wallpaperView.set({
-            top: menuPosAndSize.top,
-            left: menuPosAndSize.left,
-            height : menuPosAndSize.height,
-            width : menuPosAndSize.width,
+            top: menuPosAndSize.top * zoomFactor,
+            left: menuPosAndSize.left * zoomFactor,
+            height : menuPosAndSize.height * zoomFactor,
+            width : menuPosAndSize.width * zoomFactor,
             zoomFactor: zoomFactor,
             wallpaperList : wallpaperDatabase,
             languageManager : languageMgr,
